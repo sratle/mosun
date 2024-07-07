@@ -2,8 +2,8 @@
 extern keyhouse key_house;
 extern Ui ui;
 
-Ui::Ui(int width, int height, int fps)
-	:width(width), height(height), fps(fps), current_index(0)
+Ui::Ui(int width, int height)
+	:width(width), height(height), current_index(0)
 {
 }
 
@@ -37,8 +37,8 @@ void Ui::run()
 	draw_control();
 	FlushBatchDraw();
 	//¿ØÖÆfps
-	double start=0;
-	double end=0;
+	double start = 0;
+	double end = 0;
 
 	while (true)
 	{
@@ -77,9 +77,9 @@ void Ui::run()
 		draw_control();
 		FlushBatchDraw();
 		end = clock();
-		Sleep(DWORD(1000.0 / fps-start+end));
+		Sleep(DWORD(1000.0 / FPS - start + end));
 		key_house.timer++;
-		if (key_house.timer > fps * 30000)
+		if (key_house.timer > FPS * 30000)
 		{
 			key_house.timer = 0;
 		}
@@ -147,6 +147,7 @@ void Ui::draw_control()
 		else if (current_index == 2)
 		{
 			note(10, 10, 100, 50, 30, 1, L"0:ÍË³ö");
+
 			put_bk_image(key_house.plane_self[0], key_house.plane_self[1], key_house.plane_image[key_house.plane_id]);
 			setfillcolor(WHITE);
 			fillcircle(key_house.plane_self[2], key_house.plane_self[3], 5);
@@ -238,3 +239,4 @@ void Ui::put_bk_image(int x, int y, IMAGE img)
 	putimage(x, y, &img1, SRCAND);
 	putimage(x, y, &img, SRCPAINT);
 }
+

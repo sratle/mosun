@@ -1,7 +1,7 @@
 #include "Plane.h"
 extern keyhouse key_house;
 
-ur::ur(){}
+ur::ur() {}
 
 void ur::skill() {
 	return;
@@ -16,7 +16,7 @@ void ur::upgrade()
 	key_house.strike = strikes[key_house.plane_level[0]];
 }
 
-nanna::nanna(){}
+nanna::nanna() {}
 
 void nanna::skill() {
 	if (key_house.timer - key_house.temp_time > FPS * 20) {
@@ -39,11 +39,11 @@ void nanna::upgrade()
 ea::ea() {}
 
 void ea::skill() {
-	if ((key_house.timer - key_house.temp_time)%2==0) {
+	if ((key_house.timer - key_house.temp_time) % 2 == 0) {
 		key_house.shield = shields[key_house.plane_level[2]] * 2;
 		key_house.temp_time = key_house.timer;
 	}
-	else{
+	else {
 		key_house.shield = shields[key_house.plane_level[2]];
 	}
 }

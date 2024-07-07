@@ -17,4 +17,30 @@ keyhouse::keyhouse()
 	IMAGE swq_1;
 	loadimage(&swq_1, L"assets/swq.png");
 	plane_image.push_back(swq_1);
+	load_shots(L"assets/BulletAa000.png");
+	load_shots(L"assets/BulletAa001.png");
+	load_shots(L"assets/BulletAa002.png");
+	load_shots(L"assets/BulletAa003.png");
+	load_shots(L"assets/BulletAa004.png");
+	load_shots(L"assets/BulletAa005.png");
+	load_shots(L"assets/BulletAa006.png");
+}
+
+void keyhouse::load_shots(LPCTSTR imgfile)
+{
+	IMAGE img1, img2, img3, img4, img5, img6, img7;
+	loadimage(&img4, imgfile);
+	rotateimage(&img1, &img4, -PI / 6, BLACK, TRUE);
+	rotateimage(&img2, &img4, -PI / 9, BLACK, TRUE);
+	rotateimage(&img3, &img4, -PI / 18, BLACK, TRUE);
+	rotateimage(&img5, &img4, PI / 18, BLACK, TRUE);
+	rotateimage(&img6, &img4, PI / 9, BLACK, TRUE);
+	rotateimage(&img7, &img4, PI / 6, BLACK, TRUE);
+	shots_image.push_back(img1);
+	shots_image.push_back(img2);
+	shots_image.push_back(img3);
+	shots_image.push_back(img4);
+	shots_image.push_back(img5);
+	shots_image.push_back(img6);
+	shots_image.push_back(img7);
 }

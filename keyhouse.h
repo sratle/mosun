@@ -7,6 +7,9 @@ public:
 	//资源预加载
 	vector<IMAGE> sakuya;
 	vector<IMAGE> plane_image;
+	vector<IMAGE> enemy_image;
+	vector<IMAGE> shots_image;//一张图片加载七次，-30，-20，-10，0，10，20，30度
+	void load_shots(LPCTSTR);
 	//键盘输入
 	vector<BYTE> key_any;//condition0
 	vector<BYTE> key_num;//condition1
