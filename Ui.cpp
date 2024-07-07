@@ -36,7 +36,6 @@ void Ui::run()
 	BeginBatchDraw();
 	draw_control();
 	FlushBatchDraw();
-	//¿ØÖÆfps
 	double start = 0;
 	double end = 0;
 
@@ -77,7 +76,7 @@ void Ui::run()
 		draw_control();
 		FlushBatchDraw();
 		end = clock();
-		Sleep(DWORD(1000.0 / FPS - start + end));
+		Sleep(DWORD(1000.0 / FPS - start + end));//¿ØÖÆÖ¡ÂÊ
 		key_house.timer++;
 		if (key_house.timer > FPS * 30000)
 		{
