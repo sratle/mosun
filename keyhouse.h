@@ -28,7 +28,8 @@ public:
 	int condition;
 	int move_flag;
 	int timer;
-	int temp_time;
+	int plane_time;
+	int shot_time;
 	int level;
 	//±³°ü×ÊÔ´
 	int star_value;//save

@@ -145,11 +145,16 @@ void Ui::draw_control()
 		}
 		else if (current_index == 2)
 		{
+			if (key_house.shot_time == 0) {
+				key_house.shot_time = key_house.timer;
+			}
 			note(10, 10, 100, 50, 30, 1, L"0:ÍË³ö");
 
 			put_bk_image(key_house.plane_self[0], key_house.plane_self[1], key_house.plane_image[key_house.plane_id]);
 			setfillcolor(WHITE);
 			fillcircle(key_house.plane_self[2], key_house.plane_self[3], 5);
+			//×Óµ¯äÖÈ¾Âß¼­
+			put_bk_image(key_house.plane_self[2], key_house.plane_self[3]-(key_house.timer-key_house.shot_time)/10, key_house.shots_image[0 * 7 + 3]);
 
 			if (key_house.condition == 2 && (!key_house.key_num.empty()) && key_house.key_num.back() == 48)
 			{
