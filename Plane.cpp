@@ -22,10 +22,11 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 	if (keys.timer - time_re > FPS)
 	{
 		shots.push_back(new Shot(0, 3));
+		shots.back()->set_pos(keys.plane_self[2] - 16, shots.back()->get_y() - 2);
 		time_re = keys.timer;
 	}
 	for (auto shot : shots) {
-		shot->set_pos(keys.plane_self[2]-16, shot->get_y() - 2);
+		shot->set_pos(shot->get_x(), shot->get_y() - 2);
 		shot->draw();
 	}
 }
