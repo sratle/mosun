@@ -16,8 +16,6 @@ public:
 	int key_move;//condition2
 	int key_card;//condition2
 	//坐标数据
-	vector<vector<int>> shot_self;
-	vector<vector<int>> shot_enemy;
 	vector<vector<int>> plane_enemy;
 	vector<int> plane_self;
 	//卡片数据
@@ -25,12 +23,12 @@ public:
 	vector<Card> card_select;
 	vector<Card> card_now;
 	//控制用变量
-	int condition;
-	int move_flag;
-	int timer;
-	int plane_time;
-	int shot_time;
-	int level;
+	int condition;//键盘输入的状态变量
+	int move_flag;//是否处于CapsLock状态
+	int timer;//全局计时器
+	int plane_time;//plane发动被动技能的判断用的时间
+	int shot_time;//开始发射子弹的时间（也就是开始关卡的时间）
+	int level;//关卡
 	//背包资源
 	int star_value;//save
 	int anu;//save
@@ -41,9 +39,9 @@ public:
 	int hp;
 	int attack;
 	int shield;
-	int strike;
+	int strike;//暴击
 	vector<int> plane_level{ 0,0,0,0 };//save 存储四种机体的当前等级
-	int plane_unlock;//顺序解锁 1~3
+	int plane_unlock;//save 顺序解锁机体 1~3
 
 	keyhouse();
 	void load();//将存档加载

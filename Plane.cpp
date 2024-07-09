@@ -17,6 +17,11 @@ void ur::upgrade()
 	key_house.strike = strikes[key_house.plane_level[0]];
 }
 
+void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
+{
+
+}
+
 nanna::nanna() {}
 
 void nanna::skill()

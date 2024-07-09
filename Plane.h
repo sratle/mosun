@@ -1,5 +1,6 @@
 #pragma once
 #include "keyhouse.h"
+#include "Shot.h"
 
 //己方飞机
 class Plane
@@ -8,6 +9,7 @@ public:
 	//存放初始数据,在初始化进入游戏的时候进行初始化设定
 	virtual void skill() {};//机体的独特技能
 	virtual void upgrade() {};//机体升级,只在选择机体之后进行调用，加载当前等级的数据
+	virtual void draw() {};//画出目前释放的子弹
 };
 
 //id:1
@@ -22,6 +24,8 @@ private:
 public:
 	void skill() override;
 	void upgrade() override;
+	void draw() override;
+	vector<Shot*> shots;
 	ur();
 };
 
@@ -37,6 +41,8 @@ private:
 public:
 	void skill() override;
 	void upgrade() override;
+	void draw() override;
+	vector<Shot*> shots;
 	nanna();
 };
 
@@ -52,6 +58,8 @@ private:
 public:
 	void skill() override;
 	void upgrade() override;
+	void draw() override;
+	vector<Shot*> shots;
 	ea();
 };
 
@@ -67,5 +75,7 @@ private:
 public:
 	void skill() override;
 	void upgrade() override;
+	void draw() override;
+	vector<Shot*> shots;
 	enlil();
 };
