@@ -25,7 +25,7 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 		time_re = keys.timer;
 	}
 	for (auto shot : shots) {
-		shot->set_pos(keys.plane_self[2], shot->get_y() - 2);
+		shot->set_pos(keys.plane_self[2]-16, shot->get_y() - 2);
 		shot->draw();
 	}
 }
