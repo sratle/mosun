@@ -21,6 +21,7 @@ private:
 	int shields[5]{ 0,20,40,60,75 };//»¤¼×¼õÃâÖµ
 	int strikes[5]{ 0,2,4,7,10 };//±©»÷ÂÊ
 	int max_level = 5;
+	int time_re = 0;
 public:
 	void skill() override;
 	void upgrade() override;

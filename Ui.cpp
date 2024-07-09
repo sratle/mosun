@@ -1,5 +1,5 @@
 #include "Ui.h"
-extern keyhouse key_house;
+extern keyhouse keys;
 extern Ui ui;
 
 Ui::Ui(int width, int height)
@@ -44,30 +44,30 @@ void Ui::run()
 		start = clock();
 		if (peekmessage(&msg))
 		{
-			if (msg.message == WM_KEYDOWN && key_house.condition == 0)
+			if (msg.message == WM_KEYDOWN && keys.condition == 0)
 			{
-				key_house.key_any.push_back(msg.vkcode);
+				keys.key_any.push_back(msg.vkcode);
 			}
-			else if (msg.message == WM_KEYDOWN && key_house.condition == 1)
+			else if (msg.message == WM_KEYDOWN && keys.condition == 1)
 			{
 				if (msg.vkcode >= 48 && msg.vkcode <= 57)
 				{
-					key_house.key_num.push_back(msg.vkcode);
+					keys.key_num.push_back(msg.vkcode);
 				}
 			}
-			else if (msg.message == WM_KEYDOWN && key_house.condition == 2)
+			else if (msg.message == WM_KEYDOWN && keys.condition == 2)
 			{
 				if (msg.vkcode >= 48 && msg.vkcode <= 57)
 				{
-					key_house.key_num.push_back(msg.vkcode);
+					keys.key_num.push_back(msg.vkcode);
 				}
 				else if (msg.vkcode == 65 || msg.vkcode == 68 || msg.vkcode == 83 || msg.vkcode == 87)//ADSW
 				{
-					key_house.key_move = msg.vkcode;
+					keys.key_move = msg.vkcode;
 				}
 				else if (msg.vkcode == 20 || msg.vkcode == 74 || msg.vkcode == 75)//CapsLock,J,K
 				{
-					key_house.key_card = msg.vkcode;
+					keys.key_card = msg.vkcode;
 				}
 			}
 		}
@@ -77,10 +77,10 @@ void Ui::run()
 		FlushBatchDraw();
 		end = clock();
 		Sleep(DWORD(1000.0 / FPS - start + end));//控制帧率
-		key_house.timer++;
-		if (key_house.timer > FPS * 30000)
+		keys.timer++;
+		if (keys.timer > FPS * 30000)
 		{
-			key_house.timer = 0;
+			keys.timer = 0;
 		}
 	}
 	EndBatchDraw();
@@ -99,7 +99,7 @@ void Ui::draw_control()
 		putimage(0, 0, pages[current_index]);
 		if (current_index == 0)
 		{
-			double cps = key_house.timer / 10.0;
+			double cps = keys.timer / 10.0;
 			COLORREF color = RGB(200 * abs(sin(cps)), 200 * abs(sin(cps)), 80);
 			settextcolor(color);
 			setbkmode(TRANSPARENT);
@@ -108,15 +108,15 @@ void Ui::draw_control()
 			settextstyle(60, 0, _T("仿宋"));
 			outtextxy(200, 800, L"按任意键进入");
 			note(100, 10, 100, 50, 30, 0, L"0:退出");
-			if (key_house.condition == 0 && (!key_house.key_any.empty()) && key_house.key_any.back() == 48)
+			if (keys.condition == 0 && (!keys.key_any.empty()) && keys.key_any.back() == 48)
 			{
 				close();
 			}
-			else if (key_house.condition == 0 && (!key_house.key_any.empty()))
+			else if (keys.condition == 0 && (!keys.key_any.empty()))
 			{
-				key_house.key_any.clear();
+				keys.key_any.clear();
 				set_current_index(1);
-				key_house.condition = 1;
+				keys.condition = 1;
 			}
 		}
 		else if (current_index == 1)
@@ -124,73 +124,73 @@ void Ui::draw_control()
 			note(10, 10, 100, 50, 30, 1, L"0:退出");
 			note(10, 200, 300, 70, 50, 1, L"1:踏上旅程");
 
-			put_bk_image(350 + int(300 * sin(key_house.timer / 30.0)), 800, key_house.sakuya[key_house.timer / 10 % 3]);
-			if (key_house.condition == 1 && (!key_house.key_num.empty()) && key_house.key_num.back() == 48)
+			put_bk_image(350 + int(300 * sin(keys.timer / 30.0)), 800, keys.sakuya[keys.timer / 10 % 3]);
+			if (keys.condition == 1 && (!keys.key_num.empty()) && keys.key_num.back() == 48)
 			{
-				key_house.key_num.clear();
+				keys.key_num.clear();
 				PlaySound(L"assets/exit.wav", NULL, SND_ASYNC | SND_NOSTOP);
 				set_current_index(0);
-				key_house.condition = 0;
+				keys.condition = 0;
 			}
-			if (key_house.condition == 1 && (!key_house.key_num.empty()) && key_house.key_num.back() == 49)
+			if (keys.condition == 1 && (!keys.key_num.empty()) && keys.key_num.back() == 49)
 			{
-				key_house.key_num.clear();
+				keys.key_num.clear();
 				set_current_index(2);
-				key_house.condition = 2;
-				key_house.plane_self.push_back(300);
-				key_house.plane_self.push_back(900);
-				key_house.plane_self.push_back(332);
-				key_house.plane_self.push_back(964);
+				keys.condition = 2;
+				keys.plane_self.push_back(300);
+				keys.plane_self.push_back(900);
+				keys.plane_self.push_back(332);
+				keys.plane_self.push_back(964);
 			}
 		}
 		else if (current_index == 2)
 		{
-			if (key_house.shot_time == 0) {
-				key_house.shot_time = key_house.timer;
+			if (keys.shot_time == 0) {
+				keys.shot_time = keys.timer;
 			}
 			note(10, 10, 100, 50, 30, 1, L"0:退出");
 
 			//渲染机体
-			put_bk_image(key_house.plane_self[0], key_house.plane_self[1], key_house.plane_image[key_house.plane_id]);
+			put_bk_image(keys.plane_self[0], keys.plane_self[1], keys.plane_image[keys.plane_id]);
 			setfillcolor(WHITE);
-			fillcircle(key_house.plane_self[2], key_house.plane_self[3], 5);
+			fillcircle(keys.plane_self[2], keys.plane_self[3], 5);
 			//子弹渲染
-			planes_data[key_house.plane_id]->draw();
+			planes_data[keys.plane_id]->draw();
 
-			if (key_house.condition == 2 && (!key_house.key_num.empty()) && key_house.key_num.back() == 48)
+			if (keys.condition == 2 && (!keys.key_num.empty()) && keys.key_num.back() == 48)
 			{
-				key_house.key_num.clear();
+				keys.key_num.clear();
 				PlaySound(L"assets/exit.wav", NULL, SND_ASYNC | SND_NOSTOP);
 				set_current_index(1);
-				key_house.condition = 1;
+				keys.condition = 1;
 			}
-			if (key_house.condition == 2 && key_house.key_move == 65)
+			if (keys.condition == 2 && keys.key_move == 65)
 			{
-				key_house.plane_self[0] -= 3 + 5 * key_house.move_flag;
-				key_house.key_move = 0;
+				keys.plane_self[0] -= 3 + 5 * keys.move_flag;
+				keys.key_move = 0;
 			}
-			else if (key_house.condition == 2 && key_house.key_move == 68)
+			else if (keys.condition == 2 && keys.key_move == 68)
 			{
-				key_house.plane_self[0] += 3 + 5 * key_house.move_flag;
-				key_house.key_move = 0;
+				keys.plane_self[0] += 3 + 5 * keys.move_flag;
+				keys.key_move = 0;
 			}
-			else if (key_house.condition == 2 && key_house.key_move == 83)
+			else if (keys.condition == 2 && keys.key_move == 83)
 			{
-				key_house.plane_self[1] += 3 + 5 * key_house.move_flag;
-				key_house.key_move = 0;
+				keys.plane_self[1] += 3 + 5 * keys.move_flag;
+				keys.key_move = 0;
 			}
-			else if (key_house.condition == 2 && key_house.key_move == 87)
+			else if (keys.condition == 2 && keys.key_move == 87)
 			{
-				key_house.plane_self[1] -= 3 + 5 * key_house.move_flag;
-				key_house.key_move = 0;
+				keys.plane_self[1] -= 3 + 5 * keys.move_flag;
+				keys.key_move = 0;
 			}
-			else if (key_house.condition == 2 && key_house.key_card == 20)
+			else if (keys.condition == 2 && keys.key_card == 20)
 			{
-				key_house.move_flag = 1 - key_house.move_flag;
-				key_house.key_card = 0;
+				keys.move_flag = 1 - keys.move_flag;
+				keys.key_card = 0;
 			}
-			key_house.plane_self[2] = key_house.plane_self[0] + 32;
-			key_house.plane_self[3] = key_house.plane_self[1] + 64;
+			keys.plane_self[2] = keys.plane_self[0] + 32;
+			keys.plane_self[3] = keys.plane_self[1] + 64;
 		}
 	}
 }

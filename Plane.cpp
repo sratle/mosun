@@ -1,5 +1,5 @@
 #include "Plane.h"
-extern keyhouse key_house;
+extern keyhouse keys;
 
 ur::ur() {}
 
@@ -10,79 +10,102 @@ void ur::skill()
 
 void ur::upgrade()
 {
-	key_house.hp = hps[key_house.plane_level[0]];
-	key_house.mp = mps[key_house.plane_level[0]];
-	key_house.attack = attacks[key_house.plane_level[0]];
-	key_house.shield = shields[key_house.plane_level[0]];
-	key_house.strike = strikes[key_house.plane_level[0]];
+	keys.hp = hps[keys.plane_level[0]];
+	keys.mp = mps[keys.plane_level[0]];
+	keys.attack = attacks[keys.plane_level[0]];
+	keys.shield = shields[keys.plane_level[0]];
+	keys.strike = strikes[keys.plane_level[0]];
 }
 
 void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 {
-
+	if (keys.timer - time_re > FPS)
+	{
+		shots.push_back(new Shot(0, 3));
+		time_re = keys.timer;
+	}
+	for (auto shot : shots) {
+		shot->set_pos(keys.plane_self[2], shot->get_y() - 2);
+		shot->draw();
+	}
 }
 
 nanna::nanna() {}
 
 void nanna::skill()
 {
-	if (key_house.timer - key_house.plane_time > FPS * 20) {
-		key_house.hp += 5 * key_house.plane_level[1];
-		if (key_house.hp > hps[key_house.plane_level[1]])
-			key_house.hp = hps[key_house.plane_level[1]];
-		key_house.plane_time = key_house.timer;
+	if (keys.timer - keys.plane_time > FPS * 20) {
+		keys.hp += 5 * keys.plane_level[1];
+		if (keys.hp > hps[keys.plane_level[1]])
+			keys.hp = hps[keys.plane_level[1]];
+		keys.plane_time = keys.timer;
 	}
 }
 
 void nanna::upgrade()
 {
-	key_house.hp = hps[key_house.plane_level[1]];
-	key_house.mp = mps[key_house.plane_level[1]];
-	key_house.attack = attacks[key_house.plane_level[1]];
-	key_house.shield = shields[key_house.plane_level[1]];
-	key_house.strike = strikes[key_house.plane_level[1]];
+	keys.hp = hps[keys.plane_level[1]];
+	keys.mp = mps[keys.plane_level[1]];
+	keys.attack = attacks[keys.plane_level[1]];
+	keys.shield = shields[keys.plane_level[1]];
+	keys.strike = strikes[keys.plane_level[1]];
+}
+
+void nanna :: draw()
+{
+
 }
 
 ea::ea() {}
 
 void ea::skill()
 {
-	if ((key_house.timer - key_house.plane_time) % 2 == 0) {
-		key_house.shield = shields[key_house.plane_level[2]] * 2;
-		key_house.plane_time = key_house.timer;
+	if ((keys.timer - keys.plane_time) % 2 == 0) {
+		keys.shield = shields[keys.plane_level[2]] * 2;
+		keys.plane_time = keys.timer;
 	}
 	else {
-		key_house.shield = shields[key_house.plane_level[2]];
+		keys.shield = shields[keys.plane_level[2]];
 	}
 }
 
 void ea::upgrade()
 {
-	key_house.hp = hps[key_house.plane_level[2]];
-	key_house.mp = mps[key_house.plane_level[2]];
-	key_house.attack = attacks[key_house.plane_level[2]];
-	key_house.shield = shields[key_house.plane_level[2]];
-	key_house.strike = strikes[key_house.plane_level[2]];
+	keys.hp = hps[keys.plane_level[2]];
+	keys.mp = mps[keys.plane_level[2]];
+	keys.attack = attacks[keys.plane_level[2]];
+	keys.shield = shields[keys.plane_level[2]];
+	keys.strike = strikes[keys.plane_level[2]];
+}
+
+void ea::draw()
+{
+
 }
 
 enlil::enlil() {}
 
 void enlil::skill() 
 {
-	if ((key_house.timer - key_house.plane_time) % 2 == 0) {
-		key_house.strike = strikes[key_house.plane_level[3]] * 2;
-		key_house.plane_time = key_house.timer;
+	if ((keys.timer - keys.plane_time) % 2 == 0) {
+		keys.strike = strikes[keys.plane_level[3]] * 2;
+		keys.plane_time = keys.timer;
 	}
 	else {
-		key_house.strike = strikes[key_house.plane_level[3]];
+		keys.strike = strikes[keys.plane_level[3]];
 	}
 }
 
 void enlil::upgrade()
 {
-	key_house.hp = hps[key_house.plane_level[3]];
-	key_house.mp = mps[key_house.plane_level[3]];
-	key_house.attack = attacks[key_house.plane_level[3]];
-	key_house.shield = shields[key_house.plane_level[3]];
-	key_house.strike = strikes[key_house.plane_level[3]];
+	keys.hp = hps[keys.plane_level[3]];
+	keys.mp = mps[keys.plane_level[3]];
+	keys.attack = attacks[keys.plane_level[3]];
+	keys.shield = shields[keys.plane_level[3]];
+	keys.strike = strikes[keys.plane_level[3]];
+}
+
+void enlil::draw()
+{
+
 }

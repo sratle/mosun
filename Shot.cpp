@@ -1,13 +1,64 @@
 #include "Shot.h"
-extern Ui ui;
-extern keyhouse key_house;
+extern keyhouse keys;
 
 Shot::Shot(int id,int rotate)
-	:x(key_house.plane_self[2]), y(key_house.plane_self[3]), id(id), flag(0), rotate(rotate)
+	:x(keys.plane_self[2]), y(keys.plane_self[3]), id(id), flag(0), rotate(rotate)
 {
 }
 
 void Shot::draw() 
 {
-	ui.put_bk_image(x, y, key_house.shots_image[7 * id + rotate]);
+	put_bk_image(x, y, keys.shots_image[7 * id + rotate]);
+}
+
+void Shot::put_bk_image(int x, int y, IMAGE img)
+{
+	IMAGE img1;
+	DWORD* d1;
+	img1 = img;
+	d1 = GetImageBuffer(&img1);
+	float h, s, l;
+	for (int i = 0; i < img1.getheight() * img1.getwidth(); i++) {
+		RGBtoHSL(BGR(d1[i]), &h, &s, &l);
+		if (l < 0.03)
+		{
+			d1[i] = BGR(WHITE);
+		}
+		if (d1[i] != BGR(WHITE))
+		{
+			d1[i] = 0;
+		}
+	}
+	putimage(x, y, &img1, SRCAND);
+	putimage(x, y, &img, SRCPAINT);
+}
+
+void Shot::set_pos(int tx,int ty)
+{
+	x = tx;
+	y = ty;
+}
+
+int Shot::get_x() {
+	return x;
+}
+
+int Shot::get_y() {
+	return y;
+}
+
+int Shot::get_id() {
+	return id;
+}
+
+int Shot::get_r() {
+	return rotate;
+}
+
+void Shot::set_r(int r) {
+	rotate = r;
+}
+
+void Shot::set_id(int tid) {
+	id = tid;
 }

@@ -1,6 +1,5 @@
 #pragma once
 #include "main.h"
-#include "Card.h"
 class keyhouse
 {
 public:
@@ -18,10 +17,6 @@ public:
 	//坐标数据
 	vector<vector<int>> plane_enemy;
 	vector<int> plane_self;
-	//卡片数据
-	vector<Card> card_all;
-	vector<Card> card_select;
-	vector<Card> card_now;
 	//控制用变量
 	int condition;//键盘输入的状态变量
 	int move_flag;//是否处于CapsLock状态

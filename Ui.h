@@ -27,5 +27,7 @@ public:
 	void put_bk_image(int, int, IMAGE);
 	vector<Plane*> planes_data;
 	vector<Card*> cards_data;
+	vector<Card*> card_select;
+	vector<Card*> card_now;
 	vector<Drop*> drops_data;
 };
