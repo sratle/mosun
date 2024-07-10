@@ -8,7 +8,7 @@ Shot::Shot(int id,int rotate)
 
 void Shot::draw() 
 {
-	put_bk_image(x, y, keys.shots_image[7 * id + rotate]);
+	put_bk_image(x, y, keys.shots_image[14 * id + rotate]);
 }
 
 void Shot::put_bk_image(int x, int y, IMAGE img)

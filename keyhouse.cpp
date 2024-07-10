@@ -2,7 +2,7 @@
 
 keyhouse::keyhouse()
 	:condition(0), timer(0), anu(0), star_value(0), isthar(0), attack(0), hp(0), mp(0), shield(0), plane_time(0),
-	move_flag(0), key_card(0), key_move(0), plane_id(0), plane_unlock(0), strike(0), level(0),shot_time(0)
+	move_flag(0), key_card(0), key_move(0), plane_id(0), plane_unlock(0), strike(0), level(0), shot_time(0)
 {
 	//‘§º”‘ÿ
 	IMAGE sakuya_1;
@@ -29,6 +29,7 @@ keyhouse::keyhouse()
 void keyhouse::load_shots(LPCTSTR imgfile)
 {
 	IMAGE img1, img2, img3, img4, img5, img6, img7;
+	IMAGE img8, img9, img10, img11, img12, img13, img14;
 	loadimage(&img4, imgfile);
 	rotateimage(&img1, &img4, -PI / 6, BLACK, TRUE);
 	rotateimage(&img2, &img4, -PI / 9, BLACK, TRUE);
@@ -36,6 +37,13 @@ void keyhouse::load_shots(LPCTSTR imgfile)
 	rotateimage(&img5, &img4, PI / 18, BLACK, TRUE);
 	rotateimage(&img6, &img4, PI / 9, BLACK, TRUE);
 	rotateimage(&img7, &img4, PI / 6, BLACK, TRUE);
+	rotateimage(&img8, &img4, PI * 5 / 6, BLACK, TRUE);
+	rotateimage(&img9, &img4, PI * 8 / 9, BLACK, TRUE);
+	rotateimage(&img10, &img4, PI * 17 / 18, BLACK, TRUE);
+	rotateimage(&img11, &img4, PI, BLACK, TRUE);
+	rotateimage(&img12, &img4, PI * 17 / 18, BLACK, TRUE);
+	rotateimage(&img13, &img4, PI * 10 / 9, BLACK, TRUE);
+	rotateimage(&img14, &img4, PI * 7 / 6, BLACK, TRUE);
 	shots_image.push_back(img1);
 	shots_image.push_back(img2);
 	shots_image.push_back(img3);
@@ -43,4 +51,11 @@ void keyhouse::load_shots(LPCTSTR imgfile)
 	shots_image.push_back(img5);
 	shots_image.push_back(img6);
 	shots_image.push_back(img7);
+	shots_image.push_back(img8);
+	shots_image.push_back(img9);
+	shots_image.push_back(img10);
+	shots_image.push_back(img11);
+	shots_image.push_back(img12);
+	shots_image.push_back(img13);
+	shots_image.push_back(img14);
 }

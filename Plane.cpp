@@ -19,15 +19,82 @@ void ur::upgrade()
 
 void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 {
-	if (keys.timer - time_re > FPS)
+	if (stage == 0)
 	{
-		shots.push_back(new Shot(0, 3));
-		shots.back()->set_pos(keys.plane_self[2] - 16, shots.back()->get_y() - 2);
-		time_re = keys.timer;
+		//复用模块
+		if ((keys.timer - record_time[0]) > (FPS * speed))
+		{
+			//下面设计是需要改动的模块
+			shots.push_back(new Shot(0, 3));
+			shots.back()->set_pos(keys.plane_self[2] - 16, shots.back()->get_y() - 2);
+			//end
+			record_time[0] = keys.timer;
+		}
+		int flag = 0;
+		for (auto shot : shots)
+		{
+			if ((shot->get_x() < 0) || (shot->get_y() < 0)) {
+				shot->flag = 1;
+			}
+			//下面设计是需要改动的模块
+			shot->set_pos(shot->get_x(), shot->get_y() - 2);
+			//end
+			shot->draw();
+		}
+		//删除模块，需改动，此处为一个子弹一组的情况
+		if (shots[0]->flag) {
+			delete shots[0];
+			shots.erase(shots.begin());
+		}
+		//复用end
 	}
-	for (auto shot : shots) {
-		shot->set_pos(shot->get_x(), shot->get_y() - 2);
-		shot->draw();
+	else if (stage == 1)
+	{
+		//复用模块
+		if ((keys.timer - record_time[0]) > (FPS * speed))
+		{
+			//下面设计是需要改动的模块
+			shots.push_back(new Shot(0, 2));
+			shots.back()->set_pos(keys.plane_self[2] + 8, shots.back()->get_y() - 6);
+			shots.push_back(new Shot(0, 3));
+			shots.back()->set_pos(keys.plane_self[2] - 16, shots.back()->get_y() - 6);
+			shots.push_back(new Shot(0, 4));
+			shots.back()->set_pos(keys.plane_self[2] - 40, shots.back()->get_y() - 6);
+			//end
+			record_time[0] = keys.timer;
+		}
+		int flag = 0;
+		for (auto shot : shots)
+		{
+			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1280)) {
+				shot->flag = 1;
+			}
+			//下面设计是需要改动的模块
+			if (flag == 0) {
+				shot->set_pos(shot->get_x() + 2, shot->get_y() - 6);
+			}
+			else if (flag == 1) {
+				shot->set_pos(shot->get_x(), shot->get_y() - 6);
+			}
+			else if (flag == 2) {
+				shot->set_pos(shot->get_x() - 2, shot->get_y() - 6);
+			}
+			flag++;
+			if (flag == 3)
+				flag = 0;
+			//end
+			shot->draw();
+		}
+		//删除模块，需改动，此处为三个子弹一组的情况
+		if (shots[0]->flag & shots[1]->flag & shots[2]->flag) {
+			delete shots[0];
+			delete shots[1];
+			delete shots[2];
+			shots.erase(shots.begin());
+			shots.erase(shots.begin());
+			shots.erase(shots.begin());
+		}
+		//复用end
 	}
 }
 
@@ -52,7 +119,7 @@ void nanna::upgrade()
 	keys.strike = strikes[keys.plane_level[1]];
 }
 
-void nanna :: draw()
+void nanna::draw()
 {
 
 }
@@ -86,7 +153,7 @@ void ea::draw()
 
 enlil::enlil() {}
 
-void enlil::skill() 
+void enlil::skill()
 {
 	if ((keys.timer - keys.plane_time) % 2 == 0) {
 		keys.strike = strikes[keys.plane_level[3]] * 2;

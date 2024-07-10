@@ -21,7 +21,9 @@ private:
 	int shields[5]{ 0,20,40,60,75 };//护甲减免值
 	int strikes[5]{ 0,2,4,7,10 };//暴击率
 	int max_level = 5;
-	int time_re = 0;
+	int stage = 1;//子弹阶段
+	float speed = 0.8;//子弹发射速度
+	vector<int> record_time = { 0 };
 public:
 	void skill() override;
 	void upgrade() override;

@@ -16,7 +16,7 @@ public:
 	int key_card;//condition2
 	//坐标数据
 	vector<vector<int>> plane_enemy;
-	vector<int> plane_self;
+	vector<int> plane_self;//0，1：渲染坐标，2，3：判定坐标
 	//控制用变量
 	int condition;//键盘输入的状态变量
 	int move_flag;//是否处于CapsLock状态
