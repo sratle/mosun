@@ -1,8 +1,9 @@
 #include "Shot.h"
 extern keyhouse keys;
 
-Shot::Shot(int id,int rotate)
-	:x(keys.plane_self[2]), y(keys.plane_self[3]), id(id), flag(0), rotate(rotate)
+//id,rotate,x,y
+Shot::Shot(int id,int rotate,int x,int y)
+	:x(x), y(y), id(id), flag(0), rotate(rotate)
 {
 }
 

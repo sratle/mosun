@@ -8,8 +8,9 @@ class Plane
 public:
 	//存放初始数据,在初始化进入游戏的时候进行初始化设定
 	virtual void skill() {};//机体的独特技能
-	virtual void upgrade() {};//机体升级,只在选择机体之后进行调用，加载当前等级的数据
+	virtual void upgrade() {};//机体升级,在机体初始化之后进行调用，加载当前等级的数据
 	virtual void draw() {};//画出目前释放的子弹
+	vector<int> position;//0，1：渲染坐标，2，3：判定坐标
 };
 
 //id:1
@@ -22,13 +23,13 @@ private:
 	int strikes[5]{ 0,2,4,7,10 };//暴击率
 	int max_level = 5;
 	int stage = 1;//子弹阶段
-	float speed = 0.8;//子弹发射速度
+	double speed = 0.8;//子弹发射速度
+	vector<Shot*> shots;
 	vector<int> record_time = { 0 };
 public:
 	void skill() override;
 	void upgrade() override;
 	void draw() override;
-	vector<Shot*> shots;
 	ur();
 };
 
@@ -41,11 +42,14 @@ private:
 	int shields[5]{ 20,35,50,60,70 };
 	int strikes[5]{ 2,4,7,10,13 };
 	int max_level = 5;
+	int stage = 1;//子弹阶段
+	double speed = 0.8;//子弹发射速度
+	vector<Shot*> shots;
+	vector<int> record_time = { 0 };
 public:
 	void skill() override;
 	void upgrade() override;
 	void draw() override;
-	vector<Shot*> shots;
 	nanna();
 };
 
@@ -58,11 +62,14 @@ private:
 	int shields[6]{ 15,30,40,50,65,75 };
 	int strikes[6]{ 2,5,8,11,15,19 };
 	int max_level = 6;
+	int stage = 1;//子弹阶段
+	double speed = 0.8;//子弹发射速度
+	vector<Shot*> shots;
+	vector<int> record_time = { 0 };
 public:
 	void skill() override;
 	void upgrade() override;
 	void draw() override;
-	vector<Shot*> shots;
 	ea();
 };
 
@@ -75,10 +82,13 @@ private:
 	int shields[6]{ 10,20,30,45,55,60 };
 	int strikes[6]{ 10,13,17,22,27,35 };
 	int max_level = 6;
+	int stage = 1;//子弹阶段
+	double speed = 0.8;//子弹发射速度
+	vector<Shot*> shots;
+	vector<int> record_time = { 0 };
 public:
 	void skill() override;
 	void upgrade() override;
 	void draw() override;
-	vector<Shot*> shots;
 	enlil();
 };

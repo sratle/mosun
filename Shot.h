@@ -6,7 +6,7 @@ class Shot
 public:
 	int flag;//是否出界
 	void draw();
-	Shot(int,int);//id,rotate
+	Shot(int,int,int,int);
 	void set_pos(int, int);//渲染坐标x,y
 	int get_x();
 	int get_y();

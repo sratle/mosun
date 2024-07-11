@@ -1,5 +1,7 @@
 #pragma once
 #include "main.h"
+//标save的是需要存档的
+//关键数据存储其中，注意这个类不能越来越臃肿，需要根据逻辑，适当地把一些数据封装到该有的类里面
 class keyhouse
 {
 public:
@@ -14,11 +16,8 @@ public:
 	vector<BYTE> key_num;//condition1
 	int key_move;//condition2
 	int key_card;//condition2
-	//坐标数据
-	vector<vector<int>> plane_enemy;
-	vector<int> plane_self;//0，1：渲染坐标，2，3：判定坐标
 	//控制用变量
-	int condition;//键盘输入的状态变量
+	int condition;//键盘输入的状态变量，0：主界面模式，1：菜单模式，2：战斗模式
 	int move_flag;//是否处于CapsLock状态
 	int timer;//全局计时器
 	int plane_time;//plane发动被动技能的判断用的时间
@@ -28,7 +27,7 @@ public:
 	int star_value;//save
 	int anu;//save
 	int isthar;//save
-	//机体数据
+	//机体数据,这是当前的飞机数据加载到这里，实时变化控制
 	int plane_id;//从ui.planes_data中加载对应id
 	int mp;
 	int hp;
