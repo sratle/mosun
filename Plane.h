@@ -12,6 +12,7 @@ public:
 	virtual void draw() {};//画出目前释放的子弹
 	void put_bk_image(int, int, IMAGE);
 	void control();//控制移动和渲染自身
+
 	vector<int> position{324,900,360,964};//0，1：渲染坐标，2，3：判定坐标
 };
 
@@ -26,9 +27,11 @@ private:
 	int max_level = 5;
 	vector<Shot*> shots;
 	vector<int> record_time = { 0 };
-public:
 	int stage = 1;//子弹阶段
 	double speed = 0.8;//子弹发射速度,越小越快
+public:
+	void set_stage(int);
+	int get_stage();
 	void skill() override;
 	void upgrade() override;
 	void draw() override;
@@ -46,9 +49,11 @@ private:
 	int max_level = 5;
 	vector<Shot*> shots;
 	vector<int> record_time = { 0 };
-public:
 	int stage = 1;//子弹阶段
 	double speed = 0.8;//子弹发射速度
+public:
+	void set_stage(int);
+	int get_stage();
 	void skill() override;
 	void upgrade() override;
 	void draw() override;
@@ -66,9 +71,11 @@ private:
 	int max_level = 6;
 	vector<Shot*> shots;
 	vector<int> record_time = { 0 };
-public:
 	int stage = 1;//子弹阶段
 	double speed = 0.8;//子弹发射速度
+public:
+	void set_stage(int);
+	int get_stage();
 	void skill() override;
 	void upgrade() override;
 	void draw() override;
@@ -86,9 +93,11 @@ private:
 	int max_level = 6;
 	vector<Shot*> shots;
 	vector<int> record_time = { 0 };
-public:
 	int stage = 1;//子弹阶段
 	double speed = 0.8;//子弹发射速度
+public:
+	void set_stage(int);
+	int get_stage();
 	void skill() override;
 	void upgrade() override;
 	void draw() override;

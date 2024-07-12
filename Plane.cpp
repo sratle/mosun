@@ -101,6 +101,14 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 	}
 }
 
+void ur::set_stage(int stage_t) {
+	stage = stage_t;
+}
+
+int ur::get_stage() {
+	return stage;
+}
+
 nanna::nanna() {}
 
 void nanna::skill()
@@ -125,6 +133,14 @@ void nanna::upgrade()
 void nanna::draw()
 {
 
+}
+
+void nanna::set_stage(int stage_t) {
+	stage = stage_t;
+}
+
+int nanna::get_stage() {
+	return stage;
 }
 
 ea::ea() {}
@@ -154,6 +170,14 @@ void ea::draw()
 
 }
 
+void ea::set_stage(int stage_t) {
+	stage = stage_t;
+}
+
+int ea::get_stage() {
+	return stage;
+}
+
 enlil::enlil() {}
 
 void enlil::skill()
@@ -179,6 +203,14 @@ void enlil::upgrade()
 void enlil::draw()
 {
 
+}
+
+void enlil::set_stage(int stage_t) {
+	stage = stage_t;
+}
+
+int enlil::get_stage() {
+	return stage;
 }
 
 void Plane::control()
