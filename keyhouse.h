@@ -9,7 +9,7 @@ public:
 	vector<IMAGE> sakuya;
 	vector<IMAGE> plane_image;
 	vector<IMAGE> enemy_image;
-	vector<IMAGE> shots_image;//一张图片加载七次，-30，-20，-10，0，10，20，30度
+	vector<IMAGE> shots_image;//一张图片加载十四次，-30，-20，-10，0，10，20，30，150，160，170，180，190，200，210
 	void load_shots(LPCTSTR);
 	//键盘输入
 	vector<BYTE> key_any;//condition0

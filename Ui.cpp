@@ -3,7 +3,7 @@ extern keyhouse keys;
 extern Ui ui;
 
 Ui::Ui(int width, int height)
-	:width(width), height(height), current_index(0)
+	:width(width), height(height), current_index(0),plane(nullptr)
 {
 }
 
@@ -72,7 +72,7 @@ void Ui::run()
 		draw_control();//调用渲染控制函数
 		FlushBatchDraw();
 		end = clock();
-		Sleep(DWORD(1000.0 / FPS - start + end));//控制帧率
+		Sleep(DWORD(1000.0 / FPS + start - end));//控制帧率
 		keys.timer++;
 		if (keys.timer > FPS * 30000)
 		{
@@ -166,18 +166,10 @@ void Ui::draw_control()
 					break;
 				}
 				plane->upgrade();//加载数据到keys中
-				plane->position.push_back(300);
-				plane->position.push_back(900);
-				plane->position.push_back(332);
-				plane->position.push_back(964);
 			}
 			note(10, 10, 100, 50, 30, 1, L"0:退出");
 
-			//渲染机体
-			put_bk_image(plane->position[0], plane->position[1], keys.plane_image[keys.plane_id]);
-			setfillcolor(WHITE);
-			fillcircle(plane->position[2], plane->position[3], 5);
-			//子弹渲染,根据内部逻辑
+			//机体相关的渲染,大部分渲染逻辑封装进plane中
 			plane->draw();
 
 			//返回菜单
@@ -188,35 +180,7 @@ void Ui::draw_control()
 				set_current_index(1);
 				keys.condition = 1;
 				keys.shot_time = 0;
-			}//adsw移动控制
-			if (keys.condition == 2 && keys.key_move == 65)
-			{
-				plane->position[0] -= 3 + 5 * keys.move_flag;
-				//恢复按键编码
-				keys.key_move = 0;
 			}
-			else if (keys.condition == 2 && keys.key_move == 68)
-			{
-				plane->position[0] += 3 + 5 * keys.move_flag;
-				keys.key_move = 0;
-			}
-			else if (keys.condition == 2 && keys.key_move == 83)
-			{
-				plane->position[1] += 3 + 5 * keys.move_flag;
-				keys.key_move = 0;
-			}
-			else if (keys.condition == 2 && keys.key_move == 87)
-			{
-				plane->position[1] -= 3 + 5 * keys.move_flag;
-				keys.key_move = 0;
-			}//按下了capslock
-			else if (keys.condition == 2 && keys.key_card == 20)
-			{
-				keys.move_flag = 1 - keys.move_flag;
-				keys.key_card = 0;
-			}//把判定坐标压入坐标中
-			plane->position[2] = plane->position[0] + 32;
-			plane->position[3] = plane->position[1] + 64;
 		}
 	}
 }
