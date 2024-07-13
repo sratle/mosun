@@ -26,7 +26,7 @@ private:
 	int shields[5]{ 0,20,40,60,75 };//护甲减免值
 	int strikes[5]{ 0,2,4,7,10 };//暴击率
 	int max_level = 5;
-	vector<int> record_time = { 0 };
+	vector<int> record_time = { 0 ,1000};
 	int stage = 1;//子弹阶段
 	double speed = 0.8;//子弹发射速度,越小越快
 public:
@@ -47,7 +47,7 @@ private:
 	int shields[5]{ 20,35,50,60,70 };
 	int strikes[5]{ 2,4,7,10,13 };
 	int max_level = 5;
-	vector<int> record_time = { 0 };
+	vector<int> record_time = { 0,1000 };
 	int stage = 1;//子弹阶段
 	double speed = 0.8;//子弹发射速度
 public:
@@ -68,7 +68,7 @@ private:
 	int shields[6]{ 15,30,40,50,65,75 };
 	int strikes[6]{ 2,5,8,11,15,19 };
 	int max_level = 6;
-	vector<int> record_time = { 0 };
+	vector<int> record_time = { 0,1000 };
 	int stage = 1;//子弹阶段
 	double speed = 0.8;//子弹发射速度
 public:
@@ -89,7 +89,7 @@ private:
 	int shields[6]{ 10,20,30,45,55,60 };
 	int strikes[6]{ 10,13,17,22,27,35 };
 	int max_level = 6;
-	vector<int> record_time = { 0 };
+	vector<int> record_time = { 0,1000 };
 	int stage = 1;//子弹阶段
 	double speed = 0.8;//子弹发射速度
 public:

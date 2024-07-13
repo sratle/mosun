@@ -24,7 +24,7 @@ public:
 	void draw() override;
 
 private:
-	vector<int> record_time = { 0 };
+	vector<int> record_time = { 0 , 0 };
 	int height;
 	int width;
 };

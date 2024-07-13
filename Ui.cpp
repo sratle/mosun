@@ -205,8 +205,8 @@ void Ui::draw_control()
 void Ui::level_1()
 {
 	if (keys.get_flag(1) == 0) {
-		enemys.push_back(new simple_enemy(260, 100));
-		enemys.push_back(new simple_enemy(460, 100));
+		enemys.push_back(new simple_enemy(260, 150));
+		enemys.push_back(new simple_enemy(460, 150));
 		keys.set_flag(1, 1);
 	}
 }

@@ -19,6 +19,15 @@ void ur::upgrade()//初始化调用
 
 void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 {
+	//入场动画
+	if (record_time[1] > position[1])
+	{
+		put_bk_image(position[0], record_time[1], keys.plane_image[keys.plane_id]);
+		setfillcolor(WHITE);
+		fillcircle(position[2], record_time[1] + 64, 5);
+		record_time[1] -= 5;
+		return;
+	}
 	//控制函数
 	control();
 	//子弹渲染

@@ -20,6 +20,16 @@ void simple_enemy::draw()
 		state = 1;
 		return;
 	}
+	//入场动画
+	if (record_time[1] < position[1])
+	{
+		put_bk_image(position[0], record_time[1], keys.enemy_image[0]);
+		setfillcolor(WHITE);
+		fillcircle(position[2], record_time[1]+height/2, 10);
+		record_time[1]+=2;
+		return;
+	}
+	//渲染机体
 	put_bk_image(position[0], position[1], keys.enemy_image[0]);
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 10);
