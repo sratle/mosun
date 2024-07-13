@@ -1,6 +1,5 @@
 #include "Ui.h"
 extern keyhouse keys;
-extern Ui ui;
 
 Ui::Ui(int width, int height)
 	:width(width), height(height), current_index(0),plane(nullptr)
@@ -158,10 +157,12 @@ void Ui::draw_control()
 					break;
 				}
 				plane->upgrade();//加载数据到keys中
+				//init end
 			}
-			//按下2，进入机库
-			//按下3，进入牌库
-			//按下4，进入设置
+			//按下2，进入无尽
+			//按下3，进入机库
+			//按下4，进入牌库
+			//按下5，进入设置
 		}
 		else if (current_index == 2)
 		{
