@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <cmath>
+#include <conio.h>
 #include <easyx.h>
 #include <iostream>
 #include <mmsystem.h>

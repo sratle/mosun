@@ -90,122 +90,151 @@ void Ui::close()
 //控制与页面渲染都在这个函数里控制
 void Ui::draw_control()
 {
-	if (current_index >= 0 && current_index < pages.size())//确认正常
+	if (current_index < 0 || current_index > pages.size())//确认正常
+		return;
+	//渲染背景图
+	putimage(0, 0, pages[current_index]);
+	if (current_index == 0)
 	{
-		//渲染背景图
-		putimage(0, 0, pages[current_index]);
-		if (current_index == 0)
-		{
-			//给标题做的渐变效果，属于试验性质
-			double cps = keys.timer / 10.0;
-			COLORREF color = RGB(200 * abs(sin(cps)), 200 * abs(sin(cps)), 80);
-			settextcolor(color);
-			setbkmode(TRANSPARENT);
-			settextstyle(140, 0, _T("华文行楷"));
-			outtextxy(100, 100, L"Moon Sun");
-			settextstyle(60, 0, _T("仿宋"));
-			outtextxy(200, 800, L"按任意键进入");
+		//给标题做的渐变效果，属于试验性质
+		double cps = keys.timer / 10.0;
+		COLORREF color = RGB(200 * abs(sin(cps)), 200 * abs(sin(cps)), 80);
+		settextcolor(color);
+		setbkmode(TRANSPARENT);
+		settextstyle(140, 0, _T("华文行楷"));
+		outtextxy(100, 100, L"Moon Sun");
+		settextstyle(60, 0, _T("仿宋"));
+		outtextxy(200, 800, L"按任意键进入");
 
-			note(100, 10, 100, 50, 30, 0, L"0:退出");
-			//确认捕获按键0则执行退出
-			if (keys.condition == 0 && (!keys.key_any.empty()) && keys.key_any.back() == 48)
-			{
-				close();
-			}//如果是其他任意按键就进入
-			else if (keys.condition == 0 && (!keys.key_any.empty()))
-			{
-				keys.key_any.clear();
-				set_current_index(1);
-				keys.condition = 1;//让按键输入的模式转换到1模式：菜单模式
-			}
-		}
-		else if (current_index == 1)
+		note(100, 10, 100, 50, 30, 0, L"0:退出");
+		//确认捕获按键0则执行退出
+		if (keys.condition == 0 && (!keys.key_any.empty()) && keys.key_any.back() == 48)
 		{
-			note(10, 10, 100, 50, 30, 1, L"0:退出");
-			note(10, 200, 300, 70, 50, 1, L"1:踏上旅程");
-			//菜单界面下方的sakuya
-			put_bk_image(350 + int(300 * sin(keys.timer / 30.0)), 800, keys.sakuya[keys.timer / 10 % 3]);
-			//按下0，返回开始界面
-			if (keys.condition == 1 && (!keys.key_num.empty()) && keys.key_num.back() == 48)
-			{
-				keys.key_num.clear();
-				PlaySound(L"assets/exit.wav", NULL, SND_ASYNC | SND_NOSTOP);
-				set_current_index(0);
-				keys.condition = 0;
-			}
-			//按下1，进入战斗界面
-			if (keys.condition == 1 && (!keys.key_num.empty()) && keys.key_num.back() == 49)
-			{
-				keys.key_num.clear();
-				set_current_index(2);
-				keys.condition = 2;
-				//初始进入战斗进行战机的初始化
-				delete plane;
-				switch (keys.plane_id)
-				{
-				case 0:
-					plane = new ur;
-					break;
-				case 1:
-					plane = new nanna;
-					break;
-				case 2:
-					plane = new ea;
-					break;
-				case 3:
-					plane = new enlil;
-					break;
-				}
-				plane->upgrade();//加载数据到keys中
-				//init end
-			}
-			//按下2，进入无尽
-			//按下3，进入机库
-			//按下4，进入牌库
-			//按下5，进入设置
-		}
-		else if (current_index == 2)
+			close();
+		}//如果是其他任意按键就进入
+		else if (keys.condition == 0 && (!keys.key_any.empty()))
 		{
-			note(10, 10, 100, 50, 30, 1, L"0:退出");
-
-			//机体相关的渲染,大部分渲染逻辑封装进plane中
-			plane->draw();
-			switch (keys.level)
+			keys.key_any.clear();
+			set_current_index(1);
+			keys.condition = 1;//让按键输入的模式转换到1模式：菜单模式
+		}
+	}
+	else if (current_index == 1)
+	{
+		note(10, 10, 100, 50, 30, 1, L"0:退出");
+		note(10, 200, 300, 70, 50, 1, L"1:踏上旅程");
+		//菜单界面下方的sakuya
+		put_bk_image(350 + int(300 * sin(keys.timer / 30.0)), 800, keys.sakuya[keys.timer / 10 % 3]);
+		//按下0，返回开始界面
+		if (keys.condition == 1 && (!keys.key_num.empty()) && keys.key_num.back() == 48)
+		{
+			keys.key_num.clear();
+			PlaySound(L"assets/exit.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			set_current_index(0);
+			keys.condition = 0;
+		}
+		//按下1，进入战斗界面
+		if (keys.condition == 1 && (!keys.key_num.empty()) && keys.key_num.back() == 49)
+		{
+			keys.key_num.clear();
+			set_current_index(2);
+			keys.condition = 2;
+			//初始进入战斗进行战机的初始化
+			switch (keys.plane_id)
 			{
 			case 0:
-				level_1();
+				plane = new ur;
+				break;
+			case 1:
+				plane = new nanna;
+				break;
+			case 2:
+				plane = new ea;
+				break;
+			case 3:
+				plane = new enlil;
 				break;
 			}
-			for (auto ene : enemys) {
-				ene->draw();
-			}
-			judge();//判定
-
-			//返回菜单
-			if (keys.condition == 2 && (!keys.key_num.empty()) && keys.key_num.back() == 48)
-			{
-				keys.key_num.clear();
-				PlaySound(L"assets/exit.wav", NULL, SND_ASYNC | SND_NOSTOP);
-				set_current_index(1);
-				keys.condition = 1;
-				for (int i = 0; i < keys.get_flag_size(); i++)
-					keys.set_flag(i, 0);
-			}
+			plane->upgrade();//加载数据到keys中
+			//init end
 		}
+		//按下2，进入无尽
+		//按下3，进入机库
+		//按下4，进入牌库
+		//按下5，进入设置
+	}
+	else if (current_index == 2)
+	{
+		note(10, 10, 100, 50, 30, 1, L"0:退出");
+		//返回菜单
+		if (keys.condition == 2 && (!keys.key_num.empty()) && keys.key_num.back() == 48)
+		{
+			keys.key_num.clear();
+			PlaySound(L"assets/exit.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			set_current_index(1);
+			keys.condition = 1;
+			for (int i = 0; i < keys.get_flag_size(); i++)
+				keys.set_flag(i, 0);
+			for (auto enemy : enemys)
+				delete enemy;
+			enemys.clear();
+			delete plane;
+			plane = nullptr;
+		}
+		//死亡
+		if (keys.hp <= 0) {
+			note(180, 300, 360, 120, 80, 1, L"YOU DIED");
+			return;
+		}
+		//机体相关的渲染,大部分渲染逻辑封装进plane中
+		plane->draw();
+		switch (keys.level)
+		{
+		case 0:
+			level_1();
+			break;
+		}
+		for (auto ene : enemys) {
+			ene->draw();
+		}
+		judge();//判定
 	}
 }
 
 void Ui::level_1()
 {
 	if (keys.get_flag(1) == 0) {
-		enemys.push_back(new simple_enemy(360, 100));
+		enemys.push_back(new simple_enemy(260, 100));
+		enemys.push_back(new simple_enemy(460, 100));
 		keys.set_flag(1, 1);
 	}
 }
 
 void Ui::judge()//判定函数
 {
-
+	//判定己方子弹对敌机的伤害
+	for (auto shot : plane->shots)
+	{
+		for (auto enemy : enemys)
+		{
+			//若击中
+			if (sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 15)
+			{
+				enemy->hp -= keys.attack * (1 + (rand() < keys.strike));
+			}
+		}
+	}
+	//判定敌机子弹对己方的伤害
+	for (auto enemy : enemys)
+	{
+		for (auto shot : enemy->shots)
+		{
+			if (sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 5)
+			{
+				keys.hp -= enemy->attack;
+			}
+		}
+	}
 }
 
 //在指定位置渲染一个提示框，参数为：x坐标，y坐标，宽度，高度，字体大小，是否含背景，内容

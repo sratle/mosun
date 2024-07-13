@@ -2,8 +2,12 @@
 extern keyhouse keys;
 
 simple_enemy::simple_enemy(int x, int y)
-	:width(64), height(128), attack(150), hp(200),speed(0.6),state(0)
+	:width(64), height(128)
 {
+	attack = 150;
+	hp = 200;
+	speed = 0.6;
+	state = 0;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -12,9 +16,13 @@ simple_enemy::simple_enemy(int x, int y)
 
 void simple_enemy::draw()
 {
+	if (hp <= 0) {
+		state = 1;
+		return;
+	}
 	put_bk_image(position[0], position[1], keys.enemy_image[0]);
 	setfillcolor(WHITE);
-	fillcircle(position[2], position[3], 5);
+	fillcircle(position[2], position[3], 10);
 	if ((keys.timer - record_time[0]) > (FPS * speed))
 	{
 		//下面设计是需要改动的模块
@@ -38,9 +46,6 @@ void simple_enemy::draw()
 	if (shots.size() > 3 && shots[0]->flag) {
 		delete shots[0];
 		shots.erase(shots.begin());
-	}
-	if (hp <= 0) {
-		state = 1;
 	}
 }
 

@@ -11,8 +11,9 @@ public:
 	virtual void upgrade() {};//机体升级,在机体初始化之后进行调用，加载当前等级的数据
 	virtual void draw() {};//画出目前释放的子弹
 	void put_bk_image(int, int, IMAGE);
-	void control();//控制移动和渲染自身
 
+	void control();//控制移动和渲染自身
+	vector<Shot*> shots;
 	vector<int> position{324,900,360,964};//0，1：渲染坐标，2，3：判定坐标
 };
 
@@ -25,7 +26,6 @@ private:
 	int shields[5]{ 0,20,40,60,75 };//护甲减免值
 	int strikes[5]{ 0,2,4,7,10 };//暴击率
 	int max_level = 5;
-	vector<Shot*> shots;
 	vector<int> record_time = { 0 };
 	int stage = 1;//子弹阶段
 	double speed = 0.8;//子弹发射速度,越小越快
@@ -47,7 +47,6 @@ private:
 	int shields[5]{ 20,35,50,60,70 };
 	int strikes[5]{ 2,4,7,10,13 };
 	int max_level = 5;
-	vector<Shot*> shots;
 	vector<int> record_time = { 0 };
 	int stage = 1;//子弹阶段
 	double speed = 0.8;//子弹发射速度
@@ -69,7 +68,6 @@ private:
 	int shields[6]{ 15,30,40,50,65,75 };
 	int strikes[6]{ 2,5,8,11,15,19 };
 	int max_level = 6;
-	vector<Shot*> shots;
 	vector<int> record_time = { 0 };
 	int stage = 1;//子弹阶段
 	double speed = 0.8;//子弹发射速度
@@ -91,7 +89,6 @@ private:
 	int shields[6]{ 10,20,30,45,55,60 };
 	int strikes[6]{ 10,13,17,22,27,35 };
 	int max_level = 6;
-	vector<Shot*> shots;
 	vector<int> record_time = { 0 };
 	int stage = 1;//子弹阶段
 	double speed = 0.8;//子弹发射速度
