@@ -19,6 +19,8 @@ private:
 	void set_current_index(int);
 	void draw_control();
 	void note(int, int, int, int, int, int, const wstring&);
+	void judge();
+	void level_1();
 
 public:
 	Ui(int, int);//输入长宽
@@ -27,6 +29,7 @@ public:
 	void run();//执行循环
 	void close();
 	void put_bk_image(int, int, IMAGE);
+
 	Plane* plane;//自己的飞机，每次进入战斗之前都会重置数据
 	vector<Enemy*> enemys;//敌机，包含BOSS和普通飞机，BOSS的编号在前，普通的在后面
 	vector<Tool*> tools;//一些小部件的定义包含其中

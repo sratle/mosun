@@ -1,1 +1,67 @@
 #include "Enemy.h"
+extern keyhouse keys;
+
+simple_enemy::simple_enemy(int x, int y)
+	:width(64), height(128), attack(150), hp(200),speed(0.6),state(0)
+{
+	position.push_back(x - width / 2);
+	position.push_back(y - height / 2);
+	position.push_back(x);
+	position.push_back(y);
+}
+
+void simple_enemy::draw()
+{
+	put_bk_image(position[0], position[1], keys.enemy_image[0]);
+	setfillcolor(WHITE);
+	fillcircle(position[2], position[3], 5);
+	if ((keys.timer - record_time[0]) > (FPS * speed))
+	{
+		//下面设计是需要改动的模块
+		shots.push_back(new Shot(3, 10, position[2], position[3]));
+		shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 2);
+		//end
+		record_time[0] = keys.timer;
+	}
+	int flag = 0;//用于切换子弹形态
+	for (auto shot : shots)
+	{
+		if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1280)) {
+			shot->flag = 1;
+		}
+		//下面设计是需要改动的模块
+		shot->set_pos(shot->get_x(), shot->get_y() + 5);
+		//end
+		shot->draw();
+	}
+	//删除模块，需改动，此处为一个子弹一组的情况
+	if (shots.size() > 3 && shots[0]->flag) {
+		delete shots[0];
+		shots.erase(shots.begin());
+	}
+	if (hp <= 0) {
+		state = 1;
+	}
+}
+
+void Enemy::put_bk_image(int x, int y, IMAGE img)
+{
+	IMAGE img1;
+	DWORD* d1;
+	img1 = img;
+	d1 = GetImageBuffer(&img1);
+	float h, s, l;
+	for (int i = 0; i < img1.getheight() * img1.getwidth(); i++) {
+		RGBtoHSL(BGR(d1[i]), &h, &s, &l);
+		if (l < 0.03)
+		{
+			d1[i] = BGR(WHITE);
+		}
+		if (d1[i] != BGR(WHITE))
+		{
+			d1[i] = 0;
+		}
+	}
+	putimage(x, y, &img1, SRCAND);
+	putimage(x, y, &img, SRCPAINT);
+}

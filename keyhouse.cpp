@@ -1,8 +1,8 @@
 #include "keyhouse.h"
 
 keyhouse::keyhouse()
-	:condition(0), timer(0), anu(0), star_value(0), isthar(0), attack(0), hp(0), mp(0), shield(0), plane_time(0),
-	move_flag(0), key_card(0), key_move(0), plane_id(0), plane_unlock(0), strike(0), level(0), shot_time(0)
+	:condition(0), timer(0), anu(0), star_value(0), isthar(0), attack(0), hp(0), mp(0), shield(0), 
+	key_card(0), key_move(0), plane_id(0), plane_unlock(0), strike(0), level(0)
 {
 	//‘§º”‘ÿ
 	IMAGE sakuya_1;
@@ -17,6 +17,10 @@ keyhouse::keyhouse()
 	IMAGE swq_1;
 	loadimage(&swq_1, L"assets/swq.png");
 	plane_image.push_back(swq_1);
+	IMAGE yuyuko_1;
+	loadimage(&yuyuko_1, L"assets/yuyuko.png");
+	enemy_image.push_back(yuyuko_1);
+
 	load_shots(L"assets/BulletAa000.png");
 	load_shots(L"assets/BulletAa001.png");
 	load_shots(L"assets/BulletAa002.png");
@@ -24,6 +28,25 @@ keyhouse::keyhouse()
 	load_shots(L"assets/BulletAa004.png");
 	load_shots(L"assets/BulletAa005.png");
 	load_shots(L"assets/BulletAa006.png");
+}
+
+int keyhouse::get_flag(int pos) 
+{
+	while (desigh_flags.size() <= pos)
+		desigh_flags.push_back(0);
+	return desigh_flags[pos];
+}
+
+void keyhouse::set_flag(int pos, int val)
+{
+	while (desigh_flags.size() <= pos)
+		desigh_flags.push_back(0);
+	desigh_flags[pos] = val;
+}
+
+int keyhouse::get_flag_size()
+{
+	return (int)desigh_flags.size();
 }
 
 void keyhouse::load_shots(LPCTSTR imgfile)

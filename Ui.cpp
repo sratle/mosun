@@ -140,16 +140,8 @@ void Ui::draw_control()
 				keys.key_num.clear();
 				set_current_index(2);
 				keys.condition = 2;
-			}
-			//按下2，进入机库
-			//按下3，进入牌库
-			//按下4，进入设置
-		}
-		else if (current_index == 2)
-		{
-			//初始进入战斗进行战机的初始化
-			if (keys.shot_time == 0) {
-				keys.shot_time = keys.timer;
+				//初始进入战斗进行战机的初始化
+				delete plane;
 				switch (keys.plane_id)
 				{
 				case 0:
@@ -167,10 +159,26 @@ void Ui::draw_control()
 				}
 				plane->upgrade();//加载数据到keys中
 			}
+			//按下2，进入机库
+			//按下3，进入牌库
+			//按下4，进入设置
+		}
+		else if (current_index == 2)
+		{
 			note(10, 10, 100, 50, 30, 1, L"0:退出");
 
 			//机体相关的渲染,大部分渲染逻辑封装进plane中
 			plane->draw();
+			switch (keys.level)
+			{
+			case 0:
+				level_1();
+				break;
+			}
+			for (auto ene : enemys) {
+				ene->draw();
+			}
+			judge();//判定
 
 			//返回菜单
 			if (keys.condition == 2 && (!keys.key_num.empty()) && keys.key_num.back() == 48)
@@ -179,10 +187,24 @@ void Ui::draw_control()
 				PlaySound(L"assets/exit.wav", NULL, SND_ASYNC | SND_NOSTOP);
 				set_current_index(1);
 				keys.condition = 1;
-				keys.shot_time = 0;
+				for (int i = 0; i < keys.get_flag_size(); i++)
+					keys.set_flag(i, 0);
 			}
 		}
 	}
+}
+
+void Ui::level_1()
+{
+	if (keys.get_flag(1) == 0) {
+		enemys.push_back(new simple_enemy(360, 100));
+		keys.set_flag(1, 1);
+	}
+}
+
+void Ui::judge()//判定函数
+{
+
 }
 
 //在指定位置渲染一个提示框，参数为：x坐标，y坐标，宽度，高度，字体大小，是否含背景，内容

@@ -9,8 +9,9 @@ public:
 	vector<IMAGE> sakuya;
 	vector<IMAGE> plane_image;
 	vector<IMAGE> enemy_image;
-	vector<IMAGE> shots_image;//一张图片加载十四次，-30，-20，-10，0，10，20，30，150，160，170，180，190，200，210
-	void load_shots(LPCTSTR);
+	//一张图片加载十四次，-30，-20，-10，0，10，20，30，150，160，170，180，190，200，210度
+	//1：6用10度，1：3用20度，1：2用30度
+	vector<IMAGE> shots_image;
 	//键盘输入
 	vector<BYTE> key_any;//condition0
 	vector<BYTE> key_num;//condition1
@@ -18,10 +19,10 @@ public:
 	int key_card;//condition2
 	//控制用变量
 	int condition;//键盘输入的状态变量，0：主界面模式，1：菜单模式，2：战斗模式
-	int move_flag;//是否处于CapsLock状态
 	int timer;//全局计时器
-	int plane_time;//plane发动被动技能的判断用的时间
-	int shot_time;//开始发射子弹的时间（也就是开始关卡的时间）
+	int get_flag(int pos);//1:CapsLock是否开启 2:关卡1判定时间 
+	int get_flag_size();
+	void set_flag(int pos, int val);
 	int level;//关卡
 	//背包资源
 	int star_value;//save
@@ -40,5 +41,9 @@ public:
 	keyhouse();
 	void load();//将存档加载
 	void save();//存档
+
+private:
+	vector<int> desigh_flags;
+	void load_shots(LPCTSTR);
 };
 

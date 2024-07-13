@@ -33,14 +33,14 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 			//end
 			record_time[0] = keys.timer;
 		}
-		int flag = 0;
+		int flag = 0;//用于切换子弹形态
 		for (auto shot : shots)
 		{
-			if ((shot->get_x() < 0) || (shot->get_y() < 0)) {
+			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1280)) {
 				shot->flag = 1;
 			}
 			//下面设计是需要改动的模块
-			shot->set_pos(shot->get_x(), shot->get_y() - 2);
+			shot->set_pos(shot->get_x(), shot->get_y() - 6);
 			//end
 			shot->draw();
 		}
@@ -113,11 +113,11 @@ nanna::nanna() {}
 
 void nanna::skill()
 {
-	if (keys.timer - keys.plane_time > FPS * 20) {
+	if (keys.timer - record_time[1] > FPS * 20) {
 		keys.hp += 5 * keys.plane_level[1];
 		if (keys.hp > hps[keys.plane_level[1]])
 			keys.hp = hps[keys.plane_level[1]];
-		keys.plane_time = keys.timer;
+		record_time[1] = keys.timer;
 	}
 }
 
@@ -147,9 +147,9 @@ ea::ea() {}
 
 void ea::skill()
 {
-	if ((keys.timer - keys.plane_time) % 2 == 0) {
+	if ((keys.timer - record_time[1]) % 2 == 0) {
 		keys.shield = shields[keys.plane_level[2]] * 2;
-		keys.plane_time = keys.timer;
+		record_time[1] = keys.timer;
 	}
 	else {
 		keys.shield = shields[keys.plane_level[2]];
@@ -182,9 +182,9 @@ enlil::enlil() {}
 
 void enlil::skill()
 {
-	if ((keys.timer - keys.plane_time) % 2 == 0) {
+	if ((keys.timer - record_time[1]) % 2 == 0) {
 		keys.strike = strikes[keys.plane_level[3]] * 2;
-		keys.plane_time = keys.timer;
+		record_time[1] = keys.timer;
 	}
 	else {
 		keys.strike = strikes[keys.plane_level[3]];
@@ -222,28 +222,28 @@ void Plane::control()
 	//adsw移动控制
 	if (keys.condition == 2 && keys.key_move == 65)
 	{
-		position[0] -= 3 + 5 * keys.move_flag;
+		position[0] -= 3 + 4 * keys.get_flag(0);
 		//恢复按键编码
 		keys.key_move = 0;
 	}
 	else if (keys.condition == 2 && keys.key_move == 68)
 	{
-		position[0] += 3 + 5 * keys.move_flag;
+		position[0] += 3 + 4 * keys.get_flag(0);
 		keys.key_move = 0;
 	}
 	else if (keys.condition == 2 && keys.key_move == 83)
 	{
-		position[1] += 3 + 5 * keys.move_flag;
+		position[1] += 3 + 4 * keys.get_flag(0);
 		keys.key_move = 0;
 	}
 	else if (keys.condition == 2 && keys.key_move == 87)
 	{
-		position[1] -= 3 + 5 * keys.move_flag;
+		position[1] -= 3 + 4 * keys.get_flag(0);
 		keys.key_move = 0;
 	}//按下了capslock
 	else if (keys.condition == 2 && keys.key_card == 20)
 	{
-		keys.move_flag = 1 - keys.move_flag;
+		keys.set_flag(0, 1 - keys.get_flag(0));
 		keys.key_card = 0;
 	}//把判定坐标压入坐标中
 	position[2] = position[0] + 32;

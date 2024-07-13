@@ -133,6 +133,7 @@
     <ClInclude Include="keyhouse.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Shot.h" />
     <ClInclude Include="Tool.h" />
     <ClInclude Include="Ui.h" />
@@ -149,10 +150,11 @@
     <ClCompile Include="Ui.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="task.txt" />
+    <Image Include="assets\mosun.ico" />
+    <Image Include="main_test.png" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="main_test.png" />
+    <ResourceCompile Include="MOSUN.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
