@@ -180,6 +180,7 @@ void Ui::draw_control()
 			enemys.clear();
 			delete plane;
 			plane = nullptr;
+			return;
 		}
 		//ËÀÍö
 		if (keys.hp <= 0) {
