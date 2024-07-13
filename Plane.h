@@ -16,7 +16,7 @@ public:
 	vector<int> position{324,900,360,964};//0£¬1£ºäÖÈ¾×ø±ê£¬2£¬3£ºÅÐ¶¨×ø±ê
 };
 
-//id:1
+//id:0
 class ur : public Plane {
 private:
 	int hps[5]{ 300,350,420,500,600 };
@@ -38,7 +38,7 @@ public:
 	ur();
 };
 
-//id:2
+//id:1
 class nanna : public Plane {
 private:
 	int hps[5]{ 300,370,450,540,650 };
@@ -60,7 +60,7 @@ public:
 	nanna();
 };
 
-//id:3
+//id:2
 class ea :public Plane {
 private:
 	int hps[6]{ 400,470,550,640,740,850 };
@@ -82,7 +82,7 @@ public:
 	ea();
 };
 
-//id:4
+//id:3
 class enlil :public Plane {
 private:
 	int hps[6]{ 200,250,310,380,460,550 };
