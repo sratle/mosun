@@ -174,13 +174,19 @@ void Ui::draw_control()
 			PlaySound(L"assets/exit.wav", NULL, SND_ASYNC | SND_NOSTOP);
 			set_current_index(1);
 			keys.condition = 1;
+			//重置flags，用于关卡的flags
 			for (int i = 0; i < keys.get_flag_size(); i++)
 				keys.set_flag(i, 0);
+			delete plane;
+			plane = nullptr;
+			//重置defeat目标数据
+			defeat_target.clear();
+			//内存管理
+			if (enemys.empty())
+				return;
 			for (auto enemy : enemys)
 				delete enemy;
 			enemys.clear();
-			delete plane;
-			plane = nullptr;
 			return;
 		}
 		//死亡
@@ -205,17 +211,48 @@ void Ui::draw_control()
 
 void Ui::level_1()
 {
-	if (keys.get_flag(1) == 0) {
+	//使用flag和defeat目标进行对照，编写关卡下一个阶段的时候需要将target_num值手动加一
+	static int target_num = 3;
+	static int target = 0;
+	if (defeat_target.empty())
+		for (int i = 0; i <= target_num; i++)
+			defeat_target.push_back(0);
+	int i = 0;
+	//模块start
+	if (keys.get_flag(1) == defeat_target[i]) {
+		enemys_reset();
+		//添加enemy,需修改
 		enemys.push_back(new simple_enemy(260, 150, 1));
 		enemys.push_back(new simple_enemy(460, 150, 1));
-		keys.set_flag(1, 1);
+		//下面三句话不用改
+		keys.set_flag(1, keys.get_flag(1) + 1);
+		target++;
+		defeat_target[target]=keys.get_flag(1) + (int)enemys.size();
 	}
-	if (keys.get_flag(1) == 3) {
+	i++;
+	//end
+	if (keys.get_flag(1) == defeat_target[i]) {
+		enemys_reset();
+		//添加enemy
 		enemys.push_back(new simple_enemy(260, 150, 1));
 		enemys.push_back(new simple_enemy(360, 250, 1));
 		enemys.push_back(new simple_enemy(460, 150, 1));
-		keys.set_flag(1, 4);
+		//下面三句话不用改
+		keys.set_flag(1, keys.get_flag(1) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(1) + (int)enemys.size();
 	}
+	i++;
+	if (keys.get_flag(1) == defeat_target[i]) {
+		enemys_reset();
+		enemys.push_back(new simple_enemy(260, 350, 1));
+		enemys.push_back(new simple_enemy(360, 150, 1));
+		enemys.push_back(new simple_enemy(460, 350, 1));
+		keys.set_flag(1, keys.get_flag(1) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(1) + (int)enemys.size();
+	}
+	i++;
 }
 
 void Ui::judge()//判定函数
@@ -226,7 +263,7 @@ void Ui::judge()//判定函数
 		for (auto enemy : enemys)
 		{
 			//若击中
-			if (sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 15)
+			if (sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 24)
 			{
 				enemy->hp -= keys.attack * (1 + (rand() < keys.strike));
 			}
@@ -235,14 +272,26 @@ void Ui::judge()//判定函数
 	//判定敌机子弹对己方的伤害
 	for (auto enemy : enemys)
 	{
+		if (enemy->state)
+			continue;//敌机已经寄了就不用做判断
 		for (auto shot : enemy->shots)
 		{
-			if (sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 5)
+			if (sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 8)
 			{
 				keys.hp -= enemy->attack;
 			}
 		}
 	}
+}
+
+//重置enemys库,内存管理
+void Ui::enemys_reset()
+{
+	if (enemys.empty())
+		return;
+	for (auto enemy : enemys)
+		delete enemy;
+	enemys.clear();
 }
 
 //在指定位置渲染一个提示框，参数为：x坐标，y坐标，宽度，高度，字体大小，是否含背景，内容

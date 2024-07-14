@@ -19,8 +19,10 @@ private:
 	void set_current_index(int);
 	void draw_control();
 	void note(int, int, int, int, int, int, const wstring&);
-	void judge();
-	void level_1();
+	void judge();//判定用函数
+	void level_1();//关卡1函数，里面分为数个阶段
+	void enemys_reset();
+	vector<int> defeat_target;//目标击败的总数，主要用于自动化统计敌机数量，完成关卡推进
 
 public:
 	Ui(int, int);//输入长宽

@@ -1,7 +1,7 @@
 #include "Enemy.h"
 extern keyhouse keys;
 
-simple_enemy::simple_enemy(int x, int y,int g)
+simple_enemy::simple_enemy(int x, int y, int g)
 	:width(64), height(128)
 {
 	attack = 150;
@@ -19,7 +19,7 @@ void simple_enemy::draw()
 {
 	if (state == 1)
 		return;
-	if (hp <= 0&&state==0) {
+	if (hp <= 0 && state == 0) {
 		state = 1;
 		keys.set_flag(group, keys.get_flag(1) + 1);
 		return;
@@ -29,8 +29,8 @@ void simple_enemy::draw()
 	{
 		put_bk_image(position[0], record_time[1], keys.enemy_image[0]);
 		setfillcolor(WHITE);
-		fillcircle(position[2], record_time[1]+height/2, 10);
-		record_time[1]+=4;
+		fillcircle(position[2], record_time[1] + height / 2, 10);
+		record_time[1] += 4;
 		return;
 	}
 	//äÖÈ¾»úÌå
