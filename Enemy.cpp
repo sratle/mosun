@@ -1,13 +1,14 @@
 #include "Enemy.h"
 extern keyhouse keys;
 
-simple_enemy::simple_enemy(int x, int y)
+simple_enemy::simple_enemy(int x, int y,int g)
 	:width(64), height(128)
 {
 	attack = 150;
-	hp = 200;
+	hp = 500;
 	speed = 0.6;
 	state = 0;
+	group = g;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -16,8 +17,11 @@ simple_enemy::simple_enemy(int x, int y)
 
 void simple_enemy::draw()
 {
-	if (hp <= 0) {
+	if (state == 1)
+		return;
+	if (hp <= 0&&state==0) {
 		state = 1;
+		keys.set_flag(group, keys.get_flag(1) + 1);
 		return;
 	}
 	//入场动画
@@ -26,7 +30,7 @@ void simple_enemy::draw()
 		put_bk_image(position[0], record_time[1], keys.enemy_image[0]);
 		setfillcolor(WHITE);
 		fillcircle(position[2], record_time[1]+height/2, 10);
-		record_time[1]+=2;
+		record_time[1]+=4;
 		return;
 	}
 	//渲染机体

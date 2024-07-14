@@ -2,7 +2,7 @@
 extern keyhouse keys;
 
 Ui::Ui(int width, int height)
-	:width(width), height(height), current_index(0),plane(nullptr)
+	:width(width), height(height), current_index(0), plane(nullptr)
 {
 }
 
@@ -156,6 +156,7 @@ void Ui::draw_control()
 				break;
 			}
 			plane->upgrade();//加载数据到keys中
+			plane->set_stage(1);
 			//init end
 		}
 		//按下2，进入无尽
@@ -205,9 +206,15 @@ void Ui::draw_control()
 void Ui::level_1()
 {
 	if (keys.get_flag(1) == 0) {
-		enemys.push_back(new simple_enemy(260, 150));
-		enemys.push_back(new simple_enemy(460, 150));
+		enemys.push_back(new simple_enemy(260, 150, 1));
+		enemys.push_back(new simple_enemy(460, 150, 1));
 		keys.set_flag(1, 1);
+	}
+	if (keys.get_flag(1) == 3) {
+		enemys.push_back(new simple_enemy(260, 150, 1));
+		enemys.push_back(new simple_enemy(360, 250, 1));
+		enemys.push_back(new simple_enemy(460, 150, 1));
+		keys.set_flag(1, 4);
 	}
 }
 

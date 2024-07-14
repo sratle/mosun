@@ -15,12 +15,13 @@ public:
 	int hp = 0;
 	double speed = 0;
 	int state = 0;//是否存活
+	int group = 1;
 };
 
 class simple_enemy :public Enemy
 {
 public:
-	simple_enemy(int, int);//需传入初始化判定位置
+	simple_enemy(int, int,int);//需传入初始化判定位置
 	void draw() override;
 
 private:

@@ -28,6 +28,8 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 		record_time[1] -= 5;
 		return;
 	}
+	else
+		record_time[1] = 0;
 	//控制函数
 	control();
 	//子弹渲染
@@ -67,11 +69,11 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 		{
 			//下面设计是需要改动的模块
 			shots.push_back(new Shot(0, 2, position[2], position[3]));
-			shots.back()->set_pos(position[2] + 8, shots.back()->get_y() - 6);
+			shots.back()->set_pos(position[2] + 8, shots.back()->get_y() - 16);
 			shots.push_back(new Shot(1, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 6);
+			shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 16);
 			shots.push_back(new Shot(0, 4, position[2], position[3]));
-			shots.back()->set_pos(position[2] - 40, shots.back()->get_y() - 6);
+			shots.back()->set_pos(position[2] - 40, shots.back()->get_y() - 16);
 			//end
 			record_time[0] = keys.timer;
 		}
@@ -83,13 +85,13 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 			}
 			//下面设计是需要改动的模块
 			if (flag == 0) {
-				shot->set_pos(shot->get_x() + 1, shot->get_y() - 6);
+				shot->set_pos(shot->get_x() + 2, shot->get_y() - 12);
 			}
 			else if (flag == 1) {
-				shot->set_pos(shot->get_x(), shot->get_y() - 6);
+				shot->set_pos(shot->get_x(), shot->get_y() - 12);
 			}
 			else if (flag == 2) {
-				shot->set_pos(shot->get_x() - 1, shot->get_y() - 6);
+				shot->set_pos(shot->get_x() - 2, shot->get_y() - 12);
 			}
 			flag++;
 			if (flag == 3)
@@ -112,6 +114,12 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 
 void ur::set_stage(int stage_t) {
 	stage = stage_t;
+	if (stage == 0)
+		speed = 0.7;
+	else if (stage == 1)
+		speed = 0.5;
+	else if (stage == 2)
+		speed = 0.4;
 }
 
 int ur::get_stage() {
@@ -229,35 +237,34 @@ void Plane::control()
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 5);
 	//adsw移动控制
-	if (keys.condition == 2 && keys.key_move == 65)
+	if (keys.key_move == 65 && keys.condition == 2)
 	{
 		position[0] -= 3 + 4 * keys.get_flag(0);
 		//恢复按键编码
 		keys.key_move = 0;
 	}
-	else if (keys.condition == 2 && keys.key_move == 68)
+	else if (keys.key_move == 68 && keys.condition == 2)
 	{
 		position[0] += 3 + 4 * keys.get_flag(0);
 		keys.key_move = 0;
 	}
-	else if (keys.condition == 2 && keys.key_move == 83)
+	else if (keys.key_move == 83 && keys.condition == 2)
 	{
 		position[1] += 3 + 4 * keys.get_flag(0);
 		keys.key_move = 0;
 	}
-	else if (keys.condition == 2 && keys.key_move == 87)
+	else if (keys.key_move == 87 && keys.condition == 2)
 	{
 		position[1] -= 3 + 4 * keys.get_flag(0);
 		keys.key_move = 0;
 	}//按下了capslock
-	else if (keys.condition == 2 && keys.key_card == 20)
+	else if (keys.key_card == 20 && keys.condition == 2)
 	{
 		keys.set_flag(0, 1 - keys.get_flag(0));
 		keys.key_card = 0;
 	}//把判定坐标压入坐标中
 	position[2] = position[0] + 32;
 	position[3] = position[1] + 64;
-
 }
 
 void Plane::put_bk_image(int x, int y, IMAGE img)

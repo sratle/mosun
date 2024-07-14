@@ -20,7 +20,7 @@ public:
 	//控制用变量
 	int condition;//键盘输入的状态变量，0：主界面模式，1：菜单模式，2：战斗模式
 	int timer;//全局计时器
-	int get_flag(int pos);//1:CapsLock是否开启 2:关卡1判定时间 
+	int get_flag(int pos);//0:CapsLock是否开启 1:关卡1判定时间 
 	int get_flag_size();
 	void set_flag(int pos, int val);
 	int level;//关卡
