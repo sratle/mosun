@@ -9,7 +9,7 @@ Shot::Shot(int id,int rotate,int x,int y)
 
 void Shot::draw() 
 {
-	put_bk_image(x, y, keys.shots_image[14 * id + rotate]);
+	put_bk_image((int)x, (int)y, keys.shots_image[14 * id + rotate]);
 }
 
 void Shot::put_bk_image(int x, int y, IMAGE img)
@@ -34,17 +34,17 @@ void Shot::put_bk_image(int x, int y, IMAGE img)
 	putimage(x, y, &img, SRCPAINT);
 }
 
-void Shot::set_pos(int tx,int ty)
+void Shot::set_pos(double tx,double ty)
 {
 	x = tx;
 	y = ty;
 }
 
-int Shot::get_x() {
+double Shot::get_x() {
 	return x;
 }
 
-int Shot::get_y() {
+double Shot::get_y() {
 	return y;
 }
 

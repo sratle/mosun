@@ -25,8 +25,24 @@ public:
 	void draw() override;
 
 private:
+	const int id = 0;//标识这个敌机的id
 	vector<int> record_time = { 0 , 0 };
 	int height;
 	int width;
+};
+
+class lock_simple :public Enemy
+{
+public:
+	lock_simple(int, int, int,int*,int*);//需传入初始化判定位置,关卡id，自己飞机的坐标指针
+	void draw() override;
+
+private:
+	const int id = 1;
+	vector<int> record_time = { 0 , 0 };
+	int height;
+	int width;
+	int* plane_x;
+	int* plane_y;
 };
 

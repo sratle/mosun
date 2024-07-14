@@ -20,6 +20,9 @@ keyhouse::keyhouse()
 	IMAGE yuyuko_1;
 	loadimage(&yuyuko_1, L"assets/yuyuko.png");
 	enemy_image.push_back(yuyuko_1);
+	IMAGE reimu_1;
+	loadimage(&reimu_1, L"assets/reimu.png");
+	enemy_image.push_back(reimu_1);
 
 	load_shots(L"assets/BulletAa000.png");
 	load_shots(L"assets/BulletAa001.png");
