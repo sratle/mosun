@@ -115,7 +115,7 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 void ur::set_stage(int stage_t) {
 	stage = stage_t;
 	if (stage == 0)
-		speed = 0.6;
+		speed = 0.3;
 	else if (stage == 1)
 		speed = 0.45;
 	else if (stage == 2)

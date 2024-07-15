@@ -99,14 +99,9 @@ void Ui::draw_control()
 		//给标题做的渐变效果，属于试验性质
 		double cps = keys.timer / 10.0;
 		COLORREF color = RGB(200 * abs(sin(cps)), 200 * abs(sin(cps)), 80);
-		settextcolor(color);
-		setbkmode(TRANSPARENT);
-		settextstyle(140, 0, _T("华文行楷"));
-		outtextxy(100, 100, L"Moon Sun");
-		settextstyle(60, 0, _T("仿宋"));
-		outtextxy(200, 800, L"按任意键进入");
-
-		note(100, 10, 100, 50, 30, 0, L"0:退出");
+		note(0, 100, 720, 150, 140, 0, color, WHITE, L"Moon Sun");
+		note(0, 800, 720, 70, 60, 0, color, WHITE, L"按任意键进入");
+		note(100, 10, 100, 50, 30, 0, color, WHITE, L"0:退出");
 		//确认捕获按键0则执行退出
 		if (keys.condition == 0 && (!keys.key_any.empty()) && keys.key_any.back() == 48)
 		{
@@ -121,8 +116,8 @@ void Ui::draw_control()
 	}
 	else if (current_index == 1)
 	{
-		note(10, 10, 100, 50, 30, 1, L"0:退出");
-		note(10, 200, 300, 70, 50, 1, L"1:踏上旅程");
+		note(10, 10, 100, 50, 30, 1, BLACK, WHITE, L"0:退出");
+		note(10, 200, 300, 70, 50, 1, BLACK, WHITE, L"1:踏上旅程");
 		//菜单界面下方的sakuya
 		put_bk_image(350 + int(300 * sin(keys.timer / 30.0)), 800, keys.sakuya[keys.timer / 10 % 3]);
 		//按下0，返回开始界面
@@ -156,7 +151,7 @@ void Ui::draw_control()
 				break;
 			}
 			plane->upgrade();//加载数据到keys中
-			plane->set_stage(1);
+			plane->set_stage(0);
 			//init end
 		}
 		//按下2，进入无尽
@@ -166,7 +161,7 @@ void Ui::draw_control()
 	}
 	else if (current_index == 2)
 	{
-		note(10, 10, 100, 50, 30, 1, L"0:退出");
+		note(10, 10, 100, 50, 30, 1, BLACK, WHITE, L"0:退出");
 		//返回菜单
 		if (keys.condition == 2 && (!keys.key_num.empty()) && keys.key_num.back() == 48)
 		{
@@ -191,7 +186,7 @@ void Ui::draw_control()
 		}
 		//死亡
 		if (keys.hp <= 0) {
-			note(180, 300, 360, 120, 80, 1, L"YOU DIED");
+			note(180, 300, 400, 120, 80, 1, RED, WHITE, L"YOU DIED");
 			return;
 		}
 		//机体相关的渲染,大部分渲染逻辑封装进plane中
@@ -213,11 +208,13 @@ void Ui::level_1()
 {
 	//使用flag和defeat目标进行对照，编写关卡下一个阶段的时候需要将target_num值手动加一
 	static int target_num = 4;
-
 	static int target = 0;
-	if (defeat_target.empty())
-		for (int i = 0; i <= target_num; i++)
+	if (defeat_target.empty()) {
+		for (int i = 0; i <= target_num; i++) {
 			defeat_target.push_back(0);
+			target = 0;
+		}
+	}
 	int i = 0;
 	//模块start
 	if (keys.get_flag(1) == defeat_target[i]) {
@@ -310,18 +307,19 @@ void Ui::enemys_reset()
 	enemys.clear();
 }
 
-//在指定位置渲染一个提示框，参数为：x坐标，y坐标，宽度，高度，字体大小，是否含背景，内容
-void Ui::note(int x, int y, int width, int height, int font, int bg, const wstring& text)
+//在指定位置渲染一个提示框，参数为：x坐标，y坐标，宽度，高度，字体大小，是否含背景，字体颜色，背景颜色，内容
+void Ui::note(int x, int y, int width, int height, int font_size, int bg, COLORREF font_c, COLORREF bg_c, const wstring& text)
 {
 	if (bg == 1)
 	{
+		setfillcolor(bg_c);
 		fillrectangle(x, y, x + width, y + height);
 	}
-	settextcolor(BLACK);
+	settextcolor(font_c);
 	setbkmode(TRANSPARENT);
-	settextstyle(font, 0, _T("仿宋"));
+	settextstyle(font_size, 0, _T("华文新魏"));
 	int textX = x + (width - textwidth(text.c_str())) / 2;
-	int textY = y + (height - textheight(_T("仿宋"))) / 2;
+	int textY = y + (height - textheight(_T("华文新魏"))) / 2;
 	outtextxy(textX, textY, text.c_str());
 }
 
