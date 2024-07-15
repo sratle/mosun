@@ -4,7 +4,7 @@
 class Shot
 {
 public:
-	int flag;//是否出界
+	int flag;//是否出界,判定结束
 	void draw();
 	Shot(int,int,int,int);//id,rotate,x,y
 	void set_pos(double, double);//渲染坐标x,y

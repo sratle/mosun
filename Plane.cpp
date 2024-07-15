@@ -85,13 +85,13 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 			}
 			//下面设计是需要改动的模块
 			if (flag == 0) {
-				shot->set_pos(shot->get_x() + 2, shot->get_y() - 12);
+				shot->set_pos(shot->get_x() + 2, shot->get_y() - 15);
 			}
 			else if (flag == 1) {
-				shot->set_pos(shot->get_x(), shot->get_y() - 12);
+				shot->set_pos(shot->get_x(), shot->get_y() - 15);
 			}
 			else if (flag == 2) {
-				shot->set_pos(shot->get_x() - 2, shot->get_y() - 12);
+				shot->set_pos(shot->get_x() - 2, shot->get_y() - 15);
 			}
 			flag++;
 			if (flag == 3)
@@ -115,9 +115,9 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 void ur::set_stage(int stage_t) {
 	stage = stage_t;
 	if (stage == 0)
-		speed = 0.7;
+		speed = 0.6;
 	else if (stage == 1)
-		speed = 0.5;
+		speed = 0.45;
 	else if (stage == 2)
 		speed = 0.4;
 }
@@ -239,7 +239,7 @@ void Plane::control()
 	//adsw移动控制
 	if (keys.key_move == 65 && keys.condition == 2)
 	{
-		position[0] -= 3 + 4 * keys.get_flag(0);
+		position[0] -= 4 + 4 * keys.get_flag(0);
 		//把判定坐标压入坐标中
 		position[2] = position[0] + 32;
 		//恢复按键编码
@@ -247,19 +247,19 @@ void Plane::control()
 	}
 	else if (keys.key_move == 68 && keys.condition == 2)
 	{
-		position[0] += 3 + 4 * keys.get_flag(0);
+		position[0] += 4 + 4 * keys.get_flag(0);
 		position[2] = position[0] + 32;
 		keys.key_move = 0;
 	}
 	else if (keys.key_move == 83 && keys.condition == 2)
 	{
-		position[1] += 3 + 4 * keys.get_flag(0);
+		position[1] += 4 + 4 * keys.get_flag(0);
 		position[3] = position[1] + 64;
 		keys.key_move = 0;
 	}
 	else if (keys.key_move == 87 && keys.condition == 2)
 	{
-		position[1] -= 3 + 4 * keys.get_flag(0);
+		position[1] -= 4 + 4 * keys.get_flag(0);
 		position[3] = position[1] + 64;
 		keys.key_move = 0;
 	}//按下了capslock

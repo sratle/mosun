@@ -224,11 +224,11 @@ void Ui::level_1()
 		enemys_reset();
 		//添加enemy,需修改
 		enemys.push_back(new simple_enemy(260, 150, 1));//分别是x，y坐标和group参数，group就是关卡id
-		enemys.push_back(new lock_simple(460, 150, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new simple_enemy(460, 150, 1));
 		//下面三句话不用改
 		keys.set_flag(1, keys.get_flag(1) + 1);
 		target++;
-		defeat_target[target]=keys.get_flag(1) + (int)enemys.size();
+		defeat_target[target] = keys.get_flag(1) + (int)enemys.size();
 	}
 	i++;
 	//end
@@ -246,9 +246,9 @@ void Ui::level_1()
 	i++;
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
-		enemys.push_back(new lock_simple(220, 350, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new lock_simple(220, 300, 1, &(plane->position[2]), &(plane->position[3])));
 		enemys.push_back(new simple_enemy(360, 150, 1));
-		enemys.push_back(new lock_simple(500, 350, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new lock_simple(500, 300, 1, &(plane->position[2]), &(plane->position[3])));
 		keys.set_flag(1, keys.get_flag(1) + 1);
 		target++;
 		defeat_target[target] = keys.get_flag(1) + (int)enemys.size();
@@ -264,9 +264,10 @@ void Ui::judge()//判定函数
 		for (auto enemy : enemys)
 		{
 			//若击中
-			if (sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 24)
+			if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 24)
 			{
 				enemy->hp -= keys.attack * (1 + (rand() < keys.strike));
+				shot->flag = 1;
 			}
 		}
 	}
@@ -277,9 +278,10 @@ void Ui::judge()//判定函数
 			continue;//敌机已经寄了就不用做判断
 		for (auto shot : enemy->shots)
 		{
-			if (sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 8)
+			if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 8)
 			{
 				keys.hp -= enemy->attack;
+				shot->flag = 1;
 			}
 		}
 	}

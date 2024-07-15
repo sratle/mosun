@@ -6,7 +6,7 @@ simple_enemy::simple_enemy(int x, int y, int g)
 	:width(64), height(128)
 {
 	attack = 150;
-	hp = 500;
+	hp = 400;
 	speed = 0.6;
 	state = 0;
 	group = g;
@@ -28,10 +28,11 @@ void simple_enemy::draw()
 	//入场动画
 	if (record_time[1] < position[1])
 	{
+		int deff = position[1] - record_time[1];
 		put_bk_image(position[0], record_time[1], keys.enemy_image[id]);
 		setfillcolor(WHITE);
 		fillcircle(position[2], record_time[1] + height / 2, 10);
-		record_time[1] += 4;
+		record_time[1] += 5 + deff / 12;
 		return;
 	}
 	//渲染机体
@@ -53,7 +54,7 @@ void simple_enemy::draw()
 			shot->flag = 1;
 		}
 		//下面设计是需要改动的模块，子弹运动
-		shot->set_pos(shot->get_x(), shot->get_y() + 5);
+		shot->set_pos(shot->get_x(), shot->get_y() + 6);
 		//end
 		shot->draw();
 	}
@@ -69,7 +70,7 @@ lock_simple::lock_simple(int x, int y, int g, int* x_t, int* y_t)
 	:width(64), height(128), plane_x(x_t), plane_y(y_t)
 {
 	attack = 200;
-	hp = 400;
+	hp = 300;
 	speed = 0.7;
 	state = 0;
 	group = g;
@@ -91,10 +92,11 @@ void lock_simple::draw()
 	//入场动画
 	if (record_time[1] < position[1])
 	{
+		int deff = position[1] - record_time[1];
 		put_bk_image(position[0], record_time[1], keys.enemy_image[id]);
 		setfillcolor(WHITE);
 		fillcircle(position[2], record_time[1] + height / 2, 10);
-		record_time[1] += 4;
+		record_time[1] += 5 + deff / 12;
 		return;
 	}
 	//渲染机体
@@ -116,7 +118,7 @@ void lock_simple::draw()
 			shot->flag = 1;
 		}
 		//下面设计是需要改动的模块，子弹运动
-		shot->set_pos(shot->get_x() + (*plane_x-position[2])*5.0/(float)(*plane_y-position[3]), shot->get_y() + 5);
+		shot->set_pos(shot->get_x() + (*plane_x - position[2]) * 6.0 / (float)(*plane_y - position[3]), shot->get_y() + 6);
 		//end
 		shot->draw();
 	}

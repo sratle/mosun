@@ -29,7 +29,7 @@ private:
 	int strikes[5]{ 0,2,4,7,10 };//暴击率
 	int max_level = 5;
 	vector<int> record_time = { 0 ,1000};
-	int stage = 1;//子弹阶段
+	int stage = 0;//子弹阶段
 	double speed = 0.8;//子弹发射速度,越小越快
 public:
 	void set_stage(int) override;
@@ -50,7 +50,7 @@ private:
 	int strikes[5]{ 2,4,7,10,13 };
 	int max_level = 5;
 	vector<int> record_time = { 0,1000 };
-	int stage = 1;//子弹阶段
+	int stage = 0;//子弹阶段
 	double speed = 0.8;//子弹发射速度
 public:
 	void set_stage(int) override;
@@ -71,7 +71,7 @@ private:
 	int strikes[6]{ 2,5,8,11,15,19 };
 	int max_level = 6;
 	vector<int> record_time = { 0,1000 };
-	int stage = 1;//子弹阶段
+	int stage = 0;//子弹阶段
 	double speed = 0.8;//子弹发射速度
 public:
 	void set_stage(int) override;
