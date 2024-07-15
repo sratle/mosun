@@ -217,7 +217,7 @@ void Ui::draw_control()
 void Ui::level_1()
 {
 	//使用flag和defeat目标进行对照，编写关卡下一个阶段的时候需要将target_num值手动加一
-	static int target_num = 4;
+	static int target_num = 5;
 	static int target = 0;
 	if (defeat_target.empty()) {
 		for (int i = 0; i <= target_num; i++) {
@@ -264,9 +264,21 @@ void Ui::level_1()
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
 		enemys.push_back(new simple_three(260, 150, 1));
-		enemys.push_back(new lock_simple(120, 300, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new lock_super(120, 300, 1, &(plane->position[2]), &(plane->position[3])));
 		enemys.push_back(new lock_simple(600, 300, 1, &(plane->position[2]), &(plane->position[3])));
 		enemys.push_back(new simple_three(460, 150, 1));
+		keys.set_flag(1, keys.get_flag(1) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(1) + (int)enemys.size();
+	}
+	i++;
+	if (keys.get_flag(1) == defeat_target[i]) {
+		enemys_reset();
+		enemys.push_back(new simple_three(120, 360, 1));
+		enemys.push_back(new lock_super(120, 140, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new simple_three(360, 260, 1));
+		enemys.push_back(new lock_super(600, 140, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new simple_three(600, 360, 1));
 		keys.set_flag(1, keys.get_flag(1) + 1);
 		target++;
 		defeat_target[target] = keys.get_flag(1) + (int)enemys.size();

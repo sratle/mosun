@@ -19,16 +19,19 @@ keyhouse::keyhouse()
 	IMAGE swq_1;
 	loadimage(&swq_1, L"assets/swq.png");
 	plane_image.push_back(swq_1);
-	IMAGE yuyuko_1;
 	//enemy
+	IMAGE yuyuko_1;//0
 	loadimage(&yuyuko_1, L"assets/yuyuko.png");
 	enemy_image.push_back(yuyuko_1);
-	IMAGE reimu_1;
+	IMAGE reimu_1;//1
 	loadimage(&reimu_1, L"assets/reimu.png");
 	enemy_image.push_back(reimu_1);
-	IMAGE tenshi_1;
+	IMAGE tenshi_1;//2
 	loadimage(&tenshi_1, L"assets/tenshi.png");
 	enemy_image.push_back(tenshi_1);
+	IMAGE alice_1;//3
+	loadimage(&alice_1, L"assets/alice.png");
+	enemy_image.push_back(alice_1);
 	//drop
 	IMAGE updrop_1;
 	loadimage(&updrop_1, L"assets/updrop.png");
