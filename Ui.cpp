@@ -313,6 +313,7 @@ void Ui::judge()//ÅÐ¶¨º¯Êý
 			if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 8)
 			{
 				keys.hp -= enemy->attack;
+				plane->set_stage(plane->get_stage() - 1);
 				shot->flag = 1;
 			}
 		}

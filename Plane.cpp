@@ -154,6 +154,8 @@ void ur::set_stage(int stage_t) {
 	stage = stage_t;
 	if (stage > 2)
 		stage = 2;
+	if (stage < 0)
+		stage = 0;
 	if (stage == 0)
 		speed = 0.3;
 	else if (stage == 1)
