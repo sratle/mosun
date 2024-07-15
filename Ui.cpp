@@ -177,11 +177,18 @@ void Ui::draw_control()
 			//重置defeat目标数据
 			defeat_target.clear();
 			//内存管理
-			if (enemys.empty())
-				return;
-			for (auto enemy : enemys)
-				delete enemy;
-			enemys.clear();
+			if (!enemys.empty())
+			{
+				for (auto enemy : enemys)
+					delete enemy;
+				enemys.clear();
+			}
+			if (!drops.empty())
+			{
+				for (auto drop : drops)
+					delete drop;
+				drops.clear();
+			}
 			return;
 		}
 		//死亡
