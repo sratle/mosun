@@ -9,6 +9,8 @@ Shot::Shot(int id,int rotate,int x,int y)
 
 void Shot::draw() 
 {
+	if (flag)
+		return;
 	put_bk_image((int)x, (int)y, keys.shots_image[14 * id + rotate]);
 }
 

@@ -23,6 +23,9 @@ keyhouse::keyhouse()
 	IMAGE reimu_1;
 	loadimage(&reimu_1, L"assets/reimu.png");
 	enemy_image.push_back(reimu_1);
+	IMAGE tenshi_1;
+	loadimage(&tenshi_1, L"assets/tenshi.png");
+	enemy_image.push_back(tenshi_1);
 
 	load_shots(L"assets/BulletAa000.png");
 	load_shots(L"assets/BulletAa001.png");

@@ -212,7 +212,7 @@ void Ui::draw_control()
 void Ui::level_1()
 {
 	//使用flag和defeat目标进行对照，编写关卡下一个阶段的时候需要将target_num值手动加一
-	static int target_num = 3;
+	static int target_num = 4;
 
 	static int target = 0;
 	if (defeat_target.empty())
@@ -223,8 +223,8 @@ void Ui::level_1()
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
 		//添加enemy,需修改
-		enemys.push_back(new simple_enemy(260, 150, 1));//分别是x，y坐标和group参数，group就是关卡id
-		enemys.push_back(new simple_enemy(460, 150, 1));
+		enemys.push_back(new simple_enemy(240, 150, 1));//分别是x，y坐标和group参数，group就是关卡id
+		enemys.push_back(new simple_enemy(480, 150, 1));
 		//下面三句话不用改
 		keys.set_flag(1, keys.get_flag(1) + 1);
 		target++;
@@ -235,9 +235,9 @@ void Ui::level_1()
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
 		//添加enemy
-		enemys.push_back(new simple_enemy(260, 150, 1));
+		enemys.push_back(new simple_enemy(220, 150, 1));
 		enemys.push_back(new lock_simple(360, 250, 1, &(plane->position[2]), &(plane->position[3])));
-		enemys.push_back(new simple_enemy(460, 150, 1));
+		enemys.push_back(new simple_enemy(500, 150, 1));
 		//下面三句话不用改
 		keys.set_flag(1, keys.get_flag(1) + 1);
 		target++;
@@ -246,9 +246,20 @@ void Ui::level_1()
 	i++;
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
-		enemys.push_back(new lock_simple(220, 300, 1, &(plane->position[2]), &(plane->position[3])));
-		enemys.push_back(new simple_enemy(360, 150, 1));
-		enemys.push_back(new lock_simple(500, 300, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new lock_simple(160, 300, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new simple_three(360, 150, 1));
+		enemys.push_back(new lock_simple(560, 300, 1, &(plane->position[2]), &(plane->position[3])));
+		keys.set_flag(1, keys.get_flag(1) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(1) + (int)enemys.size();
+	}
+	i++;
+	if (keys.get_flag(1) == defeat_target[i]) {
+		enemys_reset();
+		enemys.push_back(new simple_three(260, 150, 1));
+		enemys.push_back(new lock_simple(120, 300, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new lock_simple(600, 300, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new simple_three(460, 150, 1));
 		keys.set_flag(1, keys.get_flag(1) + 1);
 		target++;
 		defeat_target[target] = keys.get_flag(1) + (int)enemys.size();
@@ -263,6 +274,8 @@ void Ui::judge()//判定函数
 	{
 		for (auto enemy : enemys)
 		{
+			if (enemy->state)
+				continue;//敌机已经寄了就不用做判断
 			//若击中
 			if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 24)
 			{

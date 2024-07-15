@@ -46,3 +46,16 @@ private:
 	int* plane_y;
 };
 
+class simple_three :public Enemy
+{
+public:
+	simple_three(int, int, int);//需传入初始化判定位置
+	void draw() override;
+
+private:
+	const int id = 2;//标识这个敌机的id
+	vector<int> record_time = { 0 , 0 };
+	int height;
+	int width;
+};
+
