@@ -9,6 +9,7 @@ public:
 	vector<IMAGE> sakuya;
 	vector<IMAGE> plane_image;
 	vector<IMAGE> enemy_image;
+	vector<IMAGE> drop_image;
 	//一张图片加载十四次，-30，-20，-10，0，10，20，30，150，160，170，180，190，200，210度
 	//1：6用10度，1：3用20度，1：2用30度
 	vector<IMAGE> shots_image;
@@ -20,7 +21,7 @@ public:
 	//控制用变量
 	int condition;//键盘输入的状态变量，0：主界面模式，1：菜单模式，2：战斗模式
 	int timer;//全局计时器
-	int get_flag(int pos);//0:CapsLock是否开启 1:用于关卡1的判定，2：用于关卡2的判定
+	int get_flag(int pos);//0:NULL 1:用于关卡1的判定，2：用于关卡2的判定
 	int get_flag_size();
 	void set_flag(int pos, int val);
 	int level;//关卡

@@ -20,7 +20,7 @@ void Ui::init()
 	add_page(page_2);
 
 	IMAGE* page_3 = new IMAGE(width, height);
-	loadimage(page_3, L"assets/attack01.png");//战斗第一界面
+	loadimage(page_3, L"assets/attack01.png");//战斗.第一关
 	add_page(page_3);
 }
 
@@ -159,7 +159,7 @@ void Ui::draw_control()
 		//按下4，进入牌库
 		//按下5，进入设置
 	}
-	else if (current_index == 2)
+	else if (current_index == 2 || current_index == 3 || current_index == 4)
 	{
 		note(10, 10, 100, 50, 30, 1, BLACK, WHITE, L"0:退出");
 		//返回菜单
@@ -199,6 +199,9 @@ void Ui::draw_control()
 		}
 		for (auto ene : enemys) {
 			ene->draw();
+		}
+		for (auto drop : drops) {
+			drop->draw();
 		}
 		judge();//判定
 	}
@@ -271,12 +274,24 @@ void Ui::judge()//判定函数
 	{
 		for (auto enemy : enemys)
 		{
-			if (enemy->state)
+			if (enemy->state == 2)
 				continue;//敌机已经寄了就不用做判断
-			//若击中
-			if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 24)
+			else if (enemy->state == 1)
 			{
-				enemy->hp -= keys.attack * (1 + (rand() < keys.strike));
+				//随机释放掉落物
+				int randi = rand() % 100;
+				if (randi < 20)
+					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 0));
+				else if (randi < 40)
+					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 1));
+				else if (randi < 60)
+					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 2));
+				enemy->state = 2;
+			}
+			//若击中
+			else if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 18)
+			{
+				enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
 				shot->flag = 1;
 			}
 		}
@@ -284,7 +299,7 @@ void Ui::judge()//判定函数
 	//判定敌机子弹对己方的伤害
 	for (auto enemy : enemys)
 	{
-		if (enemy->state)
+		if (enemy->state != 0)
 			continue;//敌机已经寄了就不用做判断
 		for (auto shot : enemy->shots)
 		{
@@ -292,6 +307,33 @@ void Ui::judge()//判定函数
 			{
 				keys.hp -= enemy->attack;
 				shot->flag = 1;
+			}
+		}
+	}
+	//判定掉落物
+	for (auto drop : drops)
+	{
+		if (drop->state == 1)
+			continue;
+		//超大判定范围下，然后判断id，做出不同的功效
+		if (sqrt(pow(abs(drop->get_x() + 16 - plane->position[2]), 2) + pow(abs(drop->get_y() + 16 - plane->position[3]), 2)) < 32)
+		{
+			drop->state = 1;
+			switch (drop->get_id())
+			{
+			case 0:
+				plane->set_stage(plane->get_stage() + 1);
+				break;
+			case 1:
+				keys.hp += 100;
+				if (keys.hp > plane->get_maxhp())
+					keys.hp = plane->get_maxhp();
+				break;
+			case 2:
+				keys.mp += 100;
+				if (keys.mp > plane->get_maxmp())
+					keys.mp = plane->get_maxmp();
+				break;
 			}
 		}
 	}

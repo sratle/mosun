@@ -38,5 +38,5 @@ public:
 	vector<Card*> cards_data;//卡牌的全部数据
 	vector<Card*> card_select;//每次战斗可以选择六张卡，数据压入其中
 	vector<Card*> card_now;//手上同时拥有的卡牌有两张，可以打出其中的一张，并在定时之后刷新
-	vector<Drop*> drops;//掉落物的定义
+	vector<Drop*> drops;//掉落物
 };

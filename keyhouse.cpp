@@ -4,6 +4,7 @@ keyhouse::keyhouse()
 	:condition(0), timer(0), anu(0), star_value(0), isthar(0), attack(0), hp(0), mp(0), shield(0), 
 	key_card(0), key_move(0), plane_id(0), plane_unlock(0), strike(0), level(0)
 {
+	//加载函数或许可以使用成员函数进行代码优化
 	//预加载
 	IMAGE sakuya_1;
 	loadimage(&sakuya_1, L"assets/sakuya1.png");
@@ -14,10 +15,12 @@ keyhouse::keyhouse()
 	IMAGE sakuya_3;
 	loadimage(&sakuya_3, L"assets/sakuya3.png");
 	sakuya.push_back(sakuya_3);
+	//plane
 	IMAGE swq_1;
 	loadimage(&swq_1, L"assets/swq.png");
 	plane_image.push_back(swq_1);
 	IMAGE yuyuko_1;
+	//enemy
 	loadimage(&yuyuko_1, L"assets/yuyuko.png");
 	enemy_image.push_back(yuyuko_1);
 	IMAGE reimu_1;
@@ -26,7 +29,17 @@ keyhouse::keyhouse()
 	IMAGE tenshi_1;
 	loadimage(&tenshi_1, L"assets/tenshi.png");
 	enemy_image.push_back(tenshi_1);
-
+	//drop
+	IMAGE updrop_1;
+	loadimage(&updrop_1, L"assets/updrop.png");
+	drop_image.push_back(updrop_1);
+	IMAGE hp_1;
+	loadimage(&hp_1, L"assets/hp.png");
+	drop_image.push_back(hp_1);
+	IMAGE mp_1;
+	loadimage(&mp_1, L"assets/mp.png");
+	drop_image.push_back(mp_1);
+	//bullet
 	load_shots(L"assets/BulletAa000.png");
 	load_shots(L"assets/BulletAa001.png");
 	load_shots(L"assets/BulletAa002.png");
@@ -34,6 +47,7 @@ keyhouse::keyhouse()
 	load_shots(L"assets/BulletAa004.png");
 	load_shots(L"assets/BulletAa005.png");
 	load_shots(L"assets/BulletAa006.png");
+	//effect
 }
 
 int keyhouse::get_flag(int pos) 

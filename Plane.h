@@ -12,6 +12,9 @@ public:
 	virtual void draw() {};//画出目前释放的子弹
 	virtual void set_stage(int) {};
 	virtual int get_stage() { return 0; };
+	virtual int get_maxhp() { return 0; };
+	virtual int get_maxmp() { return 0; };
+	int lock_flag = 0;
 
 	void put_bk_image(int, int, IMAGE);
 	void control();//控制移动和渲染自身
@@ -34,6 +37,8 @@ private:
 public:
 	void set_stage(int) override;
 	int get_stage() override;
+	int get_maxhp() override;
+	int get_maxmp() override;
 	void skill() override;
 	void upgrade() override;
 	void draw() override;

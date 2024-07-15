@@ -14,7 +14,7 @@ public:
 	int attack = 0;
 	int hp = 0;
 	double speed = 0;
-	int state = 0;//是否存活
+	int state = 0;//0:初始状态 1：死亡状态但未释放掉落物 2：已经释放掉落物
 	int group = 1;
 };
 

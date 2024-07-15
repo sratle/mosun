@@ -18,7 +18,7 @@ simple_enemy::simple_enemy(int x, int y, int g)
 
 void simple_enemy::draw()
 {
-	if (state == 1)
+	if (state != 0)
 		return;
 	if (hp <= 0 && state == 0) {
 		state = 1;
@@ -82,7 +82,7 @@ lock_simple::lock_simple(int x, int y, int g, int* x_t, int* y_t)
 
 void lock_simple::draw()
 {
-	if (state == 1)
+	if (state!=0)
 		return;
 	if (hp <= 0 && state == 0) {
 		state = 1;
@@ -146,7 +146,7 @@ simple_three::simple_three(int x, int y, int g)
 
 void simple_three::draw()
 {
-	if (state == 1)
+	if (state != 0)
 		return;
 	if (hp <= 0 && state == 0) {
 		state = 1;
@@ -159,7 +159,7 @@ void simple_three::draw()
 		int deff = position[1] - record_time[1];
 		put_bk_image(position[0], record_time[1], keys.enemy_image[id]);
 		setfillcolor(WHITE);
-		fillcircle(position[2], record_time[1] + height / 2, 10);
+		fillcircle(position[2], record_time[1] + height / 2, 12);
 		record_time[1] += 5 + deff / 12;
 		return;
 	}
