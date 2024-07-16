@@ -72,7 +72,10 @@ void Ui::run()
 		draw_control();//调用渲染控制函数
 		FlushBatchDraw();
 		end = clock();
-		Sleep(DWORD(1000.0 / FPS + start - end));//控制帧率
+		double diff = 1000.0 / FPS - end + start;
+		if (diff <= 0)
+			diff = 0;
+		Sleep(DWORD(diff));//控制帧率
 		keys.timer++;
 		if (keys.timer > FPS * 30000)
 		{
