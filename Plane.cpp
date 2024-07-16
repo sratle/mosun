@@ -47,7 +47,7 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 		int flag = 0;//用于切换子弹形态
 		for (auto shot : shots)
 		{
-			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1280)) {
+			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1028)) {
 				shot->flag = 1;
 			}
 			//下面设计是需要改动的模块
@@ -80,7 +80,7 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 		int flag = 0;
 		for (auto shot : shots)
 		{
-			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1280)) {
+			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1028)) {
 				shot->flag = 1;
 			}
 			//下面设计是需要改动的模块
@@ -128,7 +128,7 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 		int flag = 0;
 		for (auto shot : shots)
 		{
-			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1280)) {
+			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1028)) {
 				shot->flag = 1;
 			}
 			//下面设计是需要改动的模块
@@ -169,7 +169,7 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 		int flag = 0;
 		for (auto shot : shots)
 		{
-			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1280)) {
+			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1028)) {
 				shot->flag = 1;
 			}
 			//下面设计是需要改动的模块
@@ -388,9 +388,9 @@ void Plane::control()
 		position[0] = 656;
 		position[2] = 688;
 	}
-	if (position[1] < 0) {
-		position[1] = 0;
-		position[3] = 64;
+	if (position[1] < 128) {
+		position[1] = 128;
+		position[3] = 192;
 	}
 	if (position[1] > 964) {
 		position[1] = 964;

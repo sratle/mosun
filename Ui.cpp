@@ -321,8 +321,7 @@ void Ui::judge()//判定函数
 				else if (randi < 75)
 					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 3));//star
 				enemy->state = 2;
-			}
-			//若击中
+			}//若击中
 			else if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 18)
 			{
 				enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
