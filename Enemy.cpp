@@ -6,7 +6,7 @@ simple_enemy::simple_enemy(int x, int y, int g)
 	:width(64), height(128)
 {
 	attack = 150;
-	hp = 400;
+	hp = 300;
 	speed = 0.6;
 	state = 0;
 	group = g;
@@ -134,7 +134,7 @@ simple_three::simple_three(int x, int y, int g)
 	:width(64), height(128)
 {
 	attack = 150;
-	hp = 600;
+	hp = 500;
 	speed = 0.6;
 	state = 0;
 	group = g;

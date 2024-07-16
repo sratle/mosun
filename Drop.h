@@ -9,7 +9,7 @@ public:
 	Drop(int,int,int);
 	int get_id();
 	int state;
-	int get_x();
+	int get_x();//ÅĞ¶¨×ø±ê
 	int get_y();
 
 private:

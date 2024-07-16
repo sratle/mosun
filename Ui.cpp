@@ -217,7 +217,7 @@ void Ui::draw_control()
 void Ui::level_1()
 {
 	//使用flag和defeat目标进行对照，编写关卡下一个阶段的时候需要将target_num值手动加一
-	static int target_num = 5;
+	static int target_num = 6;
 	static int target = 0;
 	if (defeat_target.empty()) {
 		for (int i = 0; i <= target_num; i++) {
@@ -284,6 +284,19 @@ void Ui::level_1()
 		defeat_target[target] = keys.get_flag(1) + (int)enemys.size();
 	}
 	i++;
+	if (keys.get_flag(1) == defeat_target[i]) {
+		enemys_reset();
+		enemys.push_back(new simple_three(120, 360, 1));
+		enemys.push_back(new lock_super(120, 140, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new lock_super(360, 100, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new simple_three(360, 260, 1));
+		enemys.push_back(new lock_super(600, 140, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new simple_three(600, 360, 1));
+		keys.set_flag(1, keys.get_flag(1) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(1) + (int)enemys.size();
+	}
+	i++;
 }
 
 void Ui::judge()//判定函数
@@ -300,11 +313,13 @@ void Ui::judge()//判定函数
 				//随机释放掉落物
 				int randi = rand() % 100;
 				if (randi < 20)
-					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 0));
+					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 0));//升级道具
 				else if (randi < 40)
-					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 1));
+					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 1));//血量
 				else if (randi < 60)
-					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 2));
+					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 2));//能量
+				else if (randi < 75)
+					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 3));//star
 				enemy->state = 2;
 			}
 			//若击中
@@ -336,7 +351,7 @@ void Ui::judge()//判定函数
 		if (drop->state == 1)
 			continue;
 		//超大判定范围下，然后判断id，做出不同的功效
-		if (sqrt(pow(abs(drop->get_x() + 16 - plane->position[2]), 2) + pow(abs(drop->get_y() + 16 - plane->position[3]), 2)) < 32)
+		if (sqrt(pow(abs(drop->get_x() - plane->position[2]), 2) + pow(abs(drop->get_y() - plane->position[3]), 2)) < 32)
 		{
 			drop->state = 1;
 			switch (drop->get_id())
@@ -345,14 +360,17 @@ void Ui::judge()//判定函数
 				plane->set_stage(plane->get_stage() + 1);
 				break;
 			case 1:
-				keys.hp += 100;
+				keys.hp += 150;
 				if (keys.hp > plane->get_maxhp())
 					keys.hp = plane->get_maxhp();
 				break;
 			case 2:
-				keys.mp += 100;
+				keys.mp += 80;
 				if (keys.mp > plane->get_maxmp())
 					keys.mp = plane->get_maxmp();
+				break;
+			case 3:
+				keys.star_value++;
 				break;
 			}
 		}

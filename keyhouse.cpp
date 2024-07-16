@@ -42,6 +42,9 @@ keyhouse::keyhouse()
 	IMAGE mp_1;
 	loadimage(&mp_1, L"assets/mp.png");
 	drop_image.push_back(mp_1);
+	IMAGE star_1;
+	loadimage(&star_1, L"assets/star.png");
+	drop_image.push_back(star_1);
 	//bullet
 	load_shots(L"assets/BulletAa000.png");
 	load_shots(L"assets/BulletAa001.png");
