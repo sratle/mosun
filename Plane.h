@@ -18,6 +18,7 @@ public:
 
 	void put_bk_image(int, int, IMAGE);
 	void control();//控制移动和渲染自身
+	void shot_clear();
 	vector<Shot*> shots;
 	vector<int> position{324,900,360,964};//0，1：渲染坐标，2，3：判定坐标
 };

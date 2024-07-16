@@ -155,11 +155,11 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 			//下面设计是需要改动的模块
 			shots.push_back(new Shot(0, 2, position[2], position[3]));
 			shots.back()->set_pos(position[2] + 32, shots.back()->get_y() - 16);
-			shots.push_back(new Shot(0, 2, position[2], position[3]));
+			shots.push_back(new Shot(1, 2, position[2], position[3]));
 			shots.back()->set_pos(position[2] + 16, shots.back()->get_y() - 16);
 			shots.push_back(new Shot(1, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 16);
-			shots.push_back(new Shot(0, 4, position[2], position[3]));
+			shots.push_back(new Shot(1, 4, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 48, shots.back()->get_y() - 16);
 			shots.push_back(new Shot(0, 4, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 64, shots.back()->get_y() - 16);
@@ -202,17 +202,22 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 			shots.erase(shots.begin());
 		}
 		//复用end
-		}
+	}
 }
 
 //增加stage之后注意改动这个函数
 void ur::set_stage(int stage_t) {
 	stage = stage_t;
 	static int max_stage = 3;
-	if (stage > max_stage)
+	if (stage > max_stage) {
 		stage = max_stage;
-	if (stage < 0)
+		return;
+	}
+	if (stage < 0) {
 		stage = 0;
+		return;
+	}
+	shot_clear();
 	if (stage == 0)
 		speed = 0.3;
 	else if (stage == 1)
@@ -351,7 +356,7 @@ void Plane::control()
 	//adsw移动控制
 	if (keys.key_move == 65 && keys.condition == 2)
 	{
-		position[0] -= 5 + 4 * lock_flag;
+		position[0] -= 10 - 6 * lock_flag;
 		//把判定坐标压入坐标中
 		position[2] = position[0] + 32;
 		//恢复按键编码
@@ -359,19 +364,19 @@ void Plane::control()
 	}
 	else if (keys.key_move == 68 && keys.condition == 2)
 	{
-		position[0] += 5 + 4 * lock_flag;
+		position[0] += 10 - 6 * lock_flag;
 		position[2] = position[0] + 32;
 		keys.key_move = 0;
 	}
 	else if (keys.key_move == 83 && keys.condition == 2)
 	{
-		position[1] += 5 + 4 * lock_flag;
+		position[1] += 10 - 6 * lock_flag;
 		position[3] = position[1] + 64;
 		keys.key_move = 0;
 	}
 	else if (keys.key_move == 87 && keys.condition == 2)
 	{
-		position[1] -= 5 + 4 * lock_flag;
+		position[1] -= 10 - 6 * lock_flag;
 		position[3] = position[1] + 64;
 		keys.key_move = 0;
 	}//按下了capslock
@@ -396,6 +401,15 @@ void Plane::control()
 		position[1] = 964;
 		position[3] = 1028;
 	}
+}
+
+void Plane::shot_clear()
+{
+	if (shots.empty())
+		return;
+	for (auto shot : shots)
+		delete shot;
+	shots.clear();
 }
 
 void Plane::put_bk_image(int x, int y, IMAGE img)
