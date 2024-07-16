@@ -56,14 +56,15 @@ void Ui::run()
 				{
 					keys.key_num.push_back(msg.vkcode);
 				}
-				else if (msg.vkcode == 65 || msg.vkcode == 68 || msg.vkcode == 83 || msg.vkcode == 87)//ADSW
-				{
-					keys.key_move = msg.vkcode;
-				}
 				else if (msg.vkcode == 20 || msg.vkcode == 74 || msg.vkcode == 75)//CapsLock,J,K
 				{
 					keys.key_card = msg.vkcode;
 				}
+			}
+			else if (msg.message = MOUSEEVENTF_MOVE && keys.condition == 2 && plane != nullptr)
+			{
+				keys.move[0] = msg.x;
+				keys.move[1] = msg.y;
 			}
 		}
 		while (peekmessage(&msg)) {}//msg会有堆积，影响按键判断
@@ -324,7 +325,7 @@ void Ui::judge()//判定函数
 					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 3));//star
 				enemy->state = 2;
 			}//若击中
-			else if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 18)
+			else if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 16)
 			{
 				enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
 				shot->flag = 1;
@@ -338,7 +339,7 @@ void Ui::judge()//判定函数
 			continue;//敌机已经寄了就不用做判断
 		for (auto shot : enemy->shots)
 		{
-			if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 8)
+			if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 12)
 			{
 				keys.hp -= enemy->attack;
 				plane->set_stage(plane->get_stage() - 1);

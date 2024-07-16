@@ -2,7 +2,7 @@
 
 keyhouse::keyhouse()
 	:condition(0), timer(0), anu(0), star_value(0), isthar(0), attack(0), hp(0), mp(0), shield(0),
-	key_card(0), key_move(0), plane_id(0), plane_unlock(0), strike(0), level(0)
+	key_card(0),  plane_id(0), plane_unlock(0), strike(0), level(0)
 {
 	//加载函数或许可以使用成员函数进行代码优化
 	//预加载

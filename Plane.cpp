@@ -352,39 +352,12 @@ void Plane::control()
 		setfillcolor(RED);
 	else
 		setfillcolor(WHITE);
-	fillcircle(position[2], position[3], 5);
-	//adsw移动控制
-	if (keys.key_move == 65 && keys.condition == 2)
-	{
-		position[0] -= 10 - 6 * lock_flag;
-		//把判定坐标压入坐标中
-		position[2] = position[0] + 32;
-		//恢复按键编码
-		keys.key_move = 0;
-	}
-	else if (keys.key_move == 68 && keys.condition == 2)
-	{
-		position[0] += 10 - 6 * lock_flag;
-		position[2] = position[0] + 32;
-		keys.key_move = 0;
-	}
-	else if (keys.key_move == 83 && keys.condition == 2)
-	{
-		position[1] += 10 - 6 * lock_flag;
-		position[3] = position[1] + 64;
-		keys.key_move = 0;
-	}
-	else if (keys.key_move == 87 && keys.condition == 2)
-	{
-		position[1] -= 10 - 6 * lock_flag;
-		position[3] = position[1] + 64;
-		keys.key_move = 0;
-	}//按下了capslock
-	else if (keys.key_card == 20 && keys.condition == 2)
-	{
-		lock_flag = 1 - lock_flag;
-		keys.key_card = 0;
-	}
+	fillcircle(position[2], position[3], 10);
+	position[2] = keys.move[0];
+	position[3] = keys.move[1];
+	position[0] = position[2] - 32;
+	position[1] = position[3] - 64;
+
 	if (position[0] < 0) {
 		position[0] = 0;
 		position[2] = 32;

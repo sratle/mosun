@@ -16,8 +16,8 @@ public:
 	//键盘输入
 	vector<BYTE> key_any;//condition0
 	vector<BYTE> key_num;//condition1
-	int key_move;//condition2
 	int key_card;//condition2
+	vector<int> move{ 0,0 };
 	//控制用变量
 	int condition;//键盘输入的状态变量，0：主界面模式，1：菜单模式，2：战斗模式
 	int timer;//全局计时器
