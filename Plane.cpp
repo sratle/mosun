@@ -385,11 +385,11 @@ void Plane::control()
 		lock_flag = 1 - lock_flag;
 		keys.key_card = 0;
 	}
-	if (position[0] < 0){
+	if (position[0] < 0) {
 		position[0] = 0;
 		position[2] = 32;
 	}
-	if (position[0] > 656){
+	if (position[0] > 656) {
 		position[0] = 656;
 		position[2] = 688;
 	}

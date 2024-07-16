@@ -21,7 +21,7 @@ public:
 class simple_enemy :public Enemy
 {
 public:
-	simple_enemy(int, int,int);//需传入初始化判定位置
+	simple_enemy(int, int, int);//需传入初始化判定位置
 	void draw() override;
 
 private:
@@ -34,7 +34,7 @@ private:
 class lock_simple :public Enemy
 {
 public:
-	lock_simple(int, int, int,int*,int*);//需传入初始化判定位置,关卡id，自己飞机的坐标指针
+	lock_simple(int, int, int, int*, int*);//需传入初始化判定位置,关卡id，自己飞机的坐标指针
 	void draw() override;
 
 private:

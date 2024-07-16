@@ -18,7 +18,7 @@ private:
 	void add_page(IMAGE*);
 	void set_current_index(int);
 	void draw_control();
-	void note(int, int, int, int, int, int, COLORREF, COLORREF,const wstring&);
+	void note(int, int, int, int, int, int, COLORREF, COLORREF, const wstring&);
 	void judge();//判定用函数
 	void level_1();//关卡1函数，里面分为数个阶段
 	void enemys_reset();

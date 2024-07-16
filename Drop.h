@@ -6,7 +6,7 @@ class Drop
 {
 public:
 	void draw();
-	Drop(int,int,int);
+	Drop(int, int, int);
 	int get_id();
 	int state;
 	int get_x();//ÅÐ¶¨×ø±ê

@@ -1,12 +1,12 @@
 #include "Drop.h"
 extern keyhouse keys;
 
-Drop::Drop(int xt, int yt,int idt)
-	:x(xt),y(yt),id(idt),state(0)
+Drop::Drop(int xt, int yt, int idt)
+	:x(xt), y(yt), id(idt), state(0)
 {
 }
 
-void Drop :: draw()
+void Drop::draw()
 {
 	if (state == 1)
 		return;

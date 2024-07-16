@@ -2,12 +2,12 @@
 extern keyhouse keys;
 
 //id,rotate,x,y
-Shot::Shot(int id,int rotate,int x,int y)
+Shot::Shot(int id, int rotate, int x, int y)
 	:x(x), y(y), id(id), flag(0), rotate(rotate)
 {
 }
 
-void Shot::draw() 
+void Shot::draw()
 {
 	if (flag)
 		return;
@@ -36,7 +36,7 @@ void Shot::put_bk_image(int x, int y, IMAGE img)
 	putimage(x, y, &img, SRCPAINT);
 }
 
-void Shot::set_pos(double tx,double ty)
+void Shot::set_pos(double tx, double ty)
 {
 	x = tx;
 	y = ty;
