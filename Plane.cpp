@@ -56,7 +56,7 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 			shot->draw();
 		}
 		//删除模块，需改动，此处为一个子弹一组的情况
-		if (shots.size() > 6 && shots[0]->flag) {
+		if (shots.size() > 10 && shots[0]->flag) {
 			delete shots[0];
 			shots.erase(shots.begin());
 		}
@@ -99,7 +99,7 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 			//end
 			shot->draw();
 		}
-		//删除模块，需改动，此处为三个子弹一组的情况
+		//删除模块，需改动，此处为三个子弹一组的情况,注意调整size的值
 		if (shots.size() > 18 && shots[0]->flag && shots[1]->flag && shots[2]->flag) {
 			delete shots[0];
 			delete shots[1];
@@ -137,7 +137,7 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 			shot->draw();
 		}
 		//删除模块，需改动，此处为三个子弹一组的情况
-		if (shots.size() > 18 && shots[0]->flag && shots[1]->flag && shots[2]->flag) {
+		if (shots.size() > 30 && shots[0]->flag && shots[1]->flag && shots[2]->flag) {
 			delete shots[0];
 			delete shots[1];
 			delete shots[2];
