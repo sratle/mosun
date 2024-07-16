@@ -6,7 +6,7 @@ simple_enemy::simple_enemy(int x, int y, int g)
 	:width(64), height(128)
 {
 	attack = 150;
-	hp = 300;
+	hp = 500;
 	speed = 0.6;
 	state = 0;
 	group = g;
@@ -70,7 +70,7 @@ lock_simple::lock_simple(int x, int y, int g, int* x_t, int* y_t)
 	:width(64), height(128), plane_x(x_t), plane_y(y_t)
 {
 	attack = 150;
-	hp = 300;
+	hp = 400;
 	speed = 0.7;
 	state = 0;
 	group = g;
@@ -134,7 +134,7 @@ simple_three::simple_three(int x, int y, int g)
 	:width(64), height(128)
 {
 	attack = 150;
-	hp = 500;
+	hp = 600;
 	speed = 0.6;
 	state = 0;
 	group = g;
@@ -206,7 +206,7 @@ lock_super::lock_super(int x, int y, int g, int* x_t, int* y_t)
 	:width(64), height(128), plane_x(x_t), plane_y(y_t)
 {
 	attack = 300;
-	hp = 400;
+	hp = 600;
 	speed = 0.9;
 	state = 0;
 	group = g;
