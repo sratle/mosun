@@ -54,7 +54,7 @@ void simple_enemy::draw()
 			shot->flag = 1;
 		}
 		//下面设计是需要改动的模块，子弹运动
-		shot->set_pos(shot->get_x(), shot->get_y() + 6);
+		shot->set_pos(shot->get_x(), shot->get_y() + 8);
 		//end
 		shot->draw();
 	}
@@ -69,7 +69,7 @@ void simple_enemy::draw()
 lock_simple::lock_simple(int x, int y, int g, int* x_t, int* y_t)
 	:width(64), height(128), plane_x(x_t), plane_y(y_t)
 {
-	attack = 200;
+	attack = 150;
 	hp = 300;
 	speed = 0.7;
 	state = 0;
@@ -118,7 +118,7 @@ void lock_simple::draw()
 			shot->flag = 1;
 		}
 		//下面设计是需要改动的模块，子弹运动
-		shot->set_pos(shot->get_x() + (*plane_x - position[2]) * 6.0 / (float)(*plane_y - position[3]), shot->get_y() + 6);
+		shot->set_pos(shot->get_x() + (*plane_x - position[2]) * 6.0 / (float)(*plane_y - position[3]), shot->get_y() + 8);
 		//end
 		shot->draw();
 	}
@@ -207,7 +207,7 @@ lock_super::lock_super(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 300;
 	hp = 400;
-	speed = 0.8;
+	speed = 0.9;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -254,7 +254,7 @@ void lock_super::draw()
 			shot->flag = 1;
 		}
 		//下面设计是需要改动的模块，子弹运动
-		shot->set_pos(shot->get_x() + (*plane_x - position[2]) * 10.0 / (float)(*plane_y - position[3]), shot->get_y() + 10);
+		shot->set_pos(shot->get_x() + (*plane_x - position[2]) * 10.0 / (float)(*plane_y - position[3]), shot->get_y() + 16);
 		//end
 		shot->draw();
 	}

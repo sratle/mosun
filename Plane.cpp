@@ -116,11 +116,11 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 		if ((keys.timer - record_time[0]) > (FPS * speed))
 		{
 			//下面设计是需要改动的模块
-			shots.push_back(new Shot(0, 2, position[2], position[3]));
+			shots.push_back(new Shot(0, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] + 20, shots.back()->get_y() - 16);
 			shots.push_back(new Shot(1, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 16);
-			shots.push_back(new Shot(0, 4, position[2], position[3]));
+			shots.push_back(new Shot(0, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 52, shots.back()->get_y() - 16);
 			//end
 			record_time[0] = keys.timer;
@@ -155,11 +155,11 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 			//下面设计是需要改动的模块
 			shots.push_back(new Shot(0, 2, position[2], position[3]));
 			shots.back()->set_pos(position[2] + 32, shots.back()->get_y() - 16);
-			shots.push_back(new Shot(1, 2, position[2], position[3]));
+			shots.push_back(new Shot(1, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] + 16, shots.back()->get_y() - 16);
 			shots.push_back(new Shot(1, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 16);
-			shots.push_back(new Shot(1, 4, position[2], position[3]));
+			shots.push_back(new Shot(1, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 48, shots.back()->get_y() - 16);
 			shots.push_back(new Shot(0, 4, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 64, shots.back()->get_y() - 16);
@@ -219,13 +219,13 @@ void ur::set_stage(int stage_t) {
 	}
 	shot_clear();
 	if (stage == 0)
-		speed = 0.3;
+		speed = 0.2;
 	else if (stage == 1)
-		speed = 0.45;
+		speed = 0.3;
 	else if (stage == 2)
-		speed = 0.4;
+		speed = 0.2;
 	else if (stage == 3)
-		speed = 0.5;
+		speed = 0.3;
 }
 
 int ur::get_stage() {
