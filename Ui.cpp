@@ -38,7 +38,8 @@ void Ui::run()
 	{
 		start = clock();
 		if (peekmessage(&msg))//如果有信息
-		{//按键控制模块
+		{
+			//按键控制模块
 			if (msg.message == WM_KEYDOWN && keys.condition == 0)
 			{
 				keys.key_any.push_back(msg.vkcode);
@@ -328,7 +329,7 @@ void Ui::judge()//判定函数
 					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 3));//star
 				enemy->state = 2;
 			}//若击中
-			else if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 16)
+			else if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 20)
 			{
 				enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
 				shot->flag = 1;

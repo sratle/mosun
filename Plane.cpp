@@ -350,8 +350,24 @@ void Plane::control()
 	put_bk_image(position[0], position[1], keys.plane_image[keys.plane_id]);
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 10);
-	position[2] = keys.move[0];
-	position[3] = keys.move[1];
+	if (abs(position[2] - keys.move[0]) > 24){
+		if (position[2] > keys.move[0])
+			position[2] = position[2] - 24;
+		else
+			position[2] = position[2] + 24;
+	}
+	else {
+		position[2] = keys.move[0];
+	}
+	if (abs(position[3] - keys.move[1]) > 24) {
+		if (position[3] > keys.move[1])
+			position[3] = position[3] - 24;
+		else
+			position[3] = position[3] + 24;
+	}
+	else {
+		position[3] = keys.move[1];
+	}
 	position[0] = position[2] - 32;
 	position[1] = position[3] - 64;
 
