@@ -152,6 +152,8 @@ void Ui::draw_control()
 			}
 			plane->upgrade();//加载数据到keys中
 			plane->set_stage(0);
+			//随机数种子更新
+			srand((unsigned)time(NULL));
 			//init end
 		}
 		//按下2，进入无尽
