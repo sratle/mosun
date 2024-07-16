@@ -14,7 +14,6 @@ public:
 	virtual int get_stage() { return 0; };
 	virtual int get_maxhp() { return 0; };
 	virtual int get_maxmp() { return 0; };
-	int lock_flag = 0;
 
 	void put_bk_image(int, int, IMAGE);
 	void control();//控制移动和渲染自身

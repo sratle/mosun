@@ -348,10 +348,7 @@ void Plane::control()
 {
 	//‰÷»æª˙ÃÂ
 	put_bk_image(position[0], position[1], keys.plane_image[keys.plane_id]);
-	if (lock_flag)
-		setfillcolor(RED);
-	else
-		setfillcolor(WHITE);
+	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 10);
 	position[2] = keys.move[0];
 	position[3] = keys.move[1];
