@@ -379,9 +379,9 @@ void Plane::control()
 		position[0] = 656;
 		position[2] = 688;
 	}
-	if (position[1] < 128) {
-		position[1] = 128;
-		position[3] = 192;
+	if (position[1] < 64) {
+		position[1] = 64;
+		position[3] = 128;
 	}
 	if (position[1] > 964) {
 		position[1] = 964;

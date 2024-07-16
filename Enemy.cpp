@@ -118,10 +118,9 @@ void lock_simple::draw()
 			shot->flag = 1;
 		}
 		//下面设计是需要改动的模块，子弹运动
-		if (*plane_y > position[3])
-			shot->set_pos(shot->get_x() + (*plane_x - position[2]) * 12.0 / (float)(*plane_y - position[3]), shot->get_y() + 12);
-		else
-			shot->set_pos(shot->get_x() + (*plane_x - position[2]) * 12.0 / (float)(*plane_y - position[3]), shot->get_y() - 6);
+		int dx = 20.0 * (float)(*plane_x - position[2]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
+		int dy = 20.0 * (float)(*plane_y - position[3]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
+		shot->set_pos(shot->get_x() + dx, shot->get_y() + dy);
 		//end
 		shot->draw();
 	}
@@ -257,10 +256,9 @@ void lock_super::draw()
 			shot->flag = 1;
 		}
 		//下面设计是需要改动的模块，子弹运动
-		if (*plane_y > position[3])
-			shot->set_pos(shot->get_x() + (*plane_x - position[2]) * 18.0 / (float)(*plane_y - position[3]), shot->get_y() + 18);
-		else
-			shot->set_pos(shot->get_x() + (*plane_x - position[2]) * 18.0 / (float)(*plane_y - position[3]), shot->get_y() - 6);
+		int dx = 20.0 * (float)(*plane_x - position[2]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
+		int dy = 20.0 * (float)(*plane_y - position[3]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
+		shot->set_pos(shot->get_x() + dx, shot->get_y() + dy);
 		//end
 		shot->draw();
 	}
