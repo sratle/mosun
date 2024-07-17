@@ -7,6 +7,7 @@ class Enemy
 {
 public:
 	virtual void draw() {};
+	virtual int get_id() { return 0; };
 	void put_bk_image(int, int, IMAGE);
 
 	vector<int> position;//0，1：渲染坐标，2，3：判定坐标
@@ -70,6 +71,24 @@ private:
 	vector<int> record_time = { 0 , 0 };
 	int height;
 	int width;
+	int* plane_x;
+	int* plane_y;
+};
+
+class boss_1 :public Enemy
+{
+public:
+	boss_1(int, int, int, int*, int*);//需传入初始化判定位置,关卡id，自己飞机的坐标指针
+	void draw() override;
+	int get_id() override;
+
+private:
+	const int id = 4;
+	vector<int> record_time = { 0 , 0 };
+	vector<int> rand_save;
+	int height;
+	int width;
+	int stage;
 	int* plane_x;
 	int* plane_y;
 };

@@ -57,7 +57,7 @@ void Ui::run()
 				{
 					keys.key_num.push_back(msg.vkcode);
 				}
-				else if (msg.vkcode == 20 || msg.vkcode == 74 || msg.vkcode == 75)//CapsLock,J,K
+				else if (msg.vkcode == 74 || msg.vkcode == 75)//CapsLock,J,K
 				{
 					keys.key_card = msg.vkcode;
 				}
@@ -106,7 +106,7 @@ void Ui::draw_control()
 		COLORREF color = RGB(200 * abs(sin(cps)), 200 * abs(sin(cps)), 80);
 		note(0, 100, 720, 150, 140, 0, color, WHITE, L"Moon Sun");
 		note(0, 800, 720, 70, 60, 0, color, WHITE, L"按任意键进入");
-		note(100, 10, 100, 50, 30, 0, color, WHITE, L"0:退出");
+		note(100, 10, 120, 50, 30, 0, color, WHITE, L"按0:退出");
 		//确认捕获按键0则执行退出
 		if (keys.condition == 0 && (!keys.key_any.empty()) && keys.key_any.back() == 48)
 		{
@@ -121,8 +121,12 @@ void Ui::draw_control()
 	}
 	else if (current_index == 1)
 	{
-		note(10, 10, 100, 50, 30, 1, BLACK, WHITE, L"0:退出");
-		note(10, 200, 300, 70, 50, 1, BLACK, WHITE, L"1:踏上旅程");
+		note(10, 10, 120, 50, 30, 1, LIGHTGRAY, WHITE, L"按0:退出");
+		note(10, 200, 300, 70, 50, 1, BLACK, WHITE, L"按1:踏上旅程");
+		note(10, 320, 300, 70, 50, 1, BLACK, WHITE, L"按2:无尽征途");
+		note(10, 440, 300, 70, 50, 1, BLACK, WHITE, L"按3:进入机库");
+		note(10, 560, 300, 70, 50, 1, BLACK, WHITE, L"按4:进入牌库");
+		note(10, 680, 300, 70, 50, 1, BLACK, WHITE, L"按5:打开设置");
 		//菜单界面下方的sakuya
 		put_bk_image(350 + int(300 * sin(keys.timer / 30.0)), 800, keys.sakuya[keys.timer / 10 % 3]);
 		//按下0，返回开始界面
@@ -162,13 +166,29 @@ void Ui::draw_control()
 			//init end
 		}
 		//按下2，进入无尽
+		if (keys.condition == 1 && (!keys.key_num.empty()) && keys.key_num.back() == 50)
+		{
+
+		}
 		//按下3，进入机库
+		if (keys.condition == 1 && (!keys.key_num.empty()) && keys.key_num.back() == 51)
+		{
+
+		}
 		//按下4，进入牌库
+		if (keys.condition == 1 && (!keys.key_num.empty()) && keys.key_num.back() == 52)
+		{
+
+		}
 		//按下5，进入设置
+		if (keys.condition == 1 && (!keys.key_num.empty()) && keys.key_num.back() == 53)
+		{
+
+		}
 	}
 	else if (current_index == 2 || current_index == 3 || current_index == 4)
 	{
-		note(10, 10, 100, 50, 30, 1, BLACK, WHITE, L"0:退出");
+		note(10, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"按0:退出");
 		//返回菜单
 		if (keys.condition == 2 && (!keys.key_num.empty()) && keys.key_num.back() == 48)
 		{
@@ -224,7 +244,7 @@ void Ui::draw_control()
 void Ui::level_1()
 {
 	//使用flag和defeat目标进行对照，编写关卡下一个阶段的时候需要将target_num值手动加一
-	static int target_num = 6;
+	static int target_num = 7;
 	static int target = 0;
 	if (defeat_target.empty()) {
 		for (int i = 0; i <= target_num; i++) {
@@ -237,8 +257,8 @@ void Ui::level_1()
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
 		//添加enemy,需修改
-		enemys.push_back(new simple_enemy(240, 150, 1));//分别是x，y坐标和group参数，group就是关卡id
-		enemys.push_back(new simple_enemy(480, 150, 1));
+		enemys.push_back(new simple_enemy(260, 150, 1));//分别是x，y坐标和group参数，group就是关卡id
+		enemys.push_back(new simple_enemy(460, 150, 1));
 		//下面三句话不用改
 		keys.set_flag(1, keys.get_flag(1) + 1);
 		target++;
@@ -304,6 +324,16 @@ void Ui::level_1()
 		defeat_target[target] = keys.get_flag(1) + (int)enemys.size();
 	}
 	i++;
+	if (keys.get_flag(1) == defeat_target[i]) {
+		enemys_reset();
+		enemys.push_back(new lock_simple(160, 260, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new boss_1(360, 120, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new lock_simple(560, 260, 1, &(plane->position[2]), &(plane->position[3])));
+		keys.set_flag(1, keys.get_flag(1) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(1) + (int)enemys.size();
+	}
+	i++;
 }
 
 void Ui::judge()//判定函数
@@ -317,6 +347,8 @@ void Ui::judge()//判定函数
 				continue;//敌机已经寄了就不用做判断
 			else if (enemy->state == 1)
 			{
+				if (enemy->get_id()==4)
+					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 4));//isthar
 				//随机释放掉落物
 				int randi = rand() % 100;
 				if (randi < 20)
@@ -377,6 +409,9 @@ void Ui::judge()//判定函数
 				break;
 			case 3:
 				keys.star_value++;
+				break;
+			case 4:
+				keys.isthar++;
 				break;
 			}
 		}

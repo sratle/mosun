@@ -32,6 +32,9 @@ keyhouse::keyhouse()
 	IMAGE alice_1;//3
 	loadimage(&alice_1, L"assets/alice.png");
 	enemy_image.push_back(alice_1);
+	IMAGE yukari_1;//3
+	loadimage(&yukari_1, L"assets/yukari.png");
+	enemy_image.push_back(yukari_1);
 	//drop
 	IMAGE updrop_1;
 	loadimage(&updrop_1, L"assets/updrop.png");
@@ -45,6 +48,9 @@ keyhouse::keyhouse()
 	IMAGE star_1;
 	loadimage(&star_1, L"assets/star.png");
 	drop_image.push_back(star_1);
+	IMAGE isthar_1;
+	loadimage(&isthar_1, L"assets/isthar.png");
+	drop_image.push_back(isthar_1);
 	//bullet
 	load_shots(L"assets/BulletAa000.png");
 	load_shots(L"assets/BulletAa001.png");
