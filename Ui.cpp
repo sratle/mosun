@@ -380,9 +380,9 @@ void Ui::judge()//判定函数
 			continue;//敌机已经寄了就不用做判断
 		for (auto shot : enemy->shots)
 		{
-			if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 12)
+			if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 10)
 			{
-				keys.hp -= enemy->attack;
+				keys.hp -= enemy->attack + keys.shield;
 				plane->set_stage(plane->get_stage() - 1);
 				shot->flag = 1;
 			}
