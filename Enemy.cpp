@@ -137,7 +137,7 @@ simple_three::simple_three(int x, int y, int g)
 {
 	attack = 150;
 	hp = 600;
-	speed = 0.25;
+	speed = 0.3;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);

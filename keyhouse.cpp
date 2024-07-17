@@ -32,7 +32,7 @@ keyhouse::keyhouse()
 	IMAGE alice_1;//3
 	loadimage(&alice_1, L"assets/alice.png");
 	enemy_image.push_back(alice_1);
-	IMAGE yukari_1;//3
+	IMAGE yukari_1;//4
 	loadimage(&yukari_1, L"assets/yukari.png");
 	enemy_image.push_back(yukari_1);
 	//drop
