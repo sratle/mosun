@@ -244,7 +244,7 @@ void Ui::draw_control()
 void Ui::level_1()
 {
 	//使用flag和defeat目标进行对照，编写关卡下一个阶段的时候需要将target_num值手动加一
-	static int target_num = 7;
+	static int target_num = 8;
 	static int target = 0;
 	if (defeat_target.empty()) {
 		for (int i = 0; i <= target_num; i++) {
@@ -326,14 +326,16 @@ void Ui::level_1()
 	i++;
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
-		enemys.push_back(new lock_simple(160, 260, 1, &(plane->position[2]), &(plane->position[3])));
 		enemys.push_back(new boss_1(360, 120, 1, &(plane->position[2]), &(plane->position[3])));
-		enemys.push_back(new lock_simple(560, 260, 1, &(plane->position[2]), &(plane->position[3])));
 		keys.set_flag(1, keys.get_flag(1) + 1);
 		target++;
 		defeat_target[target] = keys.get_flag(1) + (int)enemys.size();
 	}
 	i++;
+	if (keys.get_flag(1) == defeat_target[i]) {
+		enemys_reset();
+		note(0, 500, 720, 70, 60, 0,LIGHTGREEN, WHITE, L"L1 COMPLETE!");
+	}
 }
 
 void Ui::judge()//判定函数
@@ -347,8 +349,11 @@ void Ui::judge()//判定函数
 				continue;//敌机已经寄了就不用做判断
 			else if (enemy->state == 1)
 			{
-				if (enemy->get_id()==4)
+				if (enemy->get_id() == 4) {
 					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 4));//isthar
+					enemy->state == 2;
+					continue;
+				}
 				//随机释放掉落物
 				int randi = rand() % 100;
 				if (randi < 20)

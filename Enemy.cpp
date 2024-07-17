@@ -271,7 +271,7 @@ void lock_super::draw()
 
 //boss1 第一关的boss
 boss_1::boss_1(int x, int y, int g, int* x_t, int* y_t)
-	:width(90), height(128), plane_x(x_t), plane_y(y_t), stage(1)
+	:width(90), height(128), plane_x(x_t), plane_y(y_t), stage(0)
 {
 	attack = 150;
 	hp = 1500;
@@ -350,10 +350,10 @@ void boss_1::draw()
 				shot->set_pos(shot->get_x() + dx_1, shot->get_y() + dy);
 			}
 			else if (flag == 1 || flag == 2) {
-				shot->set_pos(shot->get_x() + 2, shot->get_y() + 20);
+				shot->set_pos(shot->get_x() + 1, shot->get_y() + 20);
 			}
 			else if (flag == 3) {
-				shot->set_pos(shot->get_x() + 1, shot->get_y() + 20);
+				shot->set_pos(shot->get_x() + 2, shot->get_y() + 20);
 			}
 			else if (flag > 3 && flag <= 6) {
 				shot->set_pos(shot->get_x(), shot->get_y() + 16);
@@ -365,10 +365,10 @@ void boss_1::draw()
 				shot->set_pos(shot->get_x(), shot->get_y() + 16);
 			}
 			else if (flag == 14) {
-				shot->set_pos(shot->get_x() - 1, shot->get_y() + 20);
+				shot->set_pos(shot->get_x() - 2, shot->get_y() + 20);
 			}
 			else if (flag == 15 || flag == 16) {
-				shot->set_pos(shot->get_x() - 2, shot->get_y() + 20);
+				shot->set_pos(shot->get_x() - 1, shot->get_y() + 20);
 			}
 			else if (flag == 17) {
 				shot->set_pos(shot->get_x() + dx_2, shot->get_y() + dy);
@@ -396,17 +396,6 @@ void boss_1::draw()
 	{
 		//子弹数量
 		static int num_2 = 18;
-		if (hp <= 0 && state == 0)
-		{
-			state = 1;
-			keys.set_flag(group, keys.get_flag(1) + 1);
-			if (shots.empty())
-				return;
-			for (auto shot : shots)
-				delete shot;
-			shots.clear();
-			return;
-		}
 		if (rand_save.empty())
 		{
 			for (int j = 0; j < 16; j++)
@@ -414,20 +403,24 @@ void boss_1::draw()
 				for (int i = 0; i < num_2; i++)//随机方向
 					rand_save.push_back(rand() % 5 - 2);
 				for (int i = 0; i < num_2; i++)//随机速度
-					rand_save.push_back(rand() % 10 + 6);
+					rand_save.push_back(rand() % 8 + 8);
 			}
 		}
 		if ((keys.timer - record_time[0]) > (FPS * speed))
 		{
 			//下面设计是需要改动的模块，子弹出鞘
+			static int flag_shot = 0;
 			shots.push_back(new Shot(5, 10, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 160, position[3] - 16);
 			for (int i = 0; i < num_2 - 2; i++) {
 				shots.push_back(new Shot(4, 10, position[2], position[3]));
-				shots.back()->set_pos(position[2] - 256 + i * 32, position[3] - 16);
+				shots.back()->set_pos(position[2] - 256 + i * 32 + flag_shot * 64, position[3] - 16);
 			}
 			shots.push_back(new Shot(5, 10, position[2], position[3]));
 			shots.back()->set_pos(position[2] + 128, position[3] - 16);
+			flag_shot++;
+			if (flag_shot == 2)
+				flag_shot = -1;
 			//end
 			record_time[0] = keys.timer;
 		}
@@ -438,9 +431,9 @@ void boss_1::draw()
 				shot->flag = 1;
 			}
 			//下面设计是需要改动的模块，子弹运动
-			double dx_1 = 20.0 * (float)(*plane_x - position[2] + 144) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
-			double dx_2 = 20.0 * (float)(*plane_x - position[2] - 144) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
-			double dy = 20.0 * (float)(*plane_y - position[3]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
+			double dx_1 = 24.0 * (float)(*plane_x - position[2] + 144) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
+			double dx_2 = 24.0 * (float)(*plane_x - position[2] - 144) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
+			double dy = 24.0 * (float)(*plane_y - position[3]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
 			if (flag == 0) {
 				shot->set_pos(shot->get_x() + dx_1, shot->get_y() + dy);
 			}
