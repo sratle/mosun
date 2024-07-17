@@ -15,7 +15,7 @@
 #include <windows.h>
 #pragma comment (lib,"Winmm.lib")
 //常量定义
-constexpr auto FPS = 50;
+constexpr auto FPS = 40;
 constexpr auto PI = 3.1415926;
 
 using std::string;

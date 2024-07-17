@@ -7,7 +7,7 @@ simple_enemy::simple_enemy(int x, int y, int g)
 {
 	attack = 150;
 	hp = 500;
-	speed = 0.3;
+	speed = 0.35;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -71,7 +71,7 @@ lock_simple::lock_simple(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 150;
 	hp = 400;
-	speed = 0.3;
+	speed = 0.35;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -188,7 +188,18 @@ void simple_three::draw()
 			shot->flag = 1;
 		}
 		//下面设计是需要改动的模块，子弹运动
-		shot->set_pos(shot->get_x(), shot->get_y() + 16);
+		if (flag == 0) {
+			shot->set_pos(shot->get_x() + 0.5, shot->get_y() + 24);
+		}
+		else if (flag == 1) {
+			shot->set_pos(shot->get_x(), shot->get_y() + 24);
+		}
+		else if (flag == 2) {
+			shot->set_pos(shot->get_x() - 0.5, shot->get_y() + 24);
+		}
+		flag++;
+		if (flag == 3)
+			flag = 0;
 		//end
 		shot->draw();
 	}
@@ -209,7 +220,7 @@ lock_super::lock_super(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 300;
 	hp = 600;
-	speed = 0.6;
+	speed = 0.65;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -315,6 +326,7 @@ void boss_1::draw()
 		if (hp <= 0 && state == 0)
 		{
 			stage = 1;
+			speed = 0.7;
 			hp = 2000;
 			if (shots.empty())
 				return;
