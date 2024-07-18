@@ -57,7 +57,7 @@ void Ui::run()
 				{
 					keys.key_num.push_back(msg.vkcode);
 				}
-				else if (msg.vkcode == 74 || msg.vkcode == 75)//CapsLock,J,K
+				else if (msg.vkcode == 88 || msg.vkcode == 90)//X,Z¼ü
 				{
 					keys.key_card = msg.vkcode;
 				}
