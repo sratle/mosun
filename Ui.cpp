@@ -370,6 +370,7 @@ void Ui::judge()//判定函数
 			{
 				enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
 				shot->flag = 1;
+				put_bk_image(shot->get_x(), shot->get_y(), keys.boom_image[0]);
 			}
 		}
 	}
@@ -385,6 +386,7 @@ void Ui::judge()//判定函数
 				keys.hp -= enemy->attack + keys.shield;
 				plane->set_stage(plane->get_stage() - 1);
 				shot->flag = 1;
+				put_bk_image(shot->get_x(), shot->get_y(), keys.boom_image[3]);
 			}
 		}
 	}
