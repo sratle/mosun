@@ -62,7 +62,7 @@ void Ui::run()
 					keys.key_card = msg.vkcode;
 				}
 			}
-			else if (msg.message = MOUSEEVENTF_MOVE && keys.condition == 2 && plane != nullptr)
+			else if (msg.x > 5 && keys.condition == 2 && plane != nullptr)
 			{
 				keys.move[0] = msg.x;
 				keys.move[1] = msg.y;
@@ -351,7 +351,7 @@ void Ui::judge()//判定函数
 			{
 				if (enemy->get_id() == 4) {
 					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 4));//isthar
-					enemy->state == 2;
+					enemy->state = 2;
 					continue;
 				}
 				//随机释放掉落物
@@ -370,7 +370,7 @@ void Ui::judge()//判定函数
 			{
 				enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
 				shot->flag = 1;
-				put_bk_image(shot->get_x(), shot->get_y(), keys.boom_image[0]);
+				put_bk_image((int)shot->get_x(), (int)shot->get_y(), keys.boom_image[0]);
 			}
 		}
 	}
@@ -386,7 +386,7 @@ void Ui::judge()//判定函数
 				keys.hp -= enemy->attack + keys.shield;
 				plane->set_stage(plane->get_stage() - 1);
 				shot->flag = 1;
-				put_bk_image(shot->get_x(), shot->get_y(), keys.boom_image[3]);
+				put_bk_image((int)shot->get_x(), (int)shot->get_y(), keys.boom_image[3]);
 			}
 		}
 	}
