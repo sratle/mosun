@@ -1,6 +1,7 @@
 #pragma once
 //包含一些通用的库，并且定义初始化函数、事件循环函数等
 
+#include <windows.h>
 #include <chrono>
 #include <cmath>
 #include <conio.h>
@@ -12,7 +13,6 @@
 #include <thread>
 #include <vector>
 #include <graphics.h>
-#include <windows.h>
 #pragma comment (lib,"Winmm.lib")
 //常量定义
 constexpr auto FPS = 40;

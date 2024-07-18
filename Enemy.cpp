@@ -7,7 +7,7 @@ simple_enemy::simple_enemy(int x, int y, int g)
 {
 	attack = 150;
 	hp = 500;
-	speed = 0.4;
+	speed = 0.45;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -76,7 +76,7 @@ lock_simple::lock_simple(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 150;
 	hp = 400;
-	speed = 0.4;
+	speed = 0.5;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -147,7 +147,7 @@ simple_three::simple_three(int x, int y, int g)
 {
 	attack = 150;
 	hp = 600;
-	speed = 0.35;
+	speed = 0.45;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -235,7 +235,7 @@ lock_super::lock_super(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 300;
 	hp = 600;
-	speed = 0.8;
+	speed = 0.90;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -306,7 +306,7 @@ boss_1::boss_1(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 150;
 	hp = 1500;
-	speed = 0.65;
+	speed = 0.7;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);

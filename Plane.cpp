@@ -225,7 +225,7 @@ void ur::set_stage(int stage_t) {
 	else if (stage == 2)
 		speed = 0.1;
 	else if (stage == 3)
-		speed = 0.2;
+		speed = 0.15;
 }
 
 int ur::get_stage() {
