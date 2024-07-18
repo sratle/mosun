@@ -27,7 +27,7 @@ public:
 
 private:
 	const int id = 0;//标识这个敌机的id
-	vector<int> record_time = { 0 , 0 };
+	vector<int> record_time = { 0 , 0 , 0 };//0:标识子弹时间 1：标识入场动画 2：标识爆炸动画
 	int height;
 	int width;
 };
@@ -40,7 +40,7 @@ public:
 
 private:
 	const int id = 1;
-	vector<int> record_time = { 0 , 0 };
+	vector<int> record_time = { 0 , 0 ,0 };
 	int height;
 	int width;
 	int* plane_x;
@@ -55,7 +55,7 @@ public:
 
 private:
 	const int id = 2;//标识这个敌机的id
-	vector<int> record_time = { 0 , 0 };
+	vector<int> record_time = { 0 , 0 ,0 };
 	int height;
 	int width;
 };
@@ -68,7 +68,7 @@ public:
 
 private:
 	const int id = 3;
-	vector<int> record_time = { 0 , 0 };
+	vector<int> record_time = { 0 , 0,0 };
 	int height;
 	int width;
 	int* plane_x;
@@ -84,7 +84,7 @@ public:
 
 private:
 	const int id = 4;
-	vector<int> record_time = { 0 , 0 };
+	vector<int> record_time = { 0 , 0,0 };
 	vector<int> rand_save;
 	int height;
 	int width;

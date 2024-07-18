@@ -21,6 +21,11 @@ void simple_enemy::draw()
 	if (state != 0)
 		return;
 	if (hp <= 0 && state == 0) {
+		if (record_time[2] < 10) {
+			put_bk_image(position[0], position[1] + 32, keys.boom_image[record_time[2] % 5]);
+			record_time[2]++;
+			return;
+		}
 		state = 1;
 		keys.set_flag(group, keys.get_flag(1) + 1);
 		return;
@@ -85,6 +90,11 @@ void lock_simple::draw()
 	if (state != 0)
 		return;
 	if (hp <= 0 && state == 0) {
+		if (record_time[2] < 10) {
+			put_bk_image(position[0], position[1] + 32, keys.boom_image[record_time[2] % 5]);
+			record_time[2]++;
+			return;
+		}
 		state = 1;
 		keys.set_flag(group, keys.get_flag(1) + 1);
 		return;
@@ -151,6 +161,11 @@ void simple_three::draw()
 	if (state != 0)
 		return;
 	if (hp <= 0 && state == 0) {
+		if (record_time[2] < 10) {
+			put_bk_image(position[0], position[1] + 32, keys.boom_image[record_time[2] % 5]);
+			record_time[2]++;
+			return;
+		}
 		state = 1;
 		keys.set_flag(group, keys.get_flag(1) + 1);
 		return;
@@ -234,6 +249,11 @@ void lock_super::draw()
 	if (state != 0)
 		return;
 	if (hp <= 0 && state == 0) {
+		if (record_time[2] < 10) {
+			put_bk_image(position[0], position[1] + 32, keys.boom_image[record_time[2] % 5]);
+			record_time[2]++;
+			return;
+		}
 		state = 1;
 		keys.set_flag(group, keys.get_flag(1) + 1);
 		return;
@@ -300,6 +320,11 @@ void boss_1::draw()
 	if (state != 0)
 		return;
 	if (hp <= 0 && state == 0 && stage == 1) {
+		if (record_time[2] < 20) {
+			put_bk_image(position[0], position[1] + 32, keys.boom_image[record_time[2] % 5]);
+			record_time[2]++;
+			return;
+		}
 		state = 1;
 		keys.set_flag(group, keys.get_flag(1) + 1);
 		return;

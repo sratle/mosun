@@ -2,55 +2,33 @@
 
 keyhouse::keyhouse()
 	:condition(0), timer(0), anu(0), star_value(0), isthar(0), attack(0), hp(0), mp(0), shield(0),
-	key_card(0),  plane_id(0), plane_unlock(0), strike(0), level(0)
+	key_card(0), plane_id(0), plane_unlock(0), strike(0), level(0)
 {
-	//加载函数或许可以使用成员函数进行代码优化
 	//预加载
-	IMAGE sakuya_1;
-	loadimage(&sakuya_1, L"assets/sakuya1.png");
-	sakuya.push_back(sakuya_1);
-	IMAGE sakuya_2;
-	loadimage(&sakuya_2, L"assets/sakuya2.png");
-	sakuya.push_back(sakuya_2);
-	IMAGE sakuya_3;
-	loadimage(&sakuya_3, L"assets/sakuya3.png");
-	sakuya.push_back(sakuya_3);
+	load_image_asset(L"assets/sakuya1.png", 0);
+	load_image_asset(L"assets/sakuya2.png", 0);
+	load_image_asset(L"assets/sakuya3.png", 0);
 	//plane
-	IMAGE swq_1;
-	loadimage(&swq_1, L"assets/swq.png");
-	plane_image.push_back(swq_1);
+	load_image_asset(L"assets/swq.png", 1);
 	//enemy
-	IMAGE yuyuko_1;//0
-	loadimage(&yuyuko_1, L"assets/yuyuko.png");
-	enemy_image.push_back(yuyuko_1);
-	IMAGE reimu_1;//1
-	loadimage(&reimu_1, L"assets/reimu.png");
-	enemy_image.push_back(reimu_1);
-	IMAGE tenshi_1;//2
-	loadimage(&tenshi_1, L"assets/tenshi.png");
-	enemy_image.push_back(tenshi_1);
-	IMAGE alice_1;//3
-	loadimage(&alice_1, L"assets/alice.png");
-	enemy_image.push_back(alice_1);
-	IMAGE yukari_1;//4
-	loadimage(&yukari_1, L"assets/yukari.png");
-	enemy_image.push_back(yukari_1);
+	load_image_asset(L"assets/yuyuko.png", 2);//0
+	load_image_asset(L"assets/reimu.png", 2);//1
+	load_image_asset(L"assets/tenshi.png", 2);//2
+	load_image_asset(L"assets/alice.png", 2);//3
+	load_image_asset(L"assets/yukari.png", 2);//4
 	//drop
-	IMAGE updrop_1;
-	loadimage(&updrop_1, L"assets/updrop.png");
-	drop_image.push_back(updrop_1);
-	IMAGE hp_1;
-	loadimage(&hp_1, L"assets/hp.png");
-	drop_image.push_back(hp_1);
-	IMAGE mp_1;
-	loadimage(&mp_1, L"assets/mp.png");
-	drop_image.push_back(mp_1);
-	IMAGE star_1;
-	loadimage(&star_1, L"assets/star.png");
-	drop_image.push_back(star_1);
-	IMAGE isthar_1;
-	loadimage(&isthar_1, L"assets/isthar.png");
-	drop_image.push_back(isthar_1);
+	load_image_asset(L"assets/updrop.png", 3);
+	load_image_asset(L"assets/hp.png", 3);
+	load_image_asset(L"assets/mp.png", 3);
+	load_image_asset(L"assets/star.png", 3);
+	load_image_asset(L"assets/isthar.png", 3);
+	load_image_asset(L"assets/anu.png", 3);
+	//boom
+	load_image_asset(L"assets/boom01.png", 4);
+	load_image_asset(L"assets/boom02.png", 4);
+	load_image_asset(L"assets/boom03.png", 4);
+	load_image_asset(L"assets/boom04.png", 4);
+	load_image_asset(L"assets/boom05.png", 4);
 	//bullet
 	load_shots(L"assets/BulletAa000.png");
 	load_shots(L"assets/BulletAa001.png");
@@ -79,6 +57,33 @@ void keyhouse::set_flag(int pos, int val)
 int keyhouse::get_flag_size()
 {
 	return (int)desigh_flags.size();
+}
+
+void keyhouse::load_image_asset(LPCTSTR asset, int id)
+{
+	IMAGE img;
+	loadimage(&img, asset);
+	switch (id)
+	{
+	case 0:
+		sakuya.push_back(img);
+		break;
+	case 1:
+		plane_image.push_back(img);
+		break;
+	case 2:
+		enemy_image.push_back(img);
+		break;
+	case 3:
+		drop_image.push_back(img);
+		break;
+	case 4:
+		boom_image.push_back(img);
+		break;
+	case 5:
+		card_image.push_back(img);
+		break;
+	}
 }
 
 void keyhouse::load_shots(LPCTSTR imgfile)

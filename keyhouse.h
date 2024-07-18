@@ -6,10 +6,12 @@ class keyhouse
 {
 public:
 	//资源预加载
-	vector<IMAGE> sakuya;
-	vector<IMAGE> plane_image;
-	vector<IMAGE> enemy_image;
-	vector<IMAGE> drop_image;
+	vector<IMAGE> sakuya;//0
+	vector<IMAGE> plane_image;//1
+	vector<IMAGE> enemy_image;//2
+	vector<IMAGE> drop_image;//3
+	vector<IMAGE> boom_image;//4
+	vector<IMAGE> card_image;//5
 	//一张图片加载十四次，-30，-20，-10，0，10，20，30，150，160，170，180，190，200，210度
 	//1：6用10度，1：3用20度，1：2用30度
 	vector<IMAGE> shots_image;
@@ -46,5 +48,6 @@ public:
 private:
 	vector<int> desigh_flags;
 	void load_shots(LPCTSTR);
+	void load_image_asset(LPCTSTR, int);
 };
 
