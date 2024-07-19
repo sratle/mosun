@@ -23,7 +23,7 @@ public:
 	//控制用变量
 	int condition;//键盘输入的状态变量，0：主界面模式，1：菜单模式，2：战斗模式
 	int timer;//全局计时器
-	int get_flag(int pos);//0:NULL 1:用于关卡1的判定，2：用于关卡2的判定
+	int get_flag(int pos);//0:给卡牌设计刷新用 1:用于关卡1的判定，2：用于关卡2的判定，3：用于关卡3的判定
 	int get_flag_size();
 	void set_flag(int pos, int val);
 	int level;//关卡
@@ -31,6 +31,9 @@ public:
 	int star_value;//save
 	int anu;//save
 	int isthar;//save
+	vector<int> plane_level{ 0,0,0,0 };//save 存储四种机体的当前等级
+	vector<int> cards_unlock{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };//save 16张卡的解锁情况
+	int plane_unlock;//save 机体解锁
 	//机体数据,这是当前的飞机数据加载到这里，实时变化控制
 	int plane_id;//从ui.planes_data中加载对应id
 	int mp;
@@ -38,8 +41,6 @@ public:
 	int attack;
 	int shield;
 	int strike;//暴击
-	vector<int> plane_level{ 0,0,0,0 };//save 存储四种机体的当前等级
-	int plane_unlock;//save 顺序解锁机体 1~3
 
 	keyhouse();
 	void load();//将存档加载

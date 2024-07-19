@@ -2,7 +2,7 @@
 extern keyhouse keys;
 
 Ui::Ui(int width, int height)
-	:width(width), height(height), current_index(0), plane(nullptr)
+	:width(width), height(height), current_index(0), plane(nullptr),music_id(0),bgm_id(0)
 {
 }
 
@@ -81,6 +81,7 @@ void Ui::run()
 		if (keys.timer > FPS * 30000)
 		{
 			keys.timer = 0;
+			close();
 		}
 	}
 	EndBatchDraw();
@@ -163,6 +164,7 @@ void Ui::draw_control()
 			plane->set_stage(0);
 			//随机数种子更新
 			srand((unsigned)time(NULL));
+			bgm_id = 2;
 			//init end
 		}
 		//按下2，进入无尽
@@ -193,7 +195,7 @@ void Ui::draw_control()
 		if (keys.condition == 2 && (!keys.key_num.empty()) && keys.key_num.back() == 48)
 		{
 			keys.key_num.clear();
-			PlaySound(L"assets/exit.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			music_id = 1;
 			set_current_index(1);
 			keys.condition = 1;
 			//重置flags，用于关卡的flags
@@ -216,6 +218,14 @@ void Ui::draw_control()
 					delete drop;
 				drops.clear();
 			}
+			if (!card_select.empty())
+			{
+				for (auto card : card_select)
+					delete card;
+				card_select.clear();
+			}
+			card_now.clear();
+			bgm_id = 0;
 			return;
 		}
 		//死亡
@@ -334,7 +344,211 @@ void Ui::level_1()
 	i++;
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
-		note(0, 500, 720, 70, 60, 0,LIGHTGREEN, WHITE, L"L1 COMPLETE!");
+		note(0, 500, 720, 70, 60, 0, LIGHTGREEN, WHITE, L"L1 COMPLETE!");
+	}
+}
+
+void Ui::card_control()//卡牌相关的操控、使用
+{
+	//第一次进入这个函数
+	if (card_now.empty())
+	{
+		int first = rand() % 6;
+		int second = rand() % 6;
+		card_now.push_back(card_select[first]->get_id());
+		card_select[first]->set_pos(0);
+		while (first == second)
+			second = rand() % 6;
+		card_now.push_back(card_select[second]->get_id());
+		card_select[second]->set_pos(1);
+	}
+	for (int pos_id : card_now)
+	{
+		if (pos_id == -1)
+		{
+			//刷新
+			if (keys.timer - keys.get_flag(0) > FPS * 5) {
+				int rand_id = rand() % 6;
+				if (card_now[0] == pos_id) {
+					while (card_select[rand_id]->get_id() == card_now[1])
+						rand_id = rand() % 6;
+					card_now[0] = card_select[rand_id]->get_id();
+					card_select[card_now[0]]->set_pos(0);
+				}
+				else {
+					while (card_select[rand_id]->get_id() == card_now[0])
+						rand_id = rand() % 6;
+					card_now[1] = card_select[rand_id]->get_id();
+					card_select[card_now[1]]->set_pos(1);
+				}
+			}
+			continue;
+		}
+		card_select[pos_id]->draw();
+		if (card_select[pos_id]->get_state() == 3)
+		{
+			//发动效果
+			switch (card_select[pos_id]->get_id())
+			{
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			case 8:
+				break;
+			case 9:
+				break;
+			case 10:
+				break;
+			case 11:
+				break;
+			case 12:
+				break;
+			case 13:
+				break;
+			case 14:
+				break;
+			case 15:
+				break;
+			}
+			//重置
+			if (card_now[0] == pos_id)
+				card_now[0] = -1;
+			else
+				card_now[1] = -1;
+			card_select[pos_id]->set_state(0);
+			keys.set_flag(0, keys.timer);
+		}
+	}
+	//检测到了按键
+	if (keys.key_card == 88)//对0位置操控
+	{
+		if (card_now[0] == -1) {
+			keys.key_card = 0;
+			return;
+		}
+		if (card_select[card_now[0]]->get_state() == 0 && card_select[card_now[1]]->get_state() == 1) {
+			card_select[card_now[0]]->set_state(1);
+			card_select[card_now[1]]->set_state(0);
+		}
+		else if (card_select[card_now[0]]->get_state() == 0) {
+			card_select[card_now[0]]->set_state(1);
+		}
+		else if (card_select[card_now[0]]->get_state() == 1 && card_now[1] != -1 && keys.mp >= card_select[card_now[0]]->get_cost(card_now[0])) {
+			keys.mp -= card_select[card_now[0]]->get_cost(card_now[0]);
+			card_select[card_now[0]]->set_state(2);
+		}
+	}
+	else if (keys.key_card == 90)//对1位置操控
+	{
+		if (card_now[1] == -1) {
+			keys.key_card = 0;
+			return;
+		}
+		if (card_select[card_now[1]]->get_state() == 0 && card_select[card_now[0]]->get_state() == 1) {
+			card_select[card_now[1]]->set_state(1);
+			card_select[card_now[0]]->set_state(0);
+		}
+		else if (card_select[card_now[1]]->get_state() == 0) {
+			card_select[card_now[1]]->set_state(1);
+		}
+		else if (card_select[card_now[1]]->get_state() == 1 && card_now[0] != -1 && keys.mp > card_select[card_now[1]]->get_cost(card_now[1])) {
+			keys.mp -= card_select[card_now[1]]->get_cost(card_now[1]);
+			card_select[card_now[1]]->set_state(2);
+		}
+	}
+	keys.key_card = 0;
+}
+
+void Ui::music_control()
+{
+	while(1)
+	{
+		switch (music_id)
+		{
+		case 0:
+			break;
+		case 1:
+			PlaySound(L"assets/exit.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			music_id = 0;
+			break;
+		case 2:
+			break;
+		}
+		Sleep(DWORD(400.0 / FPS));
+	}
+}
+
+void Ui::bgm_control()
+{
+	int last_bgm = -1;
+	mciSendString(L"open assets/main01.mp3 alias main01", 0, 0, 0);
+	mciSendString(L"open assets/main02.mp3 alias main02", 0, 0, 0);
+	mciSendString(L"open assets/level01.mp3 alias level01", 0, 0, 0);
+	mciSendString(L"open assets/level02.mp3 alias level02", 0, 0, 0);
+	mciSendString(L"open assets/level03.mp3 alias level03", 0, 0, 0);
+	mciSendString(L"open assets/infinity.mp3 alias infinity", 0, 0, 0);
+	while (1)
+	{
+		if (last_bgm != bgm_id) {
+			switch (last_bgm)
+			{
+			case 0:
+				mciSendString(L"stop main01", 0, 0, 0);
+				break;
+			case 1:
+				mciSendString(L"stop main02", 0, 0, 0);
+				break;
+			case 2:
+				mciSendString(L"stop level01", 0, 0, 0);
+				break;
+			case 3:
+				mciSendString(L"stop level02", 0, 0, 0);
+				break;
+			case 4:
+				mciSendString(L"stop level03", 0, 0, 0);
+				break;
+			case 5:
+				mciSendString(L"stop infinity", 0, 0, 0);
+				break;
+			}
+			last_bgm = bgm_id;
+			Sleep(DWORD(1000.0 / FPS));
+			switch (last_bgm)
+			{
+			case 0:
+				mciSendString(L"play main01 repeat", 0, 0, 0);
+				break;
+			case 1:
+				mciSendString(L"play main02 repeat", 0, 0, 0);
+				break;
+			case 2:
+				mciSendString(L"play level01 repeat", 0, 0, 0);
+				break;
+			case 3:
+				mciSendString(L"play level02 repeat", 0, 0, 0);
+				break;
+			case 4:
+				mciSendString(L"play level03 repeat", 0, 0, 0);
+				break;
+			case 5:
+				mciSendString(L"play infinity repeat", 0, 0, 0);
+				break;
+			}
+		}
+		Sleep(DWORD(1000.0 / FPS));
 	}
 }
 
