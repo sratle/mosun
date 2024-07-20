@@ -240,15 +240,19 @@ int ur::get_maxmp() {
 	return mps[keys.plane_level[0]];
 }
 
+int ur::get_maxlevel() {
+	return max_level;
+}
+
 nanna::nanna() {}
 
 void nanna::skill()
 {
-	if (keys.timer - record_time[1] > FPS * 20) {
-		keys.hp += 5 * keys.plane_level[1];
+	if (keys.timer - record_time[2] > FPS * 15) {
+		keys.hp += 5 * keys.plane_level[1] + 5;
 		if (keys.hp > hps[keys.plane_level[1]])
 			keys.hp = hps[keys.plane_level[1]];
-		record_time[1] = keys.timer;
+		record_time[2] = keys.timer;
 	}
 }
 
@@ -263,15 +267,254 @@ void nanna::upgrade()
 
 void nanna::draw()
 {
-
+	//入场动画
+	if (record_time[1] > position[1])
+	{
+		put_bk_image(position[0], record_time[1], keys.plane_image[keys.plane_id]);
+		setfillcolor(WHITE);
+		fillcircle(position[2], record_time[1] + 64, 5);
+		record_time[1] -= 5;
+		return;
+	}
+	else
+		record_time[1] = 0;
+	//控制函数
+	control();
+	//子弹渲染
+	if (stage == 0)
+	{
+		//复用模块
+		if ((keys.timer - record_time[0]) > (FPS * speed))
+		{
+			//下面设计是需要改动的模块
+			shots.push_back(new Shot(7, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2]+4 , shots.back()->get_y() - 2);
+			shots.push_back(new Shot(7, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2] - 36, shots.back()->get_y() - 2);
+			//end
+			record_time[0] = keys.timer;
+		}
+		int flag = 0;//用于切换子弹形态
+		for (auto shot : shots)
+		{
+			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1028)) {
+				shot->flag = 1;
+			}
+			//下面设计是需要改动的模块
+			
+			shot->set_pos(shot->get_x(), shot->get_y() - 22);
+			//end
+			shot->draw();
+		}
+		//删除模块，需改动
+		if (shots.size() > 30 && shots[0]->flag && shots[1]->flag) {
+			delete shots[0];
+			delete shots[1];
+			shots.erase(shots.begin());
+			shots.erase(shots.begin());
+		}
+		//复用end
+	}
+	else if (stage == 1)
+	{
+		//复用模块
+		if ((keys.timer - record_time[0]) > (FPS * speed))
+		{
+			//下面设计是需要改动的模块
+			shots.push_back(new Shot(7, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2]+4, shots.back()->get_y() +12);
+			shots.push_back(new Shot(7, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2] - 36, shots.back()->get_y() +12);
+			shots.push_back(new Shot(9, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2]+4, shots.back()->get_y() -32);
+			shots.push_back(new Shot(9, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2] - 36, shots.back()->get_y() -32);
+			//end
+			record_time[0] = keys.timer;
+		}
+		int flag = 0;//用于切换子弹形态
+		for (auto shot : shots)
+		{
+			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1028)) {
+				shot->flag = 1;
+			}
+			//下面设计是需要改动的模块
+			shot->set_pos(shot->get_x(), shot->get_y() - 20);
+			//end
+			shot->draw();
+		}
+		//删除模块，需改动，改进版本
+		static int num_1 = 4;
+		if (shots.size() > num_1 * 6) {
+			for (int i = 0; i < num_1; i++) {
+				if (shots[i]->flag != 1)
+					return;
+			}
+			for (int i = 0; i < num_1; i++)
+				delete shots[i];
+			for (int i = 0; i < num_1; i++)
+				shots.erase(shots.begin());
+		}
+		//复用end
+	}
+	else if (stage == 2)
+	{
+		//复用模块
+		if ((keys.timer - record_time[0]) > (FPS * speed))
+		{
+			//下面设计是需要改动的模块
+			shots.push_back(new Shot(7, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2]-16, shots.back()->get_y());
+			shots.push_back(new Shot(7, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2]-56, shots.back()->get_y());
+			shots.push_back(new Shot(7, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2]+24, shots.back()->get_y());
+			shots.push_back(new Shot(9, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2] - 36, shots.back()->get_y() -32);
+			shots.push_back(new Shot(9, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2] +4, shots.back()->get_y() - 32);
+			shots.push_back(new Shot(11, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2] -16, shots.back()->get_y() - 64);
+			//end
+			record_time[0] = keys.timer;
+		}
+		int flag = 0;//用于切换子弹形态
+		for (auto shot : shots)
+		{
+			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1028)) {
+				shot->flag = 1;
+				continue;
+			}
+			//下面设计是需要改动的模块
+			shot->set_pos(shot->get_x(), shot->get_y() - 18);
+			//end
+			shot->draw();
+		}
+		//删除模块，需改动，改进版本
+		static int num_1 = 6;
+		if (shots.size() > num_1 * 6) {
+			for (int i = 0; i < num_1; i++) {
+				if (shots[i]->flag != 1)
+					return;
+			}
+			for (int i = 0; i < num_1; i++)
+				delete shots[i];
+			for (int i = 0; i < num_1; i++)
+				shots.erase(shots.begin());
+		}
+		//复用end
+	}
+	else if (stage == 3)
+	{
+		//复用模块
+		if ((keys.timer - record_time[0]) > (FPS * speed))
+		{
+			//下面设计是需要改动的模块
+			shots.push_back(new Shot(7, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2] +4, shots.back()->get_y()+12);
+			shots.push_back(new Shot(7, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2] - 36, shots.back()->get_y()+12);
+			shots.push_back(new Shot(9, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2] + 4, shots.back()->get_y()-32);
+			shots.push_back(new Shot(9, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2] - 36, shots.back()->get_y()-32);
+			shots.push_back(new Shot(13, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2] + 44, shots.back()->get_y()+12);
+			shots.back()->flag = 2;
+			shots.push_back(new Shot(13, 3, position[2], position[3]));
+			shots.back()->set_pos(position[2] - 76, shots.back()->get_y()+12);
+			shots.back()->flag = 2;
+			//end
+			record_time[0] = keys.timer;
+		}
+		int flag = 0;//用于切换子弹形态
+		for (auto shot : shots)
+		{
+			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1028)) {
+				shot->flag = 1;
+			}
+			//下面设计是需要改动的模块
+			if (flag <= 3) {
+				shot->set_pos(shot->get_x(), shot->get_y() - 20);
+			}
+			else if (flag == 4){
+				if (shot->flag!=1)
+					shot->flag++;
+				if (shot->flag<26){
+					shot->set_pos(shot->get_x() + 4, shot->get_y() - 16);
+				}
+				else {
+					shot->set_pos(shot->get_x() - 4, shot->get_y() - 16);
+				}
+			}
+			else if (flag == 5) {
+				if (shot->flag != 1)
+					shot->flag++;
+				if (shot->flag < 26) {
+					shot->set_pos(shot->get_x() - 4, shot->get_y() - 16);
+				}
+				else {
+					shot->set_pos(shot->get_x() + 4, shot->get_y() - 16);
+				}
+			}
+			flag++;
+			if (flag ==6)
+				flag = 0;
+			//end
+			shot->draw();
+		}
+		//删除模块，需改动，改进版本
+			static int num_1 = 6;
+		if (shots.size() > num_1 * 6) {
+			for (int i = 0; i < num_1; i++) {
+				if (shots[i]->flag !=1)
+				     return;
+			}
+			for (int i = 0; i < num_1; i++)
+				delete shots[i];
+			for (int i = 0; i < num_1; i++)
+				shots.erase(shots.begin());
+		}
+		//复用end
+	}
 }
 
 void nanna::set_stage(int stage_t) {
 	stage = stage_t;
+	static int max_stage = 3;
+	if (stage > max_stage) {
+		stage = max_stage;
+		return;
+	}
+	if (stage < 0) {
+		stage = 0;
+		return;
+	}
+	shot_clear();
+	if (stage == 0)
+		speed = 0.15;
+	else if (stage == 1)
+		speed = 0.2;
+	else if (stage == 2)
+		speed = 0.2;
+	else if (stage == 3)
+		speed = 0.15;
 }
 
 int nanna::get_stage() {
 	return stage;
+}
+
+int nanna::get_maxhp() {
+	return hps[keys.plane_level[0]];
+}
+
+int nanna::get_maxmp() {
+	return mps[keys.plane_level[0]];
+}
+
+int nanna::get_maxlevel() {
+	return max_level;
 }
 
 ea::ea() {}
@@ -350,6 +593,7 @@ void Plane::control()
 	put_bk_image(position[0], position[1], keys.plane_image[keys.plane_id]);
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 5);
+	skill();
 	if (abs(position[2] - keys.move[0]) > 24){
 		if (position[2] > keys.move[0])
 			position[2] = position[2] - 24;

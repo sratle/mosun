@@ -2,7 +2,7 @@
 
 keyhouse::keyhouse()
 	:condition(0), timer(0), anu(0), star_value(0), isthar(0), attack(0), hp(0), mp(0), shield(0),
-	key_card(0), plane_id(0), plane_unlock(0), strike(0), level(0)
+	key_card(0), plane_id(1), plane_unlock(0), strike(0), level(0)
 {
 	//‘§º”‘ÿ
 	load_image_asset(L"assets/sakuya1.png", 0);
@@ -33,14 +33,23 @@ keyhouse::keyhouse()
 	load_image_asset(L"assets/boom04.png", 4);
 	load_image_asset(L"assets/boom05.png", 4);
 	//bullet
-	load_shots(L"assets/BulletAa000.png");
-	load_shots(L"assets/BulletAa001.png");
-	load_shots(L"assets/BulletAa002.png");
-	load_shots(L"assets/BulletAa003.png");
-	load_shots(L"assets/BulletAa004.png");
-	load_shots(L"assets/BulletAa005.png");
-	load_shots(L"assets/BulletAa006.png");
-	//effect
+	load_shots(L"assets/BulletAa000.png");//0
+	load_shots(L"assets/BulletAa001.png");//1
+	load_shots(L"assets/BulletAa002.png");//2
+	load_shots(L"assets/BulletAa003.png");//3
+	load_shots(L"assets/BulletAa004.png");//4
+	load_shots(L"assets/BulletAa005.png");//5
+	load_shots(L"assets/BulletAa006.png");//6
+	load_shots(L"assets/bulletCc000.png");//7
+	load_shots(L"assets/bulletCc001.png");//8
+	load_shots(L"assets/bulletCc002.png");//9
+	load_shots(L"assets/bulletCc003.png");//10
+	load_shots(L"assets/bulletCc004.png");//11
+	load_shots(L"assets/bulletCc005.png");//12
+	load_shots(L"assets/bulletDd000.png");//13
+	load_shots(L"assets/bulletDd001.png");//14
+	//other
+	
 }
 
 int keyhouse::get_flag(int pos)
@@ -85,6 +94,9 @@ void keyhouse::load_image_asset(LPCTSTR asset, int id)
 		break;
 	case 5:
 		card_image.push_back(img);
+		break;
+	case 6:
+		other_image.push_back(img);
 		break;
 	}
 }

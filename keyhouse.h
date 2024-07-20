@@ -12,6 +12,7 @@ public:
 	vector<IMAGE> drop_image;//3
 	vector<IMAGE> boom_image;//4
 	vector<IMAGE> card_image;//5
+	vector<IMAGE> other_image;//6
 	//一张图片加载十四次，-30，-20，-10，0，10，20，30，150，160，170，180，190，200，210度
 	//1：6用10度，1：3用20度，1：2用30度
 	vector<IMAGE> shots_image;

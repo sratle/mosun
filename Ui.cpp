@@ -542,7 +542,7 @@ void Ui::bgm_control()
 				break;
 			}
 			last_bgm = bgm_id;
-			Sleep(DWORD(1000.0 / FPS));
+			Sleep(10);
 			switch (last_bgm)
 			{
 			case 0:
@@ -599,7 +599,7 @@ void Ui::judge()//判定函数
 				music_id = rand() % 6 + 2;
 				srand((unsigned)time(NULL));
 			}//若击中
-			else if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 20)
+			else if (shot->flag !=1 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 20)
 			{
 				enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
 				shot->flag = 1;
@@ -616,9 +616,9 @@ void Ui::judge()//判定函数
 			continue;//敌机已经寄了就不用做判断
 		for (auto shot : enemy->shots)
 		{
-			if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 10)
+			if (shot->flag !=1 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 10)
 			{
-				keys.hp -= enemy->attack + keys.shield;
+				keys.hp -= (enemy->attack - keys.shield);
 				plane->set_stage(plane->get_stage() - 1);
 				shot->flag = 1;
 				music_id = 11;

@@ -419,7 +419,7 @@ void boss_1::draw()
 		//删除模块，需改动,18shots
 		if (shots.size() > num_1 * 6) {
 			for (int i = 0; i < num_1; i++) {
-				if (shots[i]->flag == 0)
+				if (shots[i]->flag != 1)
 					return;
 			}
 			for (int i = 0; i < num_1; i++)
@@ -489,7 +489,7 @@ void boss_1::draw()
 		//删除模块，需改动,18shots
 		if (shots.size() > num_2 * 6) {
 			for (int i = 0; i < num_2; i++) {
-				if (shots[i]->flag == 0)
+				if (shots[i]->flag != 1)
 					return;
 			}
 			for (int i = 0; i < num_2; i++)
