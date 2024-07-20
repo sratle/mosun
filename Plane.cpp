@@ -24,7 +24,7 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 	{
 		put_bk_image(position[0], record_time[1], keys.plane_image[keys.plane_id]);
 		setfillcolor(WHITE);
-		fillcircle(position[2], record_time[1] + 64, 8);
+		fillcircle(position[2], record_time[1] + 64, 5);
 		record_time[1] -= 5;
 		return;
 	}
@@ -349,7 +349,7 @@ void Plane::control()
 	//渲染机体
 	put_bk_image(position[0], position[1], keys.plane_image[keys.plane_id]);
 	setfillcolor(WHITE);
-	fillcircle(position[2], position[3], 8);
+	fillcircle(position[2], position[3], 5);
 	if (abs(position[2] - keys.move[0]) > 24){
 		if (position[2] > keys.move[0])
 			position[2] = position[2] - 24;

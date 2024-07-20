@@ -30,6 +30,7 @@ private:
 public:
 	void music_control();//控制当前的音效
 	void bgm_control();//控制当前的bgm
+	void input();//输入
 	Ui(int, int);//输入长宽
 	~Ui() {};
 	void init();

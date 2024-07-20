@@ -26,7 +26,6 @@ void Ui::init()
 
 void Ui::run()
 {
-	ExMessage msg;
 	BeginBatchDraw();
 	draw_control();
 	FlushBatchDraw();
@@ -37,39 +36,6 @@ void Ui::run()
 	while (true)
 	{
 		start = clock();
-		if (peekmessage(&msg))//如果有信息
-		{
-			//按键控制模块
-			if (msg.message == WM_KEYDOWN && keys.condition == 0)
-			{
-				keys.key_any.push_back(msg.vkcode);
-			}
-			else if (msg.message == WM_KEYDOWN && keys.condition == 1)
-			{
-				if (msg.vkcode >= 48 && msg.vkcode <= 57)
-				{
-					keys.key_num.push_back(msg.vkcode);
-				}
-			}
-			else if (msg.message == WM_KEYDOWN && keys.condition == 2)
-			{
-				if (msg.vkcode >= 48 && msg.vkcode <= 57)
-				{
-					keys.key_num.push_back(msg.vkcode);
-				}
-				else if (msg.vkcode == 88 || msg.vkcode == 90)//X,Z键
-				{
-					keys.key_card = msg.vkcode;
-				}
-			}
-			else if (msg.x > 5 && keys.condition == 2 && plane != nullptr)
-			{
-				keys.move[0] = msg.x;
-				keys.move[1] = msg.y;
-			}
-		}
-		while (peekmessage(&msg)) {}//msg会有堆积，影响按键判断
-
 		draw_control();//调用渲染控制函数
 		FlushBatchDraw();
 		end = clock();
@@ -122,12 +88,13 @@ void Ui::draw_control()
 	}
 	else if (current_index == 1)
 	{
+		COLORREF color = RGB(102, 204, 255);
 		note(10, 10, 120, 50, 30, 1, LIGHTGRAY, WHITE, L"按0:退出");
-		note(10, 200, 300, 70, 50, 1, BLACK, WHITE, L"按1:踏上旅程");
-		note(10, 320, 300, 70, 50, 1, BLACK, WHITE, L"按2:无尽征途");
-		note(10, 440, 300, 70, 50, 1, BLACK, WHITE, L"按3:进入机库");
-		note(10, 560, 300, 70, 50, 1, BLACK, WHITE, L"按4:进入牌库");
-		note(10, 680, 300, 70, 50, 1, BLACK, WHITE, L"按5:打开设置");
+		note(10, 200, 300, 70, 50, 1, BLACK, color, L"按1:踏上旅程");
+		note(10, 320, 300, 70, 50, 1, BLACK, color, L"按2:无尽征途");
+		note(10, 440, 300, 70, 50, 1, BLACK, color, L"按3:进入机库");
+		note(10, 560, 300, 70, 50, 1, BLACK, color, L"按4:进入牌库");
+		note(10, 680, 300, 70, 50, 1, BLACK, color, L"按5:打开设置");
 		//菜单界面下方的sakuya
 		put_bk_image(350 + int(300 * sin(keys.timer / 30.0)), 800, keys.sakuya[keys.timer / 10 % 3]);
 		//按下0，返回开始界面
@@ -485,6 +452,28 @@ void Ui::music_control()
 			music_id = 0;
 			break;
 		case 2:
+			PlaySound(L"assets/damage01.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			music_id = 0;
+			break;
+		case 3:
+			PlaySound(L"assets/damage02.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			music_id = 0;
+			break;
+		case 4:
+			PlaySound(L"assets/damage03.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			music_id = 0;
+			break;
+		case 5:
+			PlaySound(L"assets/damage04.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			music_id = 0;
+			break;
+		case 6:
+			PlaySound(L"assets/damage05.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			music_id = 0;
+			break;
+		case 7:
+			PlaySound(L"assets/damage06.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			music_id = 0;
 			break;
 		}
 		Sleep(DWORD(400.0 / FPS));
@@ -579,6 +568,7 @@ void Ui::judge()//判定函数
 				else if (randi < 75)
 					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 3));//star
 				enemy->state = 2;
+				music_id = rand() % 6 + 2;
 			}//若击中
 			else if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 20)
 			{
@@ -636,6 +626,47 @@ void Ui::judge()//判定函数
 				break;
 			}
 		}
+	}
+}
+
+void Ui::input()
+{
+	ExMessage msg;
+	while (true)
+	{
+		if (peekmessage(&msg))//如果有信息
+		{
+			//按键控制模块
+			if (msg.message == WM_KEYDOWN && keys.condition == 0)
+			{
+				keys.key_any.push_back(msg.vkcode);
+			}
+			else if (msg.message == WM_KEYDOWN && keys.condition == 1)
+			{
+				if (msg.vkcode >= 48 && msg.vkcode <= 57)
+				{
+					keys.key_num.push_back(msg.vkcode);
+				}
+			}
+			else if (msg.message == WM_KEYDOWN && keys.condition == 2)
+			{
+				if (msg.vkcode >= 48 && msg.vkcode <= 57)
+				{
+					keys.key_num.push_back(msg.vkcode);
+				}
+				else if (msg.vkcode == 88 || msg.vkcode == 90)//X,Z键
+				{
+					keys.key_card = msg.vkcode;
+				}
+			}
+			else if (msg.x > 5 && keys.condition == 2 && plane != nullptr)
+			{
+				keys.move[0] = msg.x;
+				keys.move[1] = msg.y;
+			}
+		}
+		while (peekmessage(&msg)) {}//msg会有堆积，影响按键判断
+		Sleep(DWORD(400.0 / FPS));
 	}
 }
 

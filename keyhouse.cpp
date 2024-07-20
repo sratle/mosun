@@ -9,7 +9,10 @@ keyhouse::keyhouse()
 	load_image_asset(L"assets/sakuya2.png", 0);
 	load_image_asset(L"assets/sakuya3.png", 0);
 	//plane
-	load_image_asset(L"assets/swq.png", 1);
+	load_image_asset(L"assets/chirno.png", 1);
+	load_image_asset(L"assets/patchouli.png", 1);
+	load_image_asset(L"assets/sanae.png", 1);
+	load_image_asset(L"assets/meirin.png", 1);
 	//enemy
 	load_image_asset(L"assets/yuyuko.png", 2);//0
 	load_image_asset(L"assets/reimu.png", 2);//1
