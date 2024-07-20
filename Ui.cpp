@@ -2,7 +2,7 @@
 extern keyhouse keys;
 
 Ui::Ui(int width, int height)
-	:width(width), height(height), current_index(0), plane(nullptr),music_id(0),bgm_id(0)
+	:width(width), height(height), current_index(0), plane(nullptr), music_id(0), bgm_id(0)
 {
 }
 
@@ -449,7 +449,7 @@ void Ui::card_control()//卡牌相关的操控、使用
 
 void Ui::music_control()
 {
-	while(1)
+	while (1)
 	{
 		switch (music_id)
 		{
@@ -496,7 +496,7 @@ void Ui::music_control()
 			music_id = 0;
 			break;
 		case 11:
-			PlaySound(L"assets/hit.wav", NULL, SND_ASYNC);
+			PlaySound(L"assets/hit.wav", NULL, SND_ASYNC | SND_NOSTOP);
 			music_id = 0;
 			break;
 		case 12:
