@@ -569,6 +569,7 @@ void Ui::judge()//ÅÐ¶¨º¯Êý
 					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 3));//star
 				enemy->state = 2;
 				music_id = rand() % 6 + 2;
+				srand((unsigned)time(NULL));
 			}//Èô»÷ÖÐ
 			else if (shot->flag == 0 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 20)
 			{
