@@ -81,6 +81,7 @@ void Ui::draw_control()
 		}//如果是其他任意按键就进入
 		else if (keys.condition == 0 && (!keys.key_any.empty()))
 		{
+			music_id = 8;
 			keys.key_any.clear();
 			set_current_index(1);
 			keys.condition = 1;//让按键输入的模式转换到1模式：菜单模式
@@ -108,6 +109,7 @@ void Ui::draw_control()
 		//按下1，进入战斗界面
 		if (keys.condition == 1 && (!keys.key_num.empty()) && keys.key_num.back() == 49)
 		{
+			music_id = 8;
 			keys.key_num.clear();
 			set_current_index(2);
 			keys.condition = 2;
@@ -409,13 +411,16 @@ void Ui::card_control()//卡牌相关的操控、使用
 		if (card_select[card_now[0]]->get_state() == 0 && card_select[card_now[1]]->get_state() == 1) {
 			card_select[card_now[0]]->set_state(1);
 			card_select[card_now[1]]->set_state(0);
+			music_id = 9;
 		}
 		else if (card_select[card_now[0]]->get_state() == 0) {
 			card_select[card_now[0]]->set_state(1);
+			music_id = 10;
 		}
 		else if (card_select[card_now[0]]->get_state() == 1 && card_now[1] != -1 && keys.mp >= card_select[card_now[0]]->get_cost(card_now[0])) {
 			keys.mp -= card_select[card_now[0]]->get_cost(card_now[0]);
 			card_select[card_now[0]]->set_state(2);
+			music_id = 9;
 		}
 	}
 	else if (keys.key_card == 90)//对1位置操控
@@ -427,13 +432,16 @@ void Ui::card_control()//卡牌相关的操控、使用
 		if (card_select[card_now[1]]->get_state() == 0 && card_select[card_now[0]]->get_state() == 1) {
 			card_select[card_now[1]]->set_state(1);
 			card_select[card_now[0]]->set_state(0);
+			music_id = 9;
 		}
 		else if (card_select[card_now[1]]->get_state() == 0) {
 			card_select[card_now[1]]->set_state(1);
+			music_id = 10;
 		}
 		else if (card_select[card_now[1]]->get_state() == 1 && card_now[0] != -1 && keys.mp > card_select[card_now[1]]->get_cost(card_now[1])) {
 			keys.mp -= card_select[card_now[1]]->get_cost(card_now[1]);
 			card_select[card_now[1]]->set_state(2);
+			music_id = 9;
 		}
 	}
 	keys.key_card = 0;
@@ -448,31 +456,51 @@ void Ui::music_control()
 		case 0:
 			break;
 		case 1:
-			PlaySound(L"assets/exit.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			PlaySound(L"assets/exit.wav", NULL, SND_ASYNC);
 			music_id = 0;
 			break;
 		case 2:
-			PlaySound(L"assets/damage01.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			PlaySound(L"assets/damage01.wav", NULL, SND_ASYNC);
 			music_id = 0;
 			break;
 		case 3:
-			PlaySound(L"assets/damage02.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			PlaySound(L"assets/damage02.wav", NULL, SND_ASYNC);
 			music_id = 0;
 			break;
 		case 4:
-			PlaySound(L"assets/damage03.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			PlaySound(L"assets/damage03.wav", NULL, SND_ASYNC);
 			music_id = 0;
 			break;
 		case 5:
-			PlaySound(L"assets/damage04.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			PlaySound(L"assets/damage04.wav", NULL, SND_ASYNC);
 			music_id = 0;
 			break;
 		case 6:
-			PlaySound(L"assets/damage05.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			PlaySound(L"assets/damage05.wav", NULL, SND_ASYNC);
 			music_id = 0;
 			break;
 		case 7:
-			PlaySound(L"assets/damage06.wav", NULL, SND_ASYNC | SND_NOSTOP);
+			PlaySound(L"assets/damage06.wav", NULL, SND_ASYNC);
+			music_id = 0;
+			break;
+		case 8:
+			PlaySound(L"assets/enter.wav", NULL, SND_ASYNC);
+			music_id = 0;
+			break;
+		case 9:
+			PlaySound(L"assets/change.wav", NULL, SND_ASYNC);
+			music_id = 0;
+			break;
+		case 10:
+			PlaySound(L"assets/select.wav", NULL, SND_ASYNC);
+			music_id = 0;
+			break;
+		case 11:
+			PlaySound(L"assets/hit.wav", NULL, SND_ASYNC);
+			music_id = 0;
+			break;
+		case 12:
+			PlaySound(L"assets/upgrade.wav", NULL, SND_ASYNC);
 			music_id = 0;
 			break;
 		}
@@ -575,6 +603,8 @@ void Ui::judge()//判定函数
 			{
 				enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
 				shot->flag = 1;
+				if (enemy->hp > 0)
+					music_id = 11;
 				put_bk_image((int)shot->get_x(), (int)shot->get_y(), keys.boom_image[0]);
 			}
 		}
@@ -591,6 +621,7 @@ void Ui::judge()//判定函数
 				keys.hp -= enemy->attack + keys.shield;
 				plane->set_stage(plane->get_stage() - 1);
 				shot->flag = 1;
+				music_id = 11;
 				put_bk_image((int)shot->get_x(), (int)shot->get_y(), keys.boom_image[3]);
 			}
 		}
@@ -604,6 +635,7 @@ void Ui::judge()//判定函数
 		if (sqrt(pow(abs(drop->get_x() - plane->position[2]), 2) + pow(abs(drop->get_y() - plane->position[3]), 2)) < 32)
 		{
 			drop->state = 1;
+			music_id = 12;
 			switch (drop->get_id())
 			{
 			case 0:

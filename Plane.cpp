@@ -174,13 +174,13 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 			}
 			//下面设计是需要改动的模块
 			if (flag == 0) {
-				shot->set_pos(shot->get_x() + 1, shot->get_y() - 24);
+				shot->set_pos(shot->get_x() + 1, shot->get_y() - 22);
 			}
 			else if (flag == 1 || flag == 2 || flag == 3) {
 				shot->set_pos(shot->get_x(), shot->get_y() - 24);
 			}
 			else if (flag == 4) {
-				shot->set_pos(shot->get_x() - 1, shot->get_y() - 24);
+				shot->set_pos(shot->get_x() - 1, shot->get_y() - 22);
 			}
 			flag++;
 			if (flag == 5)
