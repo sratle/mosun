@@ -347,7 +347,7 @@ void Ui::level_1()
 	i++;
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
-		note(0, 500, 720, 70, 60, 0, LIGHTGREEN, WHITE, L"L1 COMPLETE!");
+		note(0, 500, 720, 70, 60, 0, LIGHTGREEN, WHITE, L"STAGE01 COMPLETE!");
 	}
 }
 
