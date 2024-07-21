@@ -17,8 +17,8 @@ public:
 	//1：6用10度，1：3用20度，1：2用30度
 	vector<IMAGE> shots_image;
 	//键盘输入
-	vector<BYTE> key_any;//condition0
-	vector<BYTE> key_num;//condition1
+	int key_any;//condition0
+	int key_num;//condition1
 	int key_card;//condition2
 	vector<int> move{ 360,964 };
 	//控制用变量
