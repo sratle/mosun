@@ -25,6 +25,7 @@ private:
 	void level_1();//关卡1函数，里面分为数个阶段
 	void enemys_reset();//重置敌机
 	void card_control();//卡牌效果
+	void plane_house();//机库函数
 	vector<int> defeat_target;//目标击败的总数，主要用于自动化统计敌机数量，完成关卡推进
 
 public:

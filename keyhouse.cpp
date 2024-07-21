@@ -1,7 +1,7 @@
 #include "keyhouse.h"
 
 keyhouse::keyhouse()
-	:condition(0), timer(0), anu(0), star_value(0), isthar(0), attack(0), hp(0), mp(0), shield(0),
+	:condition(0), timer(0), sun(0), star_value(0), moon(0), attack(0), hp(0), mp(0), shield(0),
 	key_card(0), plane_id(0), plane_unlock(1), strike(0), level(0)
 {
 	//Ô¤¼ÓÔØ
@@ -24,8 +24,8 @@ keyhouse::keyhouse()
 	load_image_asset(L"assets/hp.png", 3);
 	load_image_asset(L"assets/mp.png", 3);
 	load_image_asset(L"assets/star.png", 3);
-	load_image_asset(L"assets/isthar.png", 3);
-	load_image_asset(L"assets/anu.png", 3);
+	load_image_asset(L"assets/moon.png", 3);
+	load_image_asset(L"assets/sun.png", 3);
 	//boom
 	load_image_asset(L"assets/boom01.png", 4);
 	load_image_asset(L"assets/boom02.png", 4);

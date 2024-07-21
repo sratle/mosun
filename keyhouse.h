@@ -30,8 +30,8 @@ public:
 	int level;//关卡
 	//背包资源
 	int star_value;//save
-	int anu;//save
-	int isthar;//save
+	int sun;//save
+	int moon;//save
 	vector<int> plane_level{ 0,0,0,0 };//save 存储四种机体的当前等级
 	vector<int> cards_unlock{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };//save 16张卡的解锁情况
 	int plane_unlock;//save 机体解锁

@@ -115,7 +115,7 @@ void Ui::draw_control()
 		//菜单界面下方的sakuya
 		put_bk_image(350 + int(300 * sin(keys.timer / 30.0)), 800, keys.sakuya[keys.timer / 10 % 3]);
 		//按下0，返回开始界面
-		if (keys.condition == 1 && keys.key_num== 48)
+		if (keys.condition == 1 && keys.key_num == 48)
 		{
 			keys.key_num = 0;
 			music_id = 1;
@@ -123,7 +123,7 @@ void Ui::draw_control()
 			keys.condition = 0;
 		}
 		//按下1，进入战斗界面
-		if (keys.condition == 1 && keys.key_num== 49)
+		if (keys.condition == 1 && keys.key_num == 49)
 		{
 			music_id = 8;
 			keys.key_num = 0;
@@ -155,14 +155,14 @@ void Ui::draw_control()
 		//按下2，进入无尽
 		if (keys.condition == 1 && keys.key_num == 50)
 		{
-			
+
 		}
 		//按下3，进入机库
 		if (keys.condition == 1 && keys.key_num == 51)
 		{
 			music_id = 8;
 			bgm_id = 1;
-			keys.key_num=0;
+			keys.key_num = 0;
 			set_current_index(6);
 		}
 		//按下4，进入牌库
@@ -171,7 +171,7 @@ void Ui::draw_control()
 
 		}
 		//按下5，进入设置
-		if (keys.condition == 1 && keys.key_num== 53)
+		if (keys.condition == 1 && keys.key_num == 53)
 		{
 
 		}
@@ -180,9 +180,9 @@ void Ui::draw_control()
 	{
 		note(10, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"按0:退出");
 		//返回菜单
-		if (keys.condition == 2 && keys.key_num== 48)
+		if (keys.condition == 2 && keys.key_num == 48)
 		{
-			keys.key_num=0;
+			keys.key_num = 0;
 			music_id = 1;
 			set_current_index(1);
 			keys.condition = 1;
@@ -243,104 +243,7 @@ void Ui::draw_control()
 	}
 	else if (current_index == 6)
 	{
-		static int flag = 0;
-		static int temp_id = 0;
-		note(10, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"按0:退出");
-		note(0, 10, 720, 50, 30, 0, LIGHTGRAY, WHITE, L"按1~4选择机体");
-		if (keys.condition == 1 && keys.key_num > 48 && keys.key_num <= 52){
-			temp_id = keys.key_num - 49;
-			if (keys.key_num <= keys.plane_unlock + 49) {
-				flag = 0;
-			}
-			else {
-				flag = 1;
-			}
-			keys.key_num = 0;
-		}
-		if (flag == 0) {
-			COLORREF color = RGB(102, 204, 255);
-			string text = "level:" +std::to_string(keys.plane_level[temp_id]+1);
-			wstring out1(text.begin(), text.end());
-			note(0, 400, 720, 80, 60, 0, color, WHITE,out1.c_str());
-		}
-		if (flag==1) {
-			COLORREF color = RGB(102, 204, 255);
-			note(180, 400, 400, 100, 80, 1, color, WHITE, L"LOCKED!");
-			if (temp_id==1)
-				note(0, 500, 720, 80, 60, 0, color, WHITE, L"使用1个isthar解锁?");
-			if (temp_id == 2)
-				note(0, 500, 720, 80, 60, 0, color, WHITE, L"使用3个isthar解锁?");
-			if (temp_id == 3)
-				note(0, 500, 720, 80, 60, 0, color, WHITE, L"使用1个anu解锁?");
-			note(400, 600, 200, 60, 40, 0, color, WHITE, L"确认按9");
-		}
-		put_bk_image(330, 200, keys.plane_image[temp_id]);
-		if (keys.condition == 1 && keys.key_num == 57&& flag == 1) {
-			keys.key_num = 0;
-			if (temp_id == 1) {
-				if (keys.isthar >= 1) {
-					flag = 0;
-					keys.isthar -= 1;
-					keys.plane_unlock = 1;
-				}
-				else {
-					flag = 3;
-				}
-			}
-			if (temp_id == 2) {
-				if (keys.plane_unlock < 1) {
-					flag = 2;
-				}
-				if (keys.isthar >= 3 && flag == 1) {
-					flag = 0;
-					keys.isthar -= 3;
-					keys.plane_unlock = 2;
-				}
-				else if (keys.isthar<3&&flag==1){
-					flag = 3;
-				}
-			}
-			if (temp_id == 3) {
-				if (keys.plane_unlock < 2) {
-					flag = 2;
-				}
-				if (keys.anu >= 1 && flag == 1) {
-					flag = 0;
-					keys.anu -= 1;
-					keys.plane_unlock = 3;
-				}
-				else if (keys.anu< 1 && flag == 1) {
-					flag = 3;
-				}
-			}
-		}
-		if (flag == 3) {
-			COLORREF color = RGB(102, 204, 255);
-			note(80, 400, 560, 100, 70, 1, color, WHITE, L"所需要的资源不足");
-			note(400, 600, 200, 60, 40, 0, color, WHITE, L"确认按9");
-		}
-		if (flag == 2) {
-			COLORREF color = RGB(102, 204, 255);
-			note(80, 400, 560, 100, 70, 1, color, WHITE, L"需先解锁前一机体");
-			note(400, 600, 200, 60, 40, 0, color, WHITE, L"确认按9");
-		}
-		if (keys.condition == 1 && keys.key_num == 57 && (flag == 2||flag==3)) {
-			temp_id = 0;
-			flag = 0;
-		}
-		//返回菜单
-		if (keys.condition == 1 && keys.key_num == 48)
-		{
-			if (flag)
-				keys.plane_id = 0;
-			else
-				keys.plane_id = temp_id;
-			keys.key_num=0;
-			music_id = 1;
-			bgm_id = 0;
-			set_current_index(1);
-			return;
-		}
+		plane_house();
 	}
 }
 
@@ -438,6 +341,206 @@ void Ui::level_1()
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
 		note(0, 500, 720, 70, 60, 0, LIGHTGREEN, WHITE, L"L1 COMPLETE!");
+	}
+}
+
+void Ui::plane_house()
+{
+	//数据
+	static vector<vector<int>> up_cost{
+		{1,2,4,1},
+		{4,6,2,1},
+		{4,6,2,4,2},
+		{4,7,3,5,2}
+	};//maxlevel:5,5,6,6
+	static vector<vector<int>> up_kind{
+		{0,0,0,1},
+		{0,0,1,2},
+		{0,0,1,1,2},
+		{0,0,1,1,2}
+	};//0:star,1:moon,2:sun
+	COLORREF color = RGB(102, 204, 255);
+	static int flag = 0;
+	static int temp_id = 0;
+	//选择机体
+	note(10, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"按0:退出");
+	note(0, 10, 720, 50, 30, 0, LIGHTGRAY, WHITE, L"按1~4选择机体");
+	if (keys.condition == 1 && keys.key_num > 48 && keys.key_num <= 52) {
+		temp_id = keys.key_num - 49;
+		if (keys.key_num <= keys.plane_unlock + 49) {
+			flag = 0;
+		}
+		else {
+			flag = 1;
+		}
+		keys.key_num = 0;
+	}
+	//升级界面
+	if (flag == 0) {
+		string text = "level:" + std::to_string(keys.plane_level[temp_id] + 1);
+		wstring out1(text.begin(), text.end());
+		note(0, 400, 720, 80, 60, 0, color, WHITE, out1.c_str());
+		if (keys.plane_level[temp_id] >= up_cost[temp_id].size()) {
+			note(0, 500, 720, 80, 60, 0, color, WHITE, L"已经是最高等级!");
+		}
+		else {
+			string text2 = "Next Level:" + std::to_string(up_cost[temp_id][keys.plane_level[temp_id]]);
+			if (up_kind[temp_id][keys.plane_level[temp_id]] == 0) {
+				text2 += " star";
+			}
+			else if (up_kind[temp_id][keys.plane_level[temp_id]] == 1) {
+				text2 += " moon";
+			}
+			else if (up_kind[temp_id][keys.plane_level[temp_id]] == 2) {
+				text2 += " sun";
+			}
+			wstring out2(text2.begin(), text2.end());
+			note(0, 500, 720, 80, 60, 0, color, WHITE, out2.c_str());
+			note(400, 600, 200, 60, 40, 0, color, WHITE, L"升级按9");
+		}
+	}
+	//升级花费
+	if (keys.condition == 1 && keys.key_num == 57 && flag == 0 && (keys.plane_level[temp_id] < up_cost[temp_id].size())) {
+		keys.key_num = 0;
+		int cost = up_cost[temp_id][keys.plane_level[temp_id]];
+		if (up_kind[temp_id][keys.plane_level[temp_id]] == 0 && keys.star_value >= cost) {
+			keys.plane_level[temp_id]++;
+			keys.star_value -= cost;
+			flag = 5;
+		}
+		else if (up_kind[temp_id][keys.plane_level[temp_id]] == 1 && keys.moon >= cost) {
+			keys.plane_level[temp_id]++;
+			keys.moon -= cost;
+			flag = 5;
+		}
+		else if (up_kind[temp_id][keys.plane_level[temp_id]] == 2 && keys.sun >= cost) {
+			keys.plane_level[temp_id]++;
+			keys.sun -= cost;
+			flag = 5;
+		}
+		else {
+			flag = 4;
+		}
+	}
+	//升级判定
+	if (flag == 4) {
+		note(80, 400, 560, 100, 70, 1, color, WHITE, L"资源不足！");
+		note(400, 600, 200, 60, 40, 0, color, WHITE, L"确认按9");
+	}
+	if (keys.condition == 1 && keys.key_num == 57 && flag == 4) {
+		flag = 0;
+		keys.key_num = 0;
+	}
+	if (flag == 5) {
+		note(80, 400, 560, 100, 70, 1, color, WHITE, L"升级成功！");
+		note(400, 600, 200, 60, 40, 0, color, WHITE, L"确认按9");
+	}
+	if (keys.condition == 1 && keys.key_num == 57 && flag == 5) {
+		flag = 0;
+		keys.key_num = 0;
+	}
+	//解锁界面
+	if (flag == 1) {
+		note(180, 400, 400, 100, 80, 1, color, WHITE, L"LOCKED!");
+		if (temp_id == 1)
+			note(0, 500, 720, 80, 60, 0, color, WHITE, L"使用1个moon解锁?");
+		if (temp_id == 2)
+			note(0, 500, 720, 80, 60, 0, color, WHITE, L"使用3个moon解锁?");
+		if (temp_id == 3)
+			note(0, 500, 720, 80, 60, 0, color, WHITE, L"使用1个sun解锁?");
+		note(400, 600, 200, 60, 40, 0, color, WHITE, L"确认按9");
+	}
+
+	//机体和名字
+	put_bk_image(328, 200, keys.plane_image[temp_id]);
+	if (temp_id == 0) {
+		note(0, 320, 720, 40, 30, 0, color, WHITE, L"Chirno");
+	}
+	else if (temp_id == 1) {
+		note(0, 320, 720, 40, 30, 0, color, WHITE, L"Patchouli");
+	}
+	else if (temp_id == 2) {
+		note(0, 320, 720, 40, 30, 0, color, WHITE, L"Sanae");
+	}
+	else if (temp_id == 3) {
+		note(0, 320, 720, 40, 30, 0, color, WHITE, L"Meirin");
+	}
+	//资源数据
+	string text3 = "star:" + std::to_string(keys.star_value);
+	wstring out3(text3.begin(), text3.end());
+	note(0, 950, 240, 40, 35, 0, color, WHITE, out3.c_str());
+	string text4 = "moon:" + std::to_string(keys.moon);
+	wstring out4(text4.begin(), text4.end());
+	note(240, 950, 240, 40, 35, 0, color, WHITE, out4.c_str());
+	string text5 = "sun:" + std::to_string(keys.sun);
+	wstring out5(text5.begin(), text5.end());
+	note(480, 950, 240, 40, 35, 0, color, WHITE, out5.c_str());
+
+	//解锁机体
+	if (keys.condition == 1 && keys.key_num == 57 && flag == 1) {
+		keys.key_num = 0;
+		if (temp_id == 1) {
+			if (keys.moon >= 1) {
+				flag = 0;
+				keys.moon -= 1;
+				keys.plane_unlock = 1;
+			}
+			else {
+				flag = 3;
+			}
+		}
+		if (temp_id == 2) {
+			if (keys.plane_unlock < 1) {
+				flag = 2;
+			}
+			if (keys.moon >= 3 && flag == 1) {
+				flag = 0;
+				keys.moon -= 3;
+				keys.plane_unlock = 2;
+			}
+			else if (keys.moon < 3 && flag == 1) {
+				flag = 3;
+			}
+		}
+		if (temp_id == 3) {
+			if (keys.plane_unlock < 2) {
+				flag = 2;
+			}
+			if (keys.sun >= 1 && flag == 1) {
+				flag = 0;
+				keys.sun -= 1;
+				keys.plane_unlock = 3;
+			}
+			else if (keys.sun < 1 && flag == 1) {
+				flag = 3;
+			}
+		}
+	}
+	if (flag == 3) {
+		note(80, 400, 560, 100, 70, 1, color, WHITE, L"所需要的资源不足");
+		note(400, 600, 200, 60, 40, 0, color, WHITE, L"确认按9");
+	}
+	if (flag == 2) {
+		note(80, 400, 560, 100, 70, 1, color, WHITE, L"需先解锁前一机体");
+		note(400, 600, 200, 60, 40, 0, color, WHITE, L"确认按9");
+	}
+	if (keys.condition == 1 && keys.key_num == 57 && (flag == 2 || flag == 3)) {
+		temp_id = 0;
+		flag = 0;
+		keys.key_num = 0;
+	}
+	//返回菜单
+	if (keys.condition == 1 && keys.key_num == 48)
+	{
+		if (flag)
+			keys.plane_id = 0;
+		else
+			keys.plane_id = temp_id;
+		keys.key_num = 0;
+		music_id = 1;
+		bgm_id = 0;
+		set_current_index(1);
+		return;
 	}
 }
 
@@ -705,7 +808,7 @@ void Ui::judge()//判定函数
 			else if (enemy->state == 1)
 			{
 				if (enemy->get_id() == 4) {
-					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 4));//isthar
+					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 4));//moon
 					enemy->state = 2;
 					continue;
 				}
@@ -723,7 +826,7 @@ void Ui::judge()//判定函数
 				music_id = rand() % 6 + 2;
 				srand((unsigned)time(NULL));
 			}//若击中
-			else if (shot->flag !=1 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 20)
+			else if (shot->flag != 1 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 20)
 			{
 				enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
 				shot->flag = 1;
@@ -740,7 +843,7 @@ void Ui::judge()//判定函数
 			continue;//敌机已经寄了就不用做判断
 		for (auto shot : enemy->shots)
 		{
-			if (shot->flag !=1 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 10)
+			if (shot->flag != 1 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 10)
 			{
 				keys.hp -= (enemy->attack - keys.shield);
 				plane->set_stage(plane->get_stage() - 1);
@@ -779,7 +882,7 @@ void Ui::judge()//判定函数
 				keys.star_value++;
 				break;
 			case 4:
-				keys.isthar++;
+				keys.moon++;
 				break;
 			}
 		}
@@ -796,20 +899,20 @@ void Ui::input()
 			//按键控制模块
 			if (msg.message == WM_KEYDOWN && keys.condition == 0)
 			{
-				keys.key_any=msg.vkcode;
+				keys.key_any = msg.vkcode;
 			}
 			else if (msg.message == WM_KEYDOWN && keys.condition == 1)
 			{
 				if (msg.vkcode >= 48 && msg.vkcode <= 57)
 				{
-					keys.key_num=msg.vkcode;
+					keys.key_num = msg.vkcode;
 				}
 			}
 			else if (msg.message == WM_KEYDOWN && keys.condition == 2)
 			{
 				if (msg.vkcode >= 48 && msg.vkcode <= 57)
 				{
-					keys.key_num=msg.vkcode;
+					keys.key_num = msg.vkcode;
 				}
 				else if (msg.vkcode == 88 || msg.vkcode == 90)//X,Z键
 				{
