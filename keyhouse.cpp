@@ -1,7 +1,7 @@
 #include "keyhouse.h"
 
 keyhouse::keyhouse()
-	:condition(0), timer(0), sun(0), star_value(0), moon(0), attack(0), hp(0), mp(0), shield(0),
+	:condition(0), timer(0), sun(100), star_value(100), moon(100), attack(0), hp(0), mp(0), shield(0),
 	key_card(0), plane_id(0), plane_unlock(1), strike(0), level(0)
 {
 	//‘§º”‘ÿ

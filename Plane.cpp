@@ -248,7 +248,7 @@ nanna::nanna() {}
 
 void nanna::skill()
 {
-	if (keys.timer - record_time[2] > FPS * 15) {
+	if (keys.timer - record_time[2] > FPS * 12) {
 		keys.hp += 5 * keys.plane_level[1] + 5;
 		if (keys.hp > hps[keys.plane_level[1]])
 			keys.hp = hps[keys.plane_level[1]];
@@ -521,9 +521,9 @@ ea::ea() {}
 
 void ea::skill()
 {
-	if ((keys.timer - record_time[1]) % 2 == 0) {
+	record_time[2] = rand() % 100;
+	if (record_time[2]>20) {
 		keys.shield = shields[keys.plane_level[2]] * 2;
-		record_time[1] = keys.timer;
 	}
 	else {
 		keys.shield = shields[keys.plane_level[2]];
@@ -556,9 +556,9 @@ enlil::enlil() {}
 
 void enlil::skill()
 {
-	if ((keys.timer - record_time[1]) % 2 == 0) {
+	record_time[2] = rand() % 100;
+	if (record_time[2]>20) {
 		keys.strike = strikes[keys.plane_level[3]] * 2;
-		record_time[1] = keys.timer;
 	}
 	else {
 		keys.strike = strikes[keys.plane_level[3]];

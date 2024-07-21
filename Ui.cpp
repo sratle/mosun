@@ -178,7 +178,14 @@ void Ui::draw_control()
 	}
 	else if (current_index == 2 || current_index == 3 || current_index == 4)
 	{
+		COLORREF color = RGB(102, 204, 255);
 		note(10, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"按0:退出");
+		string text2 = "Stage:" + std::to_string(keys.level + 1);
+		wstring out2(text2.begin(), text2.end());
+		note(200, 10, 100, 50, 30, 0, color, WHITE, out2.c_str());
+		string text3 = "Level:" + std::to_string(keys.plane_level[keys.plane_id] + 1);
+		wstring out3(text3.begin(), text3.end());
+		note(420, 10, 100, 50, 30, 0, color, WHITE, out3.c_str());
 		//返回菜单
 		if (keys.condition == 2 && keys.key_num == 48)
 		{
@@ -359,6 +366,36 @@ void Ui::plane_house()
 		{0,0,1,1,2},
 		{0,0,1,1,2}
 	};//0:star,1:moon,2:sun
+	static vector<vector<int>> hps{
+		{300,350,420,500,600 },
+		{ 300,370,450,540,650 },
+		{ 400,470,550,640,740,850 },
+		{ 200,250,310,380,460,550 }
+	};
+	static vector<vector<int>> mps{
+		{200,230,260,300,360 },
+		{ 300,350,400,460,520 },
+		{ 200,230,260,300,350,400 },
+		{ 220,250,280,320,370,420 }
+	};
+	static vector<vector<int>> attacks{
+		{ 100,120,145,170,200 },
+		{ 80,110,140,175,220 },
+		{ 100,120,150,180,210,250 },
+		{ 130,160,200,240,300,370 }
+	};
+	static vector<vector<int>> shields{
+		{ 0,20,40,60,75 },
+		{ 20,35,50,60,70 },
+		{ 15,30,40,50,65,75 },
+		{ 10,20,30,45,55,60 }
+	};
+	static vector<vector<int>> strikes{
+		{ 0,2,4,7,10 },
+		{ 2,4,7,10,13 },
+		{ 2,5,8,11,15,19 },
+		{ 10,13,17,22,27,35 }
+	};
 	COLORREF color = RGB(102, 204, 255);
 	static int flag = 0;
 	static int temp_id = 0;
@@ -453,18 +490,42 @@ void Ui::plane_house()
 
 	//机体和名字
 	put_bk_image(328, 200, keys.plane_image[temp_id]);
+
 	if (temp_id == 0) {
 		note(0, 320, 720, 40, 30, 0, color, WHITE, L"Chirno");
+		note(0, 900, 720, 50, 45, 0, color, WHITE, L"无特殊被动");
 	}
 	else if (temp_id == 1) {
+		string text6 = std::to_string(keys.plane_level[temp_id] * 5 + 5);
+		wstring out6(text6.begin(), text6.end());
 		note(0, 320, 720, 40, 30, 0, color, WHITE, L"Patchouli");
+		note(0, 900, 720, 50, 45, 0, color, WHITE, L"每12秒恢复HP");
+		note(164, 900, 720, 50, 45, 0, color, WHITE, out6.c_str());
 	}
 	else if (temp_id == 2) {
 		note(0, 320, 720, 40, 30, 0, color, WHITE, L"Sanae");
+		note(0, 900, 720, 50, 45, 0, color, WHITE, L"有20%概率防御力翻倍");
 	}
 	else if (temp_id == 3) {
 		note(0, 320, 720, 40, 30, 0, color, WHITE, L"Meirin");
+		note(0, 900, 720, 50, 45, 0, color, WHITE, L"有20%概率暴击率翻倍");
 	}
+	//数值显示
+	string text7 = "HP:" + std::to_string(hps[temp_id][keys.plane_level[temp_id]]);
+	wstring hp(text7.begin(), text7.end());
+	note(0, 690, 720, 30, 28, 0, color, WHITE, hp.c_str());
+	text7 = "MP:" + std::to_string(mps[temp_id][keys.plane_level[temp_id]]);
+	wstring mp(text7.begin(), text7.end());
+	note(0, 725, 720, 30, 28, 0, color, WHITE, mp.c_str());
+	text7 = "ATTACK:" + std::to_string(attacks[temp_id][keys.plane_level[temp_id]]);
+	wstring attack(text7.begin(), text7.end());
+	note(0, 760, 720, 30, 28, 0, color, WHITE, attack.c_str());
+	text7 = "SHIELD:" + std::to_string(shields[temp_id][keys.plane_level[temp_id]]);
+	wstring shield(text7.begin(), text7.end());
+	note(0, 795, 720, 30, 28, 0, color, WHITE, shield.c_str());
+	text7 = "STRIKE:" + std::to_string(strikes[temp_id][keys.plane_level[temp_id]]);
+	wstring strike(text7.begin(), text7.end());
+	note(0, 830, 720, 30, 28, 0, color, WHITE, strike.c_str());
 	//资源数据
 	string text3 = "star:" + std::to_string(keys.star_value);
 	wstring out3(text3.begin(), text3.end());
