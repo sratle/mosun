@@ -305,7 +305,7 @@ boss_1::boss_1(int x, int y, int g, int* x_t, int* y_t)
 	:width(90), height(128), plane_x(x_t), plane_y(y_t), stage(0)
 {
 	attack = 150;
-	hp = 1500;
+	hp = 3000;
 	speed = 0.7;
 	state = 0;
 	group = g;
@@ -352,7 +352,7 @@ void boss_1::draw()
 		{
 			stage = 1;
 			speed = 0.75;
-			hp = 2000;
+			hp = 4000;
 			if (shots.empty())
 				return;
 			for (auto shot : shots)
