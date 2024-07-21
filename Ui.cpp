@@ -36,7 +36,7 @@ void Ui::init()
 	add_page(page_6);
 
 	IMAGE* page_7 = new IMAGE(width, height);
-	loadimage(page_7, L"assets/attack01.png");//»ú¿â
+	loadimage(page_7, L"assets/planehouse.png");//»ú¿â
 	add_page(page_7);
 }
 
