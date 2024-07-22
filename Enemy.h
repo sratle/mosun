@@ -136,3 +136,23 @@ private:
 	int left_x;
 	int right_x;
 };
+
+class boss_2 :public Enemy
+{
+public:
+	boss_2(int, int, int, int*, int*);//需传入初始化判定位置,关卡id，自己飞机的坐标指针
+	void draw() override;
+	int get_id() override;
+
+private:
+	const int id = 8;
+	vector<int> record_time = { 0 , 0,0 };
+	vector<int> rand_save;
+	int height;
+	int width;
+	int stage;
+	int* plane_x;
+	int* plane_y;
+	int left_x;
+	int right_x;
+};

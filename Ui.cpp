@@ -357,6 +357,7 @@ void Ui::stage_1()
 			keys.stage = 1;
 			set_current_index(3);
 			defeat_target.clear();
+			bgm_id = 3;
 		}
 	}
 }
@@ -435,6 +436,26 @@ void Ui::stage_2()
 		defeat_target[target] = keys.get_flag(2) + (int)enemys.size();
 	}
 	i++;
+	if (keys.get_flag(2) == defeat_target[i]) {
+		enemys_reset();
+		enemys.push_back(new boss_2(360, 120, 2, &(plane->position[2]), &(plane->position[3])));
+		keys.set_flag(2, keys.get_flag(2) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(2) + (int)enemys.size();
+	}
+	i++;
+	if (keys.get_flag(2) == defeat_target[i]) {
+		enemys_reset();
+		note(0, 500, 720, 70, 60, 0, LIGHTGREEN, WHITE, L"STAGE02 COMPLETE!");
+		static int count = 0;
+		count++;
+		if (count == FPS * 5) {
+			keys.stage = 2;
+			set_current_index(4);
+			defeat_target.clear();
+		}
+		bgm_id = 4;
+	}
 }
 
 void Ui::plane_house()
