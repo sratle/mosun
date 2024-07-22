@@ -794,7 +794,7 @@ void three_move::draw()
 
 //boss2 第二关的boss
 boss_2::boss_2(int x, int y, int g, int* x_t, int* y_t)
-	:width(92), height(104), plane_x(x_t), plane_y(y_t), stage(0),left_x(x-60),right_x(x+60)
+	:width(92), height(104), plane_x(x_t), plane_y(y_t), stage(0),left_x(x-40),right_x(x+40)
 {
 	attack = 200;
 	hp = 5000;
