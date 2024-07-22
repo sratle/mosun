@@ -107,3 +107,32 @@ private:
 	int* plane_x;
 	int* plane_y;
 };
+
+class five_super :public Enemy
+{
+public:
+	five_super(int, int, int,int);//需传入初始化判定位置,关卡id，方向+-1
+	void draw() override;
+
+private:
+	const int id = 6;
+	vector<int> record_time = { 0 , 0,0 };
+	int height;
+	int width;
+	int rotate;
+};
+
+class three_move :public Enemy
+{
+public:
+	three_move(int, int, int);//需传入初始化判定位置,关卡id
+	void draw() override;
+
+private:
+	const int id = 7;
+	vector<int> record_time = { 0 , 0,0 };
+	int height;
+	int width;
+	int left_x;
+	int right_x;
+};

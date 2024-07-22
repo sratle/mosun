@@ -376,8 +376,59 @@ void Ui::stage_2()
 	if (keys.get_flag(2) == defeat_target[i]) {
 		enemys_reset();
 		//添加enemy,需修改
-		enemys.push_back(new lock_extend(580, 140, 1, &(plane->position[2]), &(plane->position[3])));//分别是x，y坐标和group参数，group就是关卡id
-		enemys.push_back(new lock_extend(140, 140, 1, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new lock_extend(560, 140, 2, &(plane->position[2]), &(plane->position[3])));//分别是x，y坐标和group参数，group就是关卡id
+		enemys.push_back(new lock_extend(160, 140, 2, &(plane->position[2]), &(plane->position[3])));
+		//下面三句话不用改
+		keys.set_flag(2, keys.get_flag(2) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(2) + (int)enemys.size();
+	}
+	i++;
+	//end
+	if (keys.get_flag(2) == defeat_target[i]) {
+		enemys_reset();
+		//添加enemy,需修改
+		enemys.push_back(new five_super(580, 200, 2, -6));//分别是x，y坐标和group参数，group就是关卡id
+		enemys.push_back(new lock_extend(360, 180, 2, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new five_super(140, 200, 2, 6));
+		//下面三句话不用改
+		keys.set_flag(2, keys.get_flag(2) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(2) + (int)enemys.size();
+	}
+	i++;
+	if (keys.get_flag(2) == defeat_target[i]) {
+		enemys_reset();
+		//添加enemy,需修改
+		enemys.push_back(new five_super(580, 220, 2, -6));//分别是x，y坐标和group参数，group就是关卡id
+		enemys.push_back(new five_super(440, 80, 2, 2));
+		enemys.push_back(new five_super(280, 80, 2, -2));
+		enemys.push_back(new five_super(140, 220, 2, 6));
+		//下面三句话不用改
+		keys.set_flag(2, keys.get_flag(2) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(2) + (int)enemys.size();
+	}
+	i++;
+	if (keys.get_flag(2) == defeat_target[i]) {
+		enemys_reset();
+		//添加enemy,需修改
+		enemys.push_back(new lock_extend(560, 200, 2, &(plane->position[2]), &(plane->position[3])));//分别是x，y坐标和group参数，group就是关卡id
+		enemys.push_back(new lock_extend(160, 200, 2, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new three_move(360, 120, 2));
+		//下面三句话不用改
+		keys.set_flag(2, keys.get_flag(2) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(2) + (int)enemys.size();
+	}
+	i++;
+	if (keys.get_flag(2) == defeat_target[i]) {
+		enemys_reset();
+		//添加enemy,需修改
+		enemys.push_back(new five_super(580, 220, 2, -6));
+		enemys.push_back(new five_super(140, 220, 2, 6));
+		enemys.push_back(new three_move(460, 120, 2));
+		enemys.push_back(new three_move(260, 120, 2));
 		//下面三句话不用改
 		keys.set_flag(2, keys.get_flag(2) + 1);
 		target++;

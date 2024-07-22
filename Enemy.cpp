@@ -28,7 +28,7 @@ void simple_enemy::draw()
 			return;
 		}
 		state = 1;
-		keys.set_flag(group, keys.get_flag(1) + 1);
+		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
 	//入场动画
@@ -97,7 +97,7 @@ void lock_simple::draw()
 			return;
 		}
 		state = 1;
-		keys.set_flag(group, keys.get_flag(1) + 1);
+		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
 	//入场动画
@@ -168,7 +168,7 @@ void simple_three::draw()
 			return;
 		}
 		state = 1;
-		keys.set_flag(group, keys.get_flag(1) + 1);
+		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
 	//入场动画
@@ -256,7 +256,7 @@ void lock_super::draw()
 			return;
 		}
 		state = 1;
-		keys.set_flag(group, keys.get_flag(1) + 1);
+		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
 	//入场动画
@@ -328,7 +328,7 @@ void boss_1::draw()
 			return;
 		}
 		state = 1;
-		keys.set_flag(group, keys.get_flag(1) + 1);
+		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
 	//入场动画
@@ -507,7 +507,7 @@ int boss_1::get_id()
 	return id;
 }
 
-//lock_extend 能够发射锁定的单列高速子弹的敌机,狙击手
+//lock_extend 能够发射锁定的三列高速子弹的敌机
 lock_extend::lock_extend(int x, int y, int g, int* x_t, int* y_t)
 	:width(64), height(128), plane_x(x_t), plane_y(y_t)
 {
@@ -533,7 +533,7 @@ void lock_extend::draw()
 			return;
 		}
 		state = 1;
-		keys.set_flag(group, keys.get_flag(1) + 1);
+		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
 	//入场动画
@@ -553,16 +553,16 @@ void lock_extend::draw()
 	if ((keys.timer - record_time[0]) > (FPS * speed))
 	{
 		//下面设计是需要改动的模块，子弹出鞘
-		int dx = 20.0 * (float)(*plane_x - position[2]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
-		int dy = 20.0 * (float)(*plane_y - position[3]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
+		double dx = 20.0 * (float)(*plane_x - position[2]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
+		double dy = 20.0 * (float)(*plane_y - position[3]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
 		
-		shots.push_back(new Shot(3, 10, position[2], position[3]));
+		shots.push_back(new Shot(6, 10, position[2], position[3]));
 		shots.back()->set_pos(position[2] + 28, shots.back()->get_y() - 2);
 		shots.back()->set_dpos(dx, dy);
-		shots.push_back(new Shot(3, 10, position[2], position[3]));
+		shots.push_back(new Shot(6, 10, position[2], position[3]));
 		shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 2);
 		shots.back()->set_dpos(dx, dy);
-		shots.push_back(new Shot(3, 10, position[2], position[3]));
+		shots.push_back(new Shot(6, 10, position[2], position[3]));
 		shots.back()->set_pos(position[2] - 60, shots.back()->get_y() - 2);
 		shots.back()->set_dpos(dx, dy);
 		//end
@@ -576,13 +576,13 @@ void lock_extend::draw()
 		}
 		//下面设计是需要改动的模块，子弹运动
 		if (flag == 0) {
-			shot->set_pos(shot->get_x() + shot->get_dx()*1.2, shot->get_y() + shot->get_dy() *1.2);
+			shot->set_pos(shot->get_x() + shot->get_dx()*1.2, shot->get_y() + shot->get_dy() *1.15);
 		}
 		else if (flag == 1) {
 			shot->set_pos(shot->get_x()+ shot->get_dx(), shot->get_y() + shot->get_dy());
 		}
 		else if (flag == 2) {
-			shot->set_pos(shot->get_x()+ shot->get_dx() *1.2, shot->get_y() + shot->get_dy() *1.2);
+			shot->set_pos(shot->get_x()+ shot->get_dx() *1.2, shot->get_y() + shot->get_dy() *1.15);
 		}
 		flag++;
 		if (flag == 3)
@@ -591,13 +591,204 @@ void lock_extend::draw()
 		shot->draw();
 	}
 	//删除模块，需改动，此处为一个子弹一组的情况
-	if (shots.size() > 6 && shots[0]->flag && shots[1]->flag && shots[2]->flag) {
-		delete shots[0];
-		delete shots[1];
-		delete shots[2];
-		shots.erase(shots.begin());
-		shots.erase(shots.begin());
-		shots.erase(shots.begin());
+	static int num_2 = 3;
+	if (shots.size() > num_2 * 6) {
+		for (int i = 0; i < num_2; i++) {
+			if (shots[i]->flag != 1)
+				return;
+		}
+		for (int i = 0; i < num_2; i++)
+			delete shots[i];
+		for (int i = 0; i < num_2; i++)
+			shots.erase(shots.begin());
+	}
+}
+
+//five_super 能够发射五列子弹的敌机
+five_super::five_super(int x, int y, int g,int r)
+	:width(64), height(128),rotate(r)
+{
+	attack = 200;
+	hp = 1000;
+	speed = 0.55;
+	state = 0;
+	group = g;
+	position.push_back(x - width / 2);
+	position.push_back(y - height / 2);
+	position.push_back(x);
+	position.push_back(y);
+}
+
+void five_super::draw()
+{
+	if (state != 0)
+		return;
+	if (hp <= 0 && state == 0) {
+		if (record_time[2] < 10) {
+			put_bk_image(position[0], position[1] + 32, keys.boom_image[record_time[2] % 5]);
+			record_time[2]++;
+			return;
+		}
+		state = 1;
+		keys.set_flag(group, keys.get_flag(group) + 1);
+		return;
+	}
+	//入场动画
+	if (record_time[1] < position[1])
+	{
+		int deff = position[1] - record_time[1];
+		put_bk_image(position[0], record_time[1], keys.enemy_image[id]);
+		setfillcolor(WHITE);
+		fillcircle(position[2], record_time[1] + height / 2, 12);
+		record_time[1] += 5 + deff / 12;
+		return;
+	}
+	//渲染机体
+	put_bk_image(position[0], position[1], keys.enemy_image[id]);
+	setfillcolor(WHITE);
+	fillcircle(position[2], position[3], 10);
+	if ((keys.timer - record_time[0]) > (FPS * speed))
+	{
+		//下面设计是需要改动的模块，子弹出鞘
+		for (int i = 0; i < 5; i++) {
+			shots.push_back(new Shot(20, 10, position[2], position[3]));
+			shots.back()->set_pos(position[2] - 80 + i * 32, position[3] - 16);
+		}
+		//end
+		record_time[0] = keys.timer;
+	}
+	int flag = 0;//用于切换子弹形态
+	for (auto shot : shots)
+	{
+		if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1028)) {
+			shot->flag = 1;
+		}
+		//下面设计是需要改动的模块，子弹运动
+		if (flag == 0||flag==2||flag==4) {
+			shot->set_pos(shot->get_x(), shot->get_y() + 18);
+		}
+		else if (flag == 1||flag==3) {
+			shot->set_pos(shot->get_x() +rotate, shot->get_y() + 20);
+		}
+		flag++;
+		if (flag == 5)
+			flag = 0;
+		//end
+		shot->draw();
+	}
+	//删除模块，需改动，此处为一个子弹一组的情况
+	static int num_2 = 5;
+	if (shots.size() > num_2 * 6) {
+		for (int i = 0; i < num_2; i++) {
+			if (shots[i]->flag != 1)
+				return;
+		}
+		for (int i = 0; i < num_2; i++)
+			delete shots[i];
+		for (int i = 0; i < num_2; i++)
+			shots.erase(shots.begin());
+	}
+}
+
+//three_move 能够发射三列子弹的移动敌机
+three_move::three_move(int x, int y, int g)
+	:width(64), height(128),left_x(x-100),right_x(x+100)
+{
+	attack = 200;
+	hp = 900;
+	speed = 0.45;
+	state = 0;
+	group = g;
+	position.push_back(x - width / 2);
+	position.push_back(y - height / 2);
+	position.push_back(x);
+	position.push_back(y);
+}
+
+void three_move::draw()
+{
+	if (state != 0)
+		return;
+	if (hp <= 0 && state == 0) {
+		if (record_time[2] < 10) {
+			put_bk_image(position[0], position[1] + 32, keys.boom_image[record_time[2] % 5]);
+			record_time[2]++;
+			return;
+		}
+		state = 1;
+		keys.set_flag(group, keys.get_flag(group) + 1);
+		return;
+	}
+	//入场动画
+	if (record_time[1] < position[1])
+	{
+		int deff = position[1] - record_time[1];
+		put_bk_image(position[0], record_time[1], keys.enemy_image[id]);
+		setfillcolor(WHITE);
+		fillcircle(position[2], record_time[1] + height / 2, 12);
+		record_time[1] += 5 + deff / 12;
+		return;
+	}
+	//move
+	static int move_flag = 0;
+	if (move_flag == 0) {
+		position[0] -= 3;
+		position[2] -= 3;
+		if (position[2] <= left_x) {
+			move_flag = 1;
+			position[2] = left_x;
+			position[0] = left_x - width / 2;
+		}
+	}else if (move_flag == 1) {
+		position[0] += 3;
+		position[2] += 3;
+		if (position[2] >=right_x) {
+			move_flag = 0;
+			position[2] =right_x;
+			position[0] = right_x - width / 2;
+		}
+	}
+	//渲染机体
+	put_bk_image(position[0], position[1], keys.enemy_image[id]);
+	setfillcolor(WHITE);
+	fillcircle(position[2], position[3], 10);
+	if ((keys.timer - record_time[0]) > (FPS * speed))
+	{
+		//下面设计是需要改动的模块，子弹出鞘
+		shots.push_back(new Shot(23, 10, position[2], position[3]));
+		shots.back()->set_pos(position[2] + 28, shots.back()->get_y() - 2);
+		shots.back()->set_dpos(-5, 0);
+		shots.push_back(new Shot(23, 10, position[2], position[3]));
+		shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 2);
+		shots.back()->set_dpos(0, 0);
+		shots.push_back(new Shot(23, 10, position[2], position[3]));
+		shots.back()->set_pos(position[2] - 60, shots.back()->get_y() - 2);
+		shots.back()->set_dpos(5, 0);
+		//end
+		record_time[0] = keys.timer;
+	}
+	int flag = 0;//用于切换子弹形态
+	for (auto shot : shots)
+	{
+		if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1028)) {
+			shot->flag = 1;
+		}
+		//下面设计是需要改动的模块，子弹运动
+		shot->set_pos(shot->get_x() + shot->get_dx(), shot->get_y() + 18);
+		//end
+		shot->draw();
+	}
+	//删除模块，需改动，此处为一个子弹一组的情况
+	static int num_2 = 3;
+	if (shots.size() > num_2 * 6) {
+		for (int i = 0; i < num_2; i++) {
+			if (shots[i]->flag != 1)
+				return;
+		}
+		for (int i = 0; i < num_2; i++)
+			delete shots[i];
+		for (int i = 0; i < num_2; i++)
+			shots.erase(shots.begin());
 	}
 }
 

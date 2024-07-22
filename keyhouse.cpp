@@ -2,7 +2,7 @@
 
 keyhouse::keyhouse()
 	:condition(0), timer(0), sun(100), star_value(100), moon(100), attack(0), hp(0), mp(0), shield(0),
-	key_card(0), plane_id(0), plane_unlock(1), strike(0), stage(0)
+	key_card(0), plane_id(0), plane_unlock(1), strike(0), stage(1)
 {
 	//‘§º”‘ÿ
 	load_image_asset(L"assets/sakuya1.png", 0);
@@ -60,6 +60,10 @@ keyhouse::keyhouse()
 	load_shots(L"assets/bulletEa002.png");//17
 	load_shots(L"assets/bulletEa003.png");//18
 	load_shots(L"assets/bulletEa004.png");//19
+	load_shots(L"assets/bulletBb000.png");//20
+	load_shots(L"assets/bulletBb001.png");//21
+	load_shots(L"assets/bulletBb002.png");//22
+	load_shots(L"assets/bulletBb003.png");//23
 	//other
 	
 }
