@@ -180,7 +180,7 @@ void Ui::draw_control()
 	{
 		COLORREF color = RGB(102, 204, 255);
 		note(10, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"按0:退出");
-		string text2 = "Stage:" + std::to_string(keys.level + 1);
+		string text2 = "Stage:" + std::to_string(keys.stage + 1);
 		wstring out2(text2.begin(), text2.end());
 		note(200, 10, 100, 50, 30, 0, color, WHITE, out2.c_str());
 		string text3 = "Level:" + std::to_string(keys.plane_level[keys.plane_id] + 1);
@@ -230,10 +230,13 @@ void Ui::draw_control()
 		}
 		//机体相关的渲染,大部分渲染逻辑封装进plane中
 		plane->draw();
-		switch (keys.level)
+		switch (keys.stage)
 		{
 		case 0:
-			level_1();
+			stage_1();
+			break;
+		case 1:
+			stage_2();
 			break;
 		}
 		for (auto ene : enemys) {
@@ -254,7 +257,7 @@ void Ui::draw_control()
 	}
 }
 
-void Ui::level_1()
+void Ui::stage_1()
 {
 	//使用flag和defeat目标进行对照，编写关卡下一个阶段的时候需要将target_num值手动加一
 	static int target_num = 8;
@@ -348,7 +351,39 @@ void Ui::level_1()
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
 		note(0, 500, 720, 70, 60, 0, LIGHTGREEN, WHITE, L"STAGE01 COMPLETE!");
+		static int count = 0;
+		count++;
+		if (count == FPS * 5) {
+			keys.stage = 1;
+			set_current_index(3);
+			defeat_target.clear();
+		}
 	}
+}
+
+void Ui::stage_2()
+{
+	static int target_num = 8;
+	static int target = 0;
+	if (defeat_target.empty()) {
+		for (int i = 0; i <= target_num; i++) {
+			defeat_target.push_back(0);
+			target = 0;
+		}
+	}
+	int i = 0;
+	//模块start
+	if (keys.get_flag(2) == defeat_target[i]) {
+		enemys_reset();
+		//添加enemy,需修改
+		enemys.push_back(new lock_extend(580, 140, 1, &(plane->position[2]), &(plane->position[3])));//分别是x，y坐标和group参数，group就是关卡id
+		enemys.push_back(new lock_extend(140, 140, 1, &(plane->position[2]), &(plane->position[3])));
+		//下面三句话不用改
+		keys.set_flag(2, keys.get_flag(2) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(2) + (int)enemys.size();
+	}
+	i++;
 }
 
 void Ui::plane_house()
@@ -868,8 +903,13 @@ void Ui::judge()//判定函数
 				continue;//敌机已经寄了就不用做判断
 			else if (enemy->state == 1)
 			{
-				if (enemy->get_id() == 4) {
+				if (enemy->get_id() == 4|| enemy->get_id() == 8) {
 					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 4));//moon
+					enemy->state = 2;
+					continue;
+				}
+				if (enemy->get_id() == 11) {
+					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 5));//moon
 					enemy->state = 2;
 					continue;
 				}
@@ -904,7 +944,7 @@ void Ui::judge()//判定函数
 			continue;//敌机已经寄了就不用做判断
 		for (auto shot : enemy->shots)
 		{
-			if (shot->flag != 1 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 10)
+			if (shot->flag != 1 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 13)
 			{
 				keys.hp -= (enemy->attack - keys.shield);
 				plane->set_stage(plane->get_stage() - 1);
@@ -944,6 +984,9 @@ void Ui::judge()//判定函数
 				break;
 			case 4:
 				keys.moon++;
+				break;
+			case 5:
+				keys.sun++;
 				break;
 			}
 		}

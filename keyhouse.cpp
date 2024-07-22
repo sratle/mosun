@@ -2,7 +2,7 @@
 
 keyhouse::keyhouse()
 	:condition(0), timer(0), sun(100), star_value(100), moon(100), attack(0), hp(0), mp(0), shield(0),
-	key_card(0), plane_id(0), plane_unlock(1), strike(0), level(0)
+	key_card(0), plane_id(0), plane_unlock(1), strike(0), stage(0)
 {
 	//‘§º”‘ÿ
 	load_image_asset(L"assets/sakuya1.png", 0);
@@ -18,7 +18,14 @@ keyhouse::keyhouse()
 	load_image_asset(L"assets/reimu.png", 2);//1
 	load_image_asset(L"assets/tenshi.png", 2);//2
 	load_image_asset(L"assets/alice.png", 2);//3
-	load_image_asset(L"assets/yukari.png", 2);//4
+	load_image_asset(L"assets/yukari.png", 2);//4 boss1
+	load_image_asset(L"assets/suwako.png", 2);//5
+	load_image_asset(L"assets/satono.png", 2);//6
+	load_image_asset(L"assets/megumu.png", 2);//7
+	load_image_asset(L"assets/suika.png", 2);//8 boss2
+	load_image_asset(L"assets/marisa.png", 2);//9
+	load_image_asset(L"assets/satori.png", 2);//10
+	load_image_asset(L"assets/utsuho.png", 2);//11 boss3
 	//drop
 	load_image_asset(L"assets/updrop.png", 3);
 	load_image_asset(L"assets/hp.png", 3);
@@ -48,6 +55,11 @@ keyhouse::keyhouse()
 	load_shots(L"assets/bulletCc005.png");//12
 	load_shots(L"assets/bulletDd000.png");//13
 	load_shots(L"assets/bulletDd001.png");//14
+	load_shots(L"assets/bulletEa000.png");//15
+	load_shots(L"assets/bulletEa001.png");//16
+	load_shots(L"assets/bulletEa002.png");//17
+	load_shots(L"assets/bulletEa003.png");//18
+	load_shots(L"assets/bulletEa004.png");//19
 	//other
 	
 }

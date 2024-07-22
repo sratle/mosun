@@ -1,5 +1,6 @@
 #include "Plane.h"
 extern keyhouse keys;
+//设计最大弹速40
 
 ur::ur() {}
 

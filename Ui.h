@@ -22,7 +22,8 @@ private:
 	void draw_control();
 	void note(int, int, int, int, int, int, COLORREF, COLORREF, const wstring&);
 	void judge();//判定用函数
-	void level_1();//关卡1函数，里面分为数个阶段
+	void stage_1();//关卡1函数，里面分为数个阶段
+	void stage_2();//关卡1函数，里面分为数个阶段
 	void enemys_reset();//重置敌机
 	void card_control();//卡牌效果
 	void plane_house();//机库函数

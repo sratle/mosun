@@ -92,3 +92,18 @@ private:
 	int* plane_x;
 	int* plane_y;
 };
+
+class lock_extend :public Enemy
+{
+public:
+	lock_extend(int, int, int, int*, int*);//需传入初始化判定位置,关卡id，自己飞机的坐标指针
+	void draw() override;
+
+private:
+	const int id = 5;
+	vector<int> record_time = { 0 , 0,0 };
+	int height;
+	int width;
+	int* plane_x;
+	int* plane_y;
+};

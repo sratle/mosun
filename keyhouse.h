@@ -27,7 +27,7 @@ public:
 	int get_flag(int pos);//0:给卡牌设计刷新用 1:用于关卡1的判定，2：用于关卡2的判定，3：用于关卡3的判定
 	int get_flag_size();
 	void set_flag(int pos, int val);
-	int level;//关卡
+	int stage;//关卡
 	//背包资源
 	int star_value;//save
 	int sun;//save

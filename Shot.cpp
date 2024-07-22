@@ -3,7 +3,7 @@ extern keyhouse keys;
 
 //id,rotate,x,y
 Shot::Shot(int id, int rotate, int x, int y)
-	:x(x), y(y), id(id), flag(0), rotate(rotate)
+	:x(x), y(y), id(id), flag(0), rotate(rotate),dx(0),dy(0)
 {
 }
 
@@ -64,4 +64,17 @@ void Shot::set_r(int r) {
 
 void Shot::set_id(int tid) {
 	id = tid;
+}
+
+void Shot::set_dpos(double d1,double d2) {
+	dx = d1;
+	dy = d2;
+}
+
+double Shot::get_dx() {
+	return dx;
+}
+
+double Shot::get_dy() {
+	return dy;
 }
