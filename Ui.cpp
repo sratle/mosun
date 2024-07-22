@@ -551,16 +551,19 @@ void Ui::plane_house()
 			keys.plane_level[temp_id]++;
 			keys.star_value -= cost;
 			flag = 5;
+			music_id = 12;
 		}
 		else if (up_kind[temp_id][keys.plane_level[temp_id]] == 1 && keys.moon >= cost) {
 			keys.plane_level[temp_id]++;
 			keys.moon -= cost;
 			flag = 5;
+			music_id = 12;
 		}
 		else if (up_kind[temp_id][keys.plane_level[temp_id]] == 2 && keys.sun >= cost) {
 			keys.plane_level[temp_id]++;
 			keys.sun -= cost;
 			flag = 5;
+			music_id = 12;
 		}
 		else {
 			flag = 4;
@@ -980,8 +983,13 @@ void Ui::judge()//判定函数
 					enemy->state = 2;
 					continue;
 				}
+				if (enemy->get_id() == 8) {
+					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 5));//moon*2
+					enemy->state = 2;
+					continue;
+				}
 				if (enemy->get_id() == 11) {
-					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 5));//moon
+					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 6));//sun
 					enemy->state = 2;
 					continue;
 				}
@@ -1058,6 +1066,9 @@ void Ui::judge()//判定函数
 				keys.moon++;
 				break;
 			case 5:
+				keys.moon += 2;
+				break;
+			case 6:
 				keys.sun++;
 				break;
 			}

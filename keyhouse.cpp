@@ -32,6 +32,7 @@ keyhouse::keyhouse()
 	load_image_asset(L"assets/mp.png", 3);
 	load_image_asset(L"assets/star.png", 3);
 	load_image_asset(L"assets/moon.png", 3);
+	load_image_asset(L"assets/moon.png", 3);
 	load_image_asset(L"assets/sun.png", 3);
 	//boom
 	load_image_asset(L"assets/boom01.png", 4);
