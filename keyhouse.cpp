@@ -65,6 +65,9 @@ keyhouse::keyhouse()
 	load_shots(L"assets/bulletBb001.png");//21
 	load_shots(L"assets/bulletBb002.png");//22
 	load_shots(L"assets/bulletBb003.png");//23
+	load_shots(L"assets/bulletFf000.png");//24
+	load_shots(L"assets/bulletFf001.png");//25
+	load_shots(L"assets/bulletFf002.png");//26
 	//other
 	
 }

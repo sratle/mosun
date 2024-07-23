@@ -1066,15 +1066,17 @@ void Ui::judge()//ÅÐ¶¨º¯Êý
 				music_id = 12;
 				break;
 			case 4:
-				keys.moon++;
+				keys.moon += 2;
 				music_id = 12;
 				break;
 			case 5:
 				keys.moon += 2;
+				keys.sun += 1;
 				music_id = 12;
 				break;
 			case 6:
-				keys.sun++;
+				keys.sun += 2;
+				keys.moon += 3;
 				music_id = 12;
 				break;
 			}
