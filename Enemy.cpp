@@ -798,7 +798,7 @@ boss_2::boss_2(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 200;
 	hp = 5000;
-	speed = 1.1;
+	speed = 1.2;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -862,7 +862,7 @@ void boss_2::draw()
 		if (hp <= 0 && state == 0)
 		{
 			stage = 1;
-			speed = 0.70;
+			speed = 0.75;
 			hp = 6500;
 			if (shots.empty())
 				return;
@@ -883,12 +883,13 @@ void boss_2::draw()
 			record_time[0] = keys.timer;
 		}
 		int flag = 0;//用于切换子弹形态
+		//反弹设计
 		for (auto shot : shots)
 		{
-			if ((shot->get_x() < 0) || (shot->get_x() > 720)&&(shot->flag==4)) {
+			if (((shot->get_x() < 0) || (shot->get_x() > 688))&&(shot->flag==4)) {
 				shot->flag = 2;
 			}
-			else if ((shot->get_x() < 0) || (shot->get_x() > 720) && (shot->flag == 2)) {
+			else if (((shot->get_x() < 0) || (shot->get_x() > 688)) && (shot->flag == 2)) {
 				shot->flag = 4;
 			}
 			else if ((shot->get_y() < 0) || (shot->get_y() > 1028)) {

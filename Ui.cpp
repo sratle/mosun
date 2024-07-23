@@ -1043,33 +1043,39 @@ void Ui::judge()//ÅÐ¶¨º¯Êý
 		if (sqrt(pow(abs(drop->get_x() - plane->position[2]), 2) + pow(abs(drop->get_y() - plane->position[3]), 2)) < 32)
 		{
 			drop->state = 1;
-			music_id = 12;
 			switch (drop->get_id())
 			{
 			case 0:
 				plane->set_stage(plane->get_stage() + 1);
+				music_id = 12;
 				break;
 			case 1:
 				keys.hp += 150;
 				if (keys.hp > plane->get_maxhp())
 					keys.hp = plane->get_maxhp();
+				music_id = 10;
 				break;
 			case 2:
 				keys.mp += 80;
 				if (keys.mp > plane->get_maxmp())
 					keys.mp = plane->get_maxmp();
+				music_id = 10;
 				break;
 			case 3:
 				keys.star_value++;
+				music_id = 12;
 				break;
 			case 4:
 				keys.moon++;
+				music_id = 12;
 				break;
 			case 5:
 				keys.moon += 2;
+				music_id = 12;
 				break;
 			case 6:
 				keys.sun++;
+				music_id = 12;
 				break;
 			}
 		}

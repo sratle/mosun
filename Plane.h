@@ -86,6 +86,9 @@ private:
 public:
 	void set_stage(int) override;
 	int get_stage() override;
+	int get_maxhp() override;
+	int get_maxmp() override;
+	int get_maxlevel() override;
 	void skill() override;
 	void upgrade() override;
 	void draw() override;
@@ -102,11 +105,14 @@ private:
 	int strikes[6]{ 10,13,17,22,27,35 };
 	int max_level = 6;
 	vector<int> record_time = { 0,1000,0 };
-	int stage = 1;//子弹阶段
+	int stage = 0;//子弹阶段
 	double speed = 0.8;//子弹发射速度
 public:
 	void set_stage(int) override;
 	int get_stage() override;
+	int get_maxhp() override;
+	int get_maxmp() override;
+	int get_maxlevel() override;
 	void skill() override;
 	void upgrade() override;
 	void draw() override;
