@@ -289,7 +289,7 @@ void nanna::draw()
 		{
 			//下面设计是需要改动的模块
 			shots.push_back(new Shot(7, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2]+4 , shots.back()->get_y() - 2);
+			shots.back()->set_pos(position[2] + 4, shots.back()->get_y() - 2);
 			shots.push_back(new Shot(7, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 36, shots.back()->get_y() - 2);
 			//end
@@ -302,7 +302,7 @@ void nanna::draw()
 				shot->flag = 1;
 			}
 			//下面设计是需要改动的模块
-			
+
 			shot->set_pos(shot->get_x(), shot->get_y() - 22);
 			//end
 			shot->draw();
@@ -323,13 +323,13 @@ void nanna::draw()
 		{
 			//下面设计是需要改动的模块
 			shots.push_back(new Shot(7, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2]+4, shots.back()->get_y() +12);
+			shots.back()->set_pos(position[2] + 4, shots.back()->get_y() + 12);
 			shots.push_back(new Shot(7, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] - 36, shots.back()->get_y() +12);
+			shots.back()->set_pos(position[2] - 36, shots.back()->get_y() + 12);
 			shots.push_back(new Shot(9, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2]+4, shots.back()->get_y() -32);
+			shots.back()->set_pos(position[2] + 4, shots.back()->get_y() - 32);
 			shots.push_back(new Shot(9, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] - 36, shots.back()->get_y() -32);
+			shots.back()->set_pos(position[2] - 36, shots.back()->get_y() - 32);
 			//end
 			record_time[0] = keys.timer;
 		}
@@ -365,17 +365,17 @@ void nanna::draw()
 		{
 			//下面设计是需要改动的模块
 			shots.push_back(new Shot(7, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2]-16, shots.back()->get_y());
+			shots.back()->set_pos(position[2] - 16, shots.back()->get_y());
 			shots.push_back(new Shot(7, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2]-56, shots.back()->get_y());
+			shots.back()->set_pos(position[2] - 56, shots.back()->get_y());
 			shots.push_back(new Shot(7, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2]+24, shots.back()->get_y());
+			shots.back()->set_pos(position[2] + 24, shots.back()->get_y());
 			shots.push_back(new Shot(9, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] - 36, shots.back()->get_y() -32);
+			shots.back()->set_pos(position[2] - 36, shots.back()->get_y() - 32);
 			shots.push_back(new Shot(9, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] +4, shots.back()->get_y() - 32);
+			shots.back()->set_pos(position[2] + 4, shots.back()->get_y() - 32);
 			shots.push_back(new Shot(11, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] -16, shots.back()->get_y() - 64);
+			shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 64);
 			//end
 			record_time[0] = keys.timer;
 		}
@@ -412,18 +412,18 @@ void nanna::draw()
 		{
 			//下面设计是需要改动的模块
 			shots.push_back(new Shot(7, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] +4, shots.back()->get_y()+12);
+			shots.back()->set_pos(position[2] + 4, shots.back()->get_y() + 12);
 			shots.push_back(new Shot(7, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] - 36, shots.back()->get_y()+12);
+			shots.back()->set_pos(position[2] - 36, shots.back()->get_y() + 12);
 			shots.push_back(new Shot(9, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] + 4, shots.back()->get_y()-32);
+			shots.back()->set_pos(position[2] + 4, shots.back()->get_y() - 32);
 			shots.push_back(new Shot(9, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] - 36, shots.back()->get_y()-32);
+			shots.back()->set_pos(position[2] - 36, shots.back()->get_y() - 32);
 			shots.push_back(new Shot(13, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] + 44, shots.back()->get_y()+12);
+			shots.back()->set_pos(position[2] + 44, shots.back()->get_y() + 12);
 			shots.back()->flag = 2;
 			shots.push_back(new Shot(13, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] - 76, shots.back()->get_y()+12);
+			shots.back()->set_pos(position[2] - 76, shots.back()->get_y() + 12);
 			shots.back()->flag = 2;
 			//end
 			record_time[0] = keys.timer;
@@ -438,10 +438,10 @@ void nanna::draw()
 			if (flag <= 3) {
 				shot->set_pos(shot->get_x(), shot->get_y() - 20);
 			}
-			else if (flag == 4){
-				if (shot->flag!=1)
+			else if (flag == 4) {
+				if (shot->flag != 1)
 					shot->flag++;
-				if (shot->flag<26){
+				if (shot->flag < 26) {
 					shot->set_pos(shot->get_x() + 4, shot->get_y() - 16);
 				}
 				else {
@@ -459,17 +459,17 @@ void nanna::draw()
 				}
 			}
 			flag++;
-			if (flag ==6)
+			if (flag == 6)
 				flag = 0;
 			//end
 			shot->draw();
 		}
 		//删除模块，需改动，改进版本
-			static int num_1 = 6;
+		static int num_1 = 6;
 		if (shots.size() > num_1 * 6) {
 			for (int i = 0; i < num_1; i++) {
-				if (shots[i]->flag !=1)
-				     return;
+				if (shots[i]->flag != 1)
+					return;
 			}
 			for (int i = 0; i < num_1; i++)
 				delete shots[i];
@@ -523,7 +523,7 @@ ea::ea() {}
 void ea::skill()
 {
 	record_time[2] = rand() % 100;
-	if (record_time[2]>20) {
+	if (record_time[2] > 20) {
 		keys.shield = shields[keys.plane_level[2]] * 2;
 	}
 	else {
@@ -597,7 +597,7 @@ void ea::draw()
 		{
 			//下面设计是需要改动的模块
 			shots.push_back(new Shot(13, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] -16, shots.back()->get_y() -40);
+			shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 40);
 			shots.push_back(new Shot(13, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 16, shots.back()->get_y() + 12);
 			shots.push_back(new Shot(14, 3, position[2], position[3]));
@@ -658,7 +658,7 @@ void ea::draw()
 				shot->flag = 1;
 			}
 			//下面设计是需要改动的模块
-			if (flag == 0){
+			if (flag == 0) {
 				shot->set_pos(shot->get_x() - 1, shot->get_y() - 18);
 			}
 			else if (flag == 1) {
@@ -703,10 +703,10 @@ void ea::draw()
 			shots.push_back(new Shot(14, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 42, shots.back()->get_y() - 32);
 			shots.push_back(new Shot(13, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] + 80, shots.back()->get_y() -6);
+			shots.back()->set_pos(position[2], shots.back()->get_y() + 32);
 			shots.back()->flag = 4;
 			shots.push_back(new Shot(13, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] - 112, shots.back()->get_y() -6);
+			shots.back()->set_pos(position[2] - 32, shots.back()->get_y() + 32);
 			shots.back()->flag = 2;
 			//end
 			record_time[0] = keys.timer;
@@ -728,10 +728,10 @@ void ea::draw()
 				shot->set_pos(shot->get_x(), shot->get_y() - 18);
 			}
 			else if (flag == 4) {
-				shot->set_pos(shot->get_x() + 8 * (shot->flag - 3), shot->get_y() -20);
+				shot->set_pos(shot->get_x() + 8 * (shot->flag - 3), shot->get_y() - 20);
 			}
 			else if (flag == 5) {
-				shot->set_pos(shot->get_x() + 8 * (shot->flag - 3), shot->get_y() -20);
+				shot->set_pos(shot->get_x() + 8 * (shot->flag - 3), shot->get_y() - 20);
 			}
 			flag++;
 			if (flag == 6)
@@ -798,7 +798,7 @@ enlil::enlil() {}
 void enlil::skill()
 {
 	record_time[2] = rand() % 100;
-	if (record_time[2]>20) {
+	if (record_time[2] > 20) {
 		keys.strike = strikes[keys.plane_level[3]] * 2;
 	}
 	else {
@@ -856,12 +856,12 @@ void enlil::draw()
 			}
 			//下面设计是需要改动的模块
 
-			shot->set_pos(shot->get_x()+shot->get_dx(), shot->get_y() +shot->get_dy());
+			shot->set_pos(shot->get_x() + shot->get_dx(), shot->get_y() + shot->get_dy());
 			//end
 			shot->draw();
 		}
 		//删除模块，需改动
-		if (shots.size() > 30 && shots[0]->flag ) {
+		if (shots.size() > 30 && shots[0]->flag) {
 			delete shots[0];
 			shots.erase(shots.begin());
 		}
@@ -875,10 +875,10 @@ void enlil::draw()
 			//下面设计是需要改动的模块
 			static int flag_s = -2;
 			shots.push_back(new Shot(24, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] +8, shots.back()->get_y() - 2);
+			shots.back()->set_pos(position[2] + 8, shots.back()->get_y() - 2);
 			shots.back()->set_dpos(flag_s, -22);
 			shots.push_back(new Shot(24, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] -40, shots.back()->get_y() - 2);
+			shots.back()->set_pos(position[2] - 40, shots.back()->get_y() - 2);
 			shots.back()->set_dpos(flag_s, -22);
 			flag_s++;
 			if (flag_s == 3) {
@@ -900,7 +900,7 @@ void enlil::draw()
 			shot->draw();
 		}
 		//删除模块，需改动
-		if (shots.size() > 30 && shots[0]->flag&& shots[1]->flag) {
+		if (shots.size() > 30 && shots[0]->flag && shots[1]->flag) {
 			delete shots[0];
 			delete shots[1];
 			shots.erase(shots.begin());
@@ -923,8 +923,8 @@ void enlil::draw()
 			shots.back()->set_pos(position[2] - 40, shots.back()->get_y() - 2);
 			shots.back()->set_dpos(flag_s, -22);
 			shots.push_back(new Shot(25, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] -16+48*flag_f, shots.back()->get_y() - 2);
-			shots.back()->set_dpos(3*flag_f, -22);
+			shots.back()->set_pos(position[2] - 16 + 48 * flag_f, shots.back()->get_y() - 2);
+			shots.back()->set_dpos(3 * flag_f, -22);
 			flag_f = -flag_f;
 			flag_s++;
 			if (flag_s == 3) {
@@ -974,10 +974,10 @@ void enlil::draw()
 			shots.back()->set_pos(position[2] - 16 + 48 * flag_f, shots.back()->get_y() - 2);
 			shots.back()->set_dpos(3 * flag_f, -22);
 			shots.push_back(new Shot(26, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] + 80, shots.back()->get_y() - 6);
+			shots.back()->set_pos(position[2], shots.back()->get_y() + 32);
 			shots.back()->flag = 4;
 			shots.push_back(new Shot(26, 3, position[2], position[3]));
-			shots.back()->set_pos(position[2] - 112, shots.back()->get_y() - 6);
+			shots.back()->set_pos(position[2] - 32, shots.back()->get_y() + 32);
 			shots.back()->flag = 2;
 			flag_f = -flag_f;
 			flag_s++;
@@ -1000,9 +1000,9 @@ void enlil::draw()
 				shot->flag = 1;
 			}
 			//下面设计是需要改动的模块
-			if (flag<=2)
+			if (flag <= 2)
 				shot->set_pos(shot->get_x() + shot->get_dx(), shot->get_y() + shot->get_dy());
-			else if (flag==3||flag==4)
+			else if (flag == 3 || flag == 4)
 				shot->set_pos(shot->get_x() + 10 * (shot->flag - 3), shot->get_y() - 24);
 			flag++;
 			if (flag == 5) {
@@ -1073,7 +1073,7 @@ void Plane::control()
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 5);
 	skill();
-	if (abs(position[2] - keys.move[0]) > 24){
+	if (abs(position[2] - keys.move[0]) > 24) {
 		if (position[2] > keys.move[0])
 			position[2] = position[2] - 24;
 		else

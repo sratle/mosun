@@ -156,3 +156,16 @@ private:
 	int left_x;
 	int right_x;
 };
+
+class six_super :public Enemy
+{
+public:
+	six_super(int, int, int);//需传入初始化判定位置,关卡id
+	void draw() override;
+
+private:
+	const int id = 9;
+	vector<int> record_time = { 0 , 0,0 };
+	int height;
+	int width;
+};

@@ -221,6 +221,7 @@ void Ui::draw_control()
 			}
 			card_now.clear();
 			bgm_id = 0;
+			keys.stage = 0;
 			return;
 		}
 		//死亡
@@ -237,6 +238,9 @@ void Ui::draw_control()
 			break;
 		case 1:
 			stage_2();
+			break;
+		case 2:
+			stage_3();
 			break;
 		}
 		for (auto ene : enemys) {
@@ -453,9 +457,63 @@ void Ui::stage_2()
 			keys.stage = 2;
 			set_current_index(4);
 			defeat_target.clear();
+			bgm_id = 4;
 		}
-		bgm_id = 4;
 	}
+}
+
+void Ui::stage_3()
+{
+	static int target_num = 8;
+	static int target = 0;
+	if (defeat_target.empty()) {
+		for (int i = 0; i <= target_num; i++) {
+			defeat_target.push_back(0);
+			target = 0;
+		}
+	}
+	int i = 0;
+	//模块start
+	if (keys.get_flag(3) == defeat_target[i]) {
+		enemys_reset();
+		//添加enemy,需修改
+		enemys.push_back(new lock_super(620, 240, 3, &(plane->position[2]), &(plane->position[3])));//分别是x，y坐标和group参数，group就是关卡id
+		enemys.push_back(new lock_extend(360, 140, 3, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new lock_super(100, 240, 3, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new simple_enemy(240, 180, 3));
+		enemys.push_back(new simple_enemy(480, 180, 3));
+		//下面三句话不用改
+		keys.set_flag(3, keys.get_flag(3) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(3) + (int)enemys.size();
+	}
+	i++;
+	if (keys.get_flag(3) == defeat_target[i]) {
+		enemys_reset();
+		//添加enemy,需修改
+		enemys.push_back(new lock_simple(620, 240, 3, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new simple_three(360, 140, 3));
+		enemys.push_back(new lock_simple(100, 240,3, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new three_move(240, 180, 3));
+		enemys.push_back(new three_move(480, 180,3));
+		//下面三句话不用改
+		keys.set_flag(3, keys.get_flag(3) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(3) + (int)enemys.size();
+	}
+	i++;
+	if (keys.get_flag(3) == defeat_target[i]) {
+		enemys_reset();
+		//添加enemy,需修改
+		enemys.push_back(new five_super(160, 200, 3,-1));
+		enemys.push_back(new six_super(360, 140, 3));
+		enemys.push_back(new five_super(560, 200, 3,1));
+		//下面三句话不用改
+		keys.set_flag(3, keys.get_flag(3) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(3) + (int)enemys.size();
+	}
+	i++;
 }
 
 void Ui::plane_house()
