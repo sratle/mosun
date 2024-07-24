@@ -970,7 +970,7 @@ void enlil::draw()
 			shots.push_back(new Shot(24, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 40, shots.back()->get_y() - 2);
 			shots.back()->set_dpos(flag_s, -22);
-			shots.push_back(new Shot(25, 3, position[2], position[3]));
+			shots.push_back(new Shot(15+abs(flag_f), 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 16 + 48 * flag_f, shots.back()->get_y() - 2);
 			shots.back()->set_dpos(3 * flag_f, -22);
 			shots.push_back(new Shot(26, 3, position[2], position[3]));

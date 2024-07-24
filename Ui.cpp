@@ -362,6 +362,7 @@ void Ui::stage_1()
 			set_current_index(3);
 			defeat_target.clear();
 			bgm_id = 3;
+			count = 0;
 		}
 	}
 }
@@ -458,6 +459,7 @@ void Ui::stage_2()
 			set_current_index(4);
 			defeat_target.clear();
 			bgm_id = 4;
+			count = 0;
 		}
 	}
 }
@@ -473,7 +475,6 @@ void Ui::stage_3()
 		}
 	}
 	int i = 0;
-	//模块start
 	if (keys.get_flag(3) == defeat_target[i]) {
 		enemys_reset();
 		//添加enemy,需修改
@@ -514,6 +515,42 @@ void Ui::stage_3()
 		defeat_target[target] = keys.get_flag(3) + (int)enemys.size();
 	}
 	i++;
+	if (keys.get_flag(3) == defeat_target[i]) {
+		enemys_reset();
+		//添加enemy,需修改
+		enemys.push_back(new five_trans(160, 200, 3));
+		enemys.push_back(new three_move(360, 140, 3));
+		enemys.push_back(new five_trans(560, 200, 3));
+		//下面三句话不用改
+		keys.set_flag(3, keys.get_flag(3) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(3) + (int)enemys.size();
+	}
+	i++;
+	if (keys.get_flag(3) == defeat_target[i]) {
+		enemys_reset();
+		//添加enemy,需修改
+		enemys.push_back(new six_super(160, 220, 3));
+		enemys.push_back(new five_trans(360, 120, 3));
+		enemys.push_back(new six_super(560, 220, 3));
+		//下面三句话不用改
+		keys.set_flag(3, keys.get_flag(3) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(3) + (int)enemys.size();
+	}
+	i++;
+	if (keys.get_flag(3) == defeat_target[i]) {
+		enemys_reset();
+		enemys.push_back(new boss_3(360, 120, 3, &(plane->position[2]), &(plane->position[3])));
+		keys.set_flag(3, keys.get_flag(3) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(3) + (int)enemys.size();
+	}
+	i++;
+	if (keys.get_flag(3) == defeat_target[i]) {
+		enemys_reset();
+		note(0, 500, 720, 70, 60, 0, LIGHTGREEN, WHITE, L"ALL STAGE COMPLETE!");
+	}
 }
 
 void Ui::plane_house()

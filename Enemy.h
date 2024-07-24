@@ -169,3 +169,36 @@ private:
 	int height;
 	int width;
 };
+
+class five_trans :public Enemy
+{
+public:
+	five_trans(int, int, int);//需传入初始化判定位置,关卡id
+	void draw() override;
+
+private:
+	const int id = 10;
+	vector<int> record_time = { 0 , 0,0 };
+	int height;
+	int width;
+};
+
+class boss_3 :public Enemy
+{
+public:
+	boss_3(int, int, int, int*, int*);//需传入初始化判定位置,关卡id，自己飞机的坐标指针
+	void draw() override;
+	int get_id() override;
+
+private:
+	const int id = 11;
+	vector<int> record_time = { 0 , 0,0 };
+	vector<int> rand_save;
+	int height;
+	int width;
+	int stage;
+	int* plane_x;
+	int* plane_y;
+	int left_x;
+	int right_x;
+};

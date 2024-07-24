@@ -796,7 +796,7 @@ void three_move::draw()
 boss_2::boss_2(int x, int y, int g, int* x_t, int* y_t)
 	:width(92), height(104), plane_x(x_t), plane_y(y_t), stage(0),left_x(x-40),right_x(x+40)
 {
-	attack = 200;
+	attack = 150;
 	hp = 5000;
 	speed = 1.2;
 	state = 0;
@@ -863,7 +863,7 @@ void boss_2::draw()
 		{
 			stage = 1;
 			speed = 0.75;
-			hp = 6500;
+			hp = 6000;
 			if (shots.empty())
 				return;
 			for (auto shot : shots)
@@ -997,7 +997,7 @@ six_super::six_super(int x, int y, int g)
 	:width(64), height(128)
 {
 	attack = 150;
-	hp = 1200;
+	hp = 1400;
 	speed = 0.4;
 	state = 0;
 	group = g;
@@ -1083,6 +1083,315 @@ void six_super::draw()
 			shots.erase(shots.begin());
 	}
 }
+
+//five_trans 往前发射五列子弹的飞机，改变弹道
+five_trans::five_trans(int x, int y, int g)
+	:width(64), height(128)
+{
+	attack = 150;
+	hp = 1600;
+	speed = 0.5;
+	state = 0;
+	group = g;
+	position.push_back(x - width / 2);
+	position.push_back(y - height / 2);
+	position.push_back(x);
+	position.push_back(y);
+}
+
+void five_trans::draw()
+{
+	if (state != 0)
+		return;
+	if (hp <= 0 && state == 0) {
+		if (record_time[2] < 10) {
+			put_bk_image(position[0], position[1] + 32, keys.boom_image[record_time[2] % 5]);
+			record_time[2]++;
+			return;
+		}
+		state = 1;
+		keys.set_flag(group, keys.get_flag(group) + 1);
+		return;
+	}
+	//入场动画
+	if (record_time[1] < position[1])
+	{
+		int deff = position[1] - record_time[1];
+		put_bk_image(position[0], record_time[1], keys.enemy_image[id]);
+		setfillcolor(WHITE);
+		fillcircle(position[2], record_time[1] + height / 2, 12);
+		record_time[1] += 5 + deff / 12;
+		return;
+	}
+	//渲染机体
+	put_bk_image(position[0], position[1], keys.enemy_image[id]);
+	setfillcolor(WHITE);
+	fillcircle(position[2], position[3], 10);
+	if ((keys.timer - record_time[0]) > (FPS * speed))
+	{
+		//下面设计是需要改动的模块，子弹出鞘
+		shots.push_back(new Shot(19, 10, position[2], position[3]));
+		shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 16);
+		shots.back()->set_dpos(0, 20);
+		shots.push_back(new Shot(23, 10, position[2], position[3]));
+		shots.back()->set_pos(position[2] - 48, shots.back()->get_y() - 16);
+		shots.back()->set_dpos(-3, 16);
+		shots.back()->flag = 2;
+		shots.push_back(new Shot(23, 10, position[2], position[3]));
+		shots.back()->set_pos(position[2] - 48, shots.back()->get_y() - 16);
+		shots.back()->set_dpos(-6, 18);
+		shots.back()->flag = 2;
+		shots.push_back(new Shot(22, 10, position[2], position[3]));
+		shots.back()->set_pos(position[2] + 16, shots.back()->get_y() - 16);
+		shots.back()->set_dpos(3, 16);
+		shots.back()->flag = 2;
+		shots.push_back(new Shot(22, 10, position[2], position[3]));
+		shots.back()->set_pos(position[2] + 16, shots.back()->get_y() - 16);
+		shots.back()->set_dpos(6, 18);
+		shots.back()->flag = 2;
+		//end
+		record_time[0] = keys.timer;
+	}
+	int flag = 0;//用于切换子弹形态
+	for (auto shot : shots)
+	{
+		if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1028)) {
+			shot->flag = 1;
+		}
+		//下面设计是需要改动的模块，子弹运动
+		if (shot->flag > 1)
+			shot->flag++;
+		if (shot->flag == 25)
+			shot->set_dpos(-(shot->get_dx() * 2), shot->get_dy() - 6);
+		shot->set_pos(shot->get_x() + shot->get_dx(), shot->get_y() + shot->get_dy());
+		//end
+		shot->draw();
+	}
+	//删除模块，需改动，此处为一个子弹一组的情况
+	static int num_2 = 5;
+	if (shots.size() > num_2 * 6) {
+		for (int i = 0; i < num_2; i++) {
+			if (shots[i]->flag != 1)
+				return;
+		}
+		for (int i = 0; i < num_2; i++)
+			delete shots[i];
+		for (int i = 0; i < num_2; i++)
+			shots.erase(shots.begin());
+	}
+}
+
+//boss3 第三关的boss
+boss_3::boss_3(int x, int y, int g, int* x_t, int* y_t)
+	:width(116), height(120), plane_x(x_t), plane_y(y_t), stage(0), left_x(x - 60), right_x(x + 60)
+{
+	attack = 150;
+	hp = 8000;
+	speed = 0.8;
+	state = 0;
+	group = g;
+	position.push_back(x - width / 2);
+	position.push_back(y - height / 2);
+	position.push_back(x);
+	position.push_back(y);
+}
+
+void boss_3::draw()
+{
+	if (state != 0)
+		return;
+	if (hp <= 0 && state == 0 && stage == 1) {
+		if (record_time[2] < 20) {
+			put_bk_image(position[0], position[1] + 20, keys.boom_image[record_time[2] % 5]);
+			record_time[2]++;
+			return;
+		}
+		state = 1;
+		keys.set_flag(group, keys.get_flag(group) + 1);
+		return;
+	}
+	//入场动画
+	if (record_time[1] < position[1])
+	{
+		int deff = position[1] - record_time[1];
+		put_bk_image(position[0], record_time[1], keys.enemy_image[id]);
+		setfillcolor(RED);
+		fillcircle(position[2], record_time[1] + height / 2, 12);
+		record_time[1] += 5 + deff / 20;
+		return;
+	}
+	//渲染机体
+	put_bk_image(position[0], position[1], keys.enemy_image[id]);
+	setfillcolor(RED);
+	fillcircle(position[2], position[3], 6);
+	//一阶段
+	if (stage == 0)
+	{
+		static int move_flag = 0;
+		if (move_flag == 0) {
+			position[0] -= 3;
+			position[2] -= 3;
+			if (position[2] <= left_x) {
+				move_flag = 1;
+				position[2] = left_x;
+				position[0] = left_x - width / 2;
+			}
+		}
+		else if (move_flag == 1) {
+			position[0] += 3;
+			position[2] += 3;
+			if (position[2] >= right_x) {
+				move_flag = 0;
+				position[2] = right_x;
+				position[0] = right_x - width / 2;
+			}
+		}
+		//子弹数量
+		static int num_1 = 24;
+		if (hp <= 0 && state == 0)
+		{
+			stage = 1;
+			speed = 0.8;
+			hp = 10000;
+			if (shots.empty())
+				return;
+			for (auto shot : shots)
+				delete shot;
+			shots.clear();
+		}
+		if ((keys.timer - record_time[0]) > (FPS * speed))
+		{
+			//下面设计是需要改动的模块，子弹出鞘
+			srand((unsigned)time(NULL));
+			for (int i = 0; i < 6; i++) {
+				shots.push_back(new Shot(22, 10, position[2], position[3]));
+				shots.back()->set_pos(position[2] + 124, position[3] + 180);
+				shots.back()->set_dpos(i*2-5, sqrt(8 * 8 - pow(i * 2 - 5, 2)));
+			}
+			for (int i = 0; i < 6; i++) {
+				shots.push_back(new Shot(22, 10, position[2], position[3]));
+				shots.back()->set_pos(position[2] - 156, position[3] + 180);
+				shots.back()->set_dpos(i*2-5, sqrt(8 * 8 - pow(i * 2 - 5, 2)));
+			}
+			for (int i = 0; i < 6; i++) {
+				shots.push_back(new Shot(23, 10, position[2], position[3]));
+				shots.back()->set_pos(100,100+i*80);
+				shots.back()->set_dpos((i-8)/2.0, i+2);
+			}
+			for (int i = 0; i < 6; i++) {
+				shots.push_back(new Shot(23, 10, position[2], position[3]));
+				shots.back()->set_pos(620, 100 + i * 80);
+				shots.back()->set_dpos((8-i)/2.0, i+2);
+			}
+			//end
+			record_time[0] = keys.timer;
+		}
+		int flag = 0;//用于切换子弹形态
+		for (auto shot : shots)
+		{
+			if ((shot->get_x() < 0) || (shot->get_y() < 0) || (shot->get_x() > 720) || (shot->get_y() > 1028)) {
+				shot->flag = 1;
+			}
+			//下面设计是需要改动的模块，子弹运动
+			shot->set_pos(shot->get_x() + shot->get_dx() * (shot->flag - 3), shot->get_y() + shot->get_dy());
+			//end
+			shot->draw();
+		}
+		//删除模块，需改动
+		if (shots.size() > num_1 * 6) {
+			for (int i = 0; i < num_1; i++) {
+				if (shots[i]->flag != 1)
+					return;
+			}
+			for (int i = 0; i < num_1; i++)
+				delete shots[i];
+			for (int i = 0; i < num_1; i++)
+				shots.erase(shots.begin());
+		}
+	}
+	//二阶段
+	if (stage == 1)
+	{
+		static int move_flag = 0;
+		if (move_flag == 0) {
+			position[0] -= 3;
+			position[2] -= 3;
+			if (position[2] <= left_x) {
+				move_flag = 1;
+				position[2] = left_x;
+				position[0] = left_x - width / 2;
+			}
+		}
+		else if (move_flag == 1) {
+			position[0] += 3;
+			position[2] += 3;
+			if (position[2] >= right_x) {
+				move_flag = 0;
+				position[2] = right_x;
+				position[0] = right_x - width / 2;
+			}
+		}
+		//子弹数量
+		static int num_2 = 24;
+		if (rand_save.empty())
+		{
+			for (int j = 0; j < num_2; j++)
+			{
+				for (int i = 0; i < num_2; i++)//随机速度
+					rand_save.push_back(rand() % 8 + 4);
+			}
+		}
+		if ((keys.timer - record_time[0]) > (FPS * speed))
+		{
+			//下面设计是需要改动的模块，子弹出鞘
+			for (int i = 0; i < 23; i++) {
+				shots.push_back(new Shot(24, 10, position[2], position[3]));
+				shots.back()->set_pos(position[2] - 280 + i * 24, position[3] - 16);
+				shots.back()->set_dpos(double(i)/2 - rand_save[i * (rand() % 23)], sqrt(rand_save[i * (rand() % 23)] * rand_save[i * (rand() % 23)] + 2 - pow(double(i)/2 - rand_save[i * (rand() % 18)], 2)));
+				shots.back()->flag = 4;
+			}
+			shots.push_back(new Shot(17, 10, position[2], position[3]));
+			shots.back()->set_pos(*plane_x, position[3] - 16);
+			shots.back()->set_dpos(0, 25);
+			//end
+			record_time[0] = keys.timer;
+		}
+		int flag = 0;//用于切换子弹形态
+		for (auto shot : shots)
+		{
+			if (((shot->get_x() < 0) || (shot->get_x() > 688)) && (shot->flag == 4)) {
+				shot->flag = 2;
+			}
+			else if (((shot->get_x() < 0) || (shot->get_x() > 688)) && (shot->flag == 2)) {
+				shot->flag = 4;
+			}
+			else if ((shot->get_y() < 0) || (shot->get_y() > 1028)) {
+				shot->flag = 1;
+			}
+			//下面设计是需要改动的模块，子弹运动
+			shot->set_pos(shot->get_x() + shot->get_dx()*(shot->flag-3), shot->get_y() + shot->get_dy());
+			//end
+			shot->draw();
+		}
+		//删除模块，需改动,18shots
+		if (shots.size() > num_2 * 6) {
+			for (int i = 0; i < num_2; i++) {
+				if (shots[i]->flag != 1)
+					return;
+			}
+			for (int i = 0; i < num_2; i++)
+				delete shots[i];
+			for (int i = 0; i < num_2; i++)
+				shots.erase(shots.begin());
+		}
+	}
+}
+
+int boss_3::get_id()
+{
+	return id;
+}
+
 void Enemy::put_bk_image(int x, int y, IMAGE img)
 {
 	IMAGE img1;
