@@ -186,6 +186,7 @@ void Ui::draw_control()
 		string text3 = "Level:" + std::to_string(keys.plane_level[keys.plane_id] + 1);
 		wstring out3(text3.begin(), text3.end());
 		note(420, 10, 100, 50, 30, 0, color, WHITE, out3.c_str());
+		note(570, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"F1开/关鼠标");
 		//返回菜单
 		if (keys.condition == 2 && keys.key_num == 48)
 		{
@@ -1104,7 +1105,7 @@ void Ui::judge()//判定函数
 				music_id = rand() % 6 + 2;
 				srand((unsigned)time(NULL));
 			}//若击中
-			else if (shot->flag != 1 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 20)
+			else if (shot->flag != 1 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 28)
 			{
 				enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
 				shot->flag = 1;
@@ -1184,6 +1185,7 @@ void Ui::judge()//判定函数
 void Ui::input()
 {
 	static int key_shift = 0;
+	static int mouse_ban = 0;
 	ExMessage msg;
 	while (true)
 	{
@@ -1212,7 +1214,7 @@ void Ui::input()
 					keys.key_card = msg.vkcode;
 				}
 			}
-			else if (msg.x > 5 && keys.condition == 2 && plane != nullptr)
+			else if (msg.x > 5 && keys.condition == 2 && plane != nullptr&&mouse_ban==0)
 			{
 				keys.move[0] = msg.x;
 				keys.move[1] = msg.y;
@@ -1229,16 +1231,20 @@ void Ui::input()
 			}
 			//left
 			if (KEY_DOWN(37)) {
-				keys.move[0] -= 7 - key_shift;
+				keys.move[0] -= 6 - key_shift;
 			}//up
 			else if (KEY_DOWN(38)) {
-				keys.move[1] -= 7 - key_shift;
+				keys.move[1] -= 6 - key_shift;
 			}//right
 			else if (KEY_DOWN(39)) {
-				keys.move[0] += 7 - key_shift;
+				keys.move[0] += 6 - key_shift;
 			}//down
 			else if (KEY_DOWN(40)) {
-				keys.move[1] += 7 - key_shift;
+				keys.move[1] += 6 - key_shift;
+			}
+			if (KEY_DOWN(112)) {
+				while (KEY_DOWN(112)) {}
+				mouse_ban = 1 - mouse_ban;
 			}
 		}
 		Sleep(DWORD(400.0 / FPS));
