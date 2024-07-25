@@ -222,6 +222,8 @@ void Ui::draw_control()
 			card_now.clear();
 			bgm_id = 0;
 			keys.stage = 0;
+			keys.move[0] = 360;
+			keys.move[1] = 932;
 			return;
 		}
 		//死亡
@@ -494,9 +496,9 @@ void Ui::stage_3()
 		//添加enemy,需修改
 		enemys.push_back(new lock_simple(620, 240, 3, &(plane->position[2]), &(plane->position[3])));
 		enemys.push_back(new simple_three(360, 140, 3));
-		enemys.push_back(new lock_simple(100, 240,3, &(plane->position[2]), &(plane->position[3])));
+		enemys.push_back(new lock_simple(100, 240, 3, &(plane->position[2]), &(plane->position[3])));
 		enemys.push_back(new three_move(240, 180, 3));
-		enemys.push_back(new three_move(480, 180,3));
+		enemys.push_back(new three_move(480, 180, 3));
 		//下面三句话不用改
 		keys.set_flag(3, keys.get_flag(3) + 1);
 		target++;
@@ -506,9 +508,9 @@ void Ui::stage_3()
 	if (keys.get_flag(3) == defeat_target[i]) {
 		enemys_reset();
 		//添加enemy,需修改
-		enemys.push_back(new five_super(160, 200, 3,-1));
+		enemys.push_back(new five_super(160, 200, 3, -1));
 		enemys.push_back(new six_super(360, 140, 3));
-		enemys.push_back(new five_super(560, 200, 3,1));
+		enemys.push_back(new five_super(560, 200, 3, 1));
 		//下面三句话不用改
 		keys.set_flag(3, keys.get_flag(3) + 1);
 		target++;
@@ -557,43 +559,43 @@ void Ui::plane_house()
 {
 	//数据
 	static vector<vector<int>> up_cost{
-		{1,2,4,1},
+		{1,2,4,1,2,3,1},
 		{4,6,2,1},
 		{4,6,2,4,2},
 		{4,7,3,5,2}
-	};//maxlevel:5,5,6,6
+	};//maxlevel:8,5,6,6
 	static vector<vector<int>> up_kind{
-		{0,0,0,1},
+		{0,0,0,1,1,1,2},
 		{0,0,1,2},
 		{0,0,1,1,2},
 		{0,0,1,1,2}
 	};//0:star,1:moon,2:sun
 	static vector<vector<int>> hps{
-		{300,350,420,500,600 },
+		{300,350,420,500,600,720,850,1000 },
 		{ 300,370,450,540,650 },
 		{ 400,470,550,640,740,850 },
 		{ 200,250,310,380,460,550 }
 	};
 	static vector<vector<int>> mps{
-		{200,230,260,300,360 },
+		{200,230,260,300,360,430,500,600 },
 		{ 300,350,400,460,520 },
 		{ 200,230,260,300,350,400 },
 		{ 220,250,280,320,370,420 }
 	};
 	static vector<vector<int>> attacks{
-		{ 100,120,145,170,200 },
+		{ 100,120,145,170,200,240,290,350 },
 		{ 80,110,140,175,220 },
 		{ 100,120,150,180,210,250 },
 		{ 130,160,200,240,300,370 }
 	};
 	static vector<vector<int>> shields{
-		{ 0,20,40,60,75 },
+		{ 0,20,40,60,75,85,95,100 },
 		{ 20,35,50,60,70 },
 		{ 15,30,40,50,65,75 },
 		{ 10,20,30,45,55,60 }
 	};
 	static vector<vector<int>> strikes{
-		{ 0,2,4,7,10 },
+		{ 0,2,4,7,10,13,16,20 },
 		{ 2,4,7,10,13 },
 		{ 2,5,8,11,15,19 },
 		{ 10,13,17,22,27,35 }
@@ -1073,7 +1075,7 @@ void Ui::judge()//判定函数
 				continue;//敌机已经寄了就不用做判断
 			else if (enemy->state == 1)
 			{
-				if (enemy->get_id() == 4|| enemy->get_id() == 8) {
+				if (enemy->get_id() == 4 || enemy->get_id() == 8) {
 					drops.push_back(new Drop(enemy->position[2], enemy->position[3], 4));//moon
 					enemy->state = 2;
 					continue;
@@ -1181,6 +1183,7 @@ void Ui::judge()//判定函数
 
 void Ui::input()
 {
+	static int key_shift = 0;
 	ExMessage msg;
 	while (true)
 	{
@@ -1216,6 +1219,28 @@ void Ui::input()
 			}
 		}
 		while (peekmessage(&msg)) {}//msg会有堆积，影响按键判断
+		if (keys.condition == 2 && plane != nullptr)
+		{
+			if (KEY_DOWN(16)) {
+				key_shift = 4;
+			}
+			else {
+				key_shift = 0;
+			}
+			//left
+			if (KEY_DOWN(37)) {
+				keys.move[0] -= 7 - key_shift;
+			}//up
+			else if (KEY_DOWN(38)) {
+				keys.move[1] -= 7 - key_shift;
+			}//right
+			else if (KEY_DOWN(39)) {
+				keys.move[0] += 7 - key_shift;
+			}//down
+			else if (KEY_DOWN(40)) {
+				keys.move[1] += 7 - key_shift;
+			}
+		}
 		Sleep(DWORD(400.0 / FPS));
 	}
 }

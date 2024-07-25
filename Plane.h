@@ -20,19 +20,19 @@ public:
 	void control();//控制移动和渲染自身
 	void shot_clear();
 	vector<Shot*> shots;
-	vector<int> position{ 324,900,360,964 };//0，1：渲染坐标，2，3：判定坐标
+	vector<int> position{ 324,868,360,932 };//0，1：渲染坐标，2，3：判定坐标
 };
 
 //id:0
 class ur : public Plane {
 private:
-	int hps[5]{300,350,420,500,600 };
-	int mps[5]{200,230,260,300,360 };
-	int attacks[5]{ 100,120,145,170,200 };
-	int shields[5]{ 0,20,40,60,75 };//护甲减免值
-	int strikes[5]{ 0,2,4,7,10 };//暴击率
-	int max_level = 5;
-	vector<int> record_time = { 0 ,1000 ,0};//子弹，入场动画，技能
+	int hps[8]{ 300,350,420,500,600,720,850,1000 };
+	int mps[8]{ 200,230,260,300,360,430,500,600 };
+	int attacks[8]{ 100,120,145,170,200,240,290,350 };
+	int shields[8]{ 0,20,40,60,75,85,95,100 };//护甲减免值
+	int strikes[8]{ 0,2,4,7,10,13,16,20 };//暴击率
+	int max_level = 8;
+	vector<int> record_time = { 0 ,1000 ,0 };//子弹，入场动画，技能
 	int stage = 0;//子弹阶段
 	double speed = 0.8;//子弹发射速度,越小越快
 public:

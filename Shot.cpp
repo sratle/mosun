@@ -3,13 +3,13 @@ extern keyhouse keys;
 
 //id,rotate,x,y
 Shot::Shot(int id, int rotate, int x, int y)
-	:x(x), y(y), id(id), flag(0), rotate(rotate),dx(0),dy(0)
+	:x(x), y(y), id(id), flag(0), rotate(rotate), dx(0), dy(0)
 {
 }
 
 void Shot::draw()
 {
-	if (flag==1)
+	if (flag == 1)
 		return;
 	put_bk_image((int)x, (int)y, keys.shots_image[14 * id + rotate]);
 }
@@ -66,7 +66,7 @@ void Shot::set_id(int tid) {
 	id = tid;
 }
 
-void Shot::set_dpos(double d1,double d2) {
+void Shot::set_dpos(double d1, double d2) {
 	dx = d1;
 	dy = d2;
 }

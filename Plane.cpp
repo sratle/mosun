@@ -40,7 +40,7 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 		if ((keys.timer - record_time[0]) > (FPS * speed))
 		{
 			//下面设计是需要改动的模块
-			shots.push_back(new Shot(0, 3, position[2], position[3]));
+			shots.push_back(new Shot(5, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 2);
 			//end
 			record_time[0] = keys.timer;
@@ -69,11 +69,11 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 		if ((keys.timer - record_time[0]) > (FPS * speed))
 		{
 			//下面设计是需要改动的模块
-			shots.push_back(new Shot(0, 2, position[2], position[3]));
+			shots.push_back(new Shot(1, 2, position[2], position[3]));
 			shots.back()->set_pos(position[2] + 8, shots.back()->get_y() - 16);
-			shots.push_back(new Shot(1, 3, position[2], position[3]));
+			shots.push_back(new Shot(5, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 16);
-			shots.push_back(new Shot(0, 4, position[2], position[3]));
+			shots.push_back(new Shot(1, 4, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 40, shots.back()->get_y() - 16);
 			//end
 			record_time[0] = keys.timer;
@@ -117,11 +117,11 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 		if ((keys.timer - record_time[0]) > (FPS * speed))
 		{
 			//下面设计是需要改动的模块
-			shots.push_back(new Shot(0, 3, position[2], position[3]));
+			shots.push_back(new Shot(5, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] + 20, shots.back()->get_y() - 16);
 			shots.push_back(new Shot(1, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 16);
-			shots.push_back(new Shot(0, 3, position[2], position[3]));
+			shots.push_back(new Shot(5, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 52, shots.back()->get_y() - 16);
 			//end
 			record_time[0] = keys.timer;
@@ -154,15 +154,15 @@ void ur::draw()//扫描子弹库，增减子弹，修改子弹坐标，然后渲染所有子弹
 		if ((keys.timer - record_time[0]) > (FPS * speed))
 		{
 			//下面设计是需要改动的模块
-			shots.push_back(new Shot(0, 2, position[2], position[3]));
+			shots.push_back(new Shot(25, 2, position[2], position[3]));
 			shots.back()->set_pos(position[2] + 32, shots.back()->get_y() - 16);
-			shots.push_back(new Shot(1, 3, position[2], position[3]));
+			shots.push_back(new Shot(5, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] + 16, shots.back()->get_y() - 16);
-			shots.push_back(new Shot(1, 3, position[2], position[3]));
+			shots.push_back(new Shot(5, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 16, shots.back()->get_y() - 16);
-			shots.push_back(new Shot(1, 3, position[2], position[3]));
+			shots.push_back(new Shot(5, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 48, shots.back()->get_y() - 16);
-			shots.push_back(new Shot(0, 4, position[2], position[3]));
+			shots.push_back(new Shot(25, 4, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 64, shots.back()->get_y() - 16);
 			//end
 			record_time[0] = keys.timer;
@@ -441,7 +441,7 @@ void nanna::draw()
 			else if (flag == 4) {
 				if (shot->flag != 1)
 					shot->flag++;
-				if (shot->flag < 26) {
+				if (shot->flag < FPS*0.6) {
 					shot->set_pos(shot->get_x() + 4, shot->get_y() - 16);
 				}
 				else {
@@ -970,7 +970,7 @@ void enlil::draw()
 			shots.push_back(new Shot(24, 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 40, shots.back()->get_y() - 2);
 			shots.back()->set_dpos(flag_s, -22);
-			shots.push_back(new Shot(15+abs(flag_f), 3, position[2], position[3]));
+			shots.push_back(new Shot(15 + abs(flag_f), 3, position[2], position[3]));
 			shots.back()->set_pos(position[2] - 16 + 48 * flag_f, shots.back()->get_y() - 2);
 			shots.back()->set_dpos(3 * flag_f, -22);
 			shots.push_back(new Shot(26, 3, position[2], position[3]));
@@ -1097,18 +1097,22 @@ void Plane::control()
 	if (position[0] < 0) {
 		position[0] = 0;
 		position[2] = 32;
+		keys.move[0] = 32;
 	}
 	if (position[0] > 656) {
 		position[0] = 656;
 		position[2] = 688;
+		keys.move[0] = 688;
 	}
 	if (position[1] < 64) {
 		position[1] = 64;
 		position[3] = 128;
+		keys.move[1] = 128;
 	}
-	if (position[1] > 964) {
-		position[1] = 964;
-		position[3] = 1028;
+	if (position[1] > 916) {
+		position[1] = 916;
+		position[3] = 980;
+		keys.move[0] = 980;
 	}
 }
 

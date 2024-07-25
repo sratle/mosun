@@ -1,7 +1,7 @@
 #include "Ui.h"
 #pragma comment(linker,"/subsystem:windows /entry:mainCRTStartup")
 keyhouse keys;
-Ui ui(720, 1028);//窗口大小
+Ui ui(720, 980);//窗口大小
 
 int main() {
 	ui.init();

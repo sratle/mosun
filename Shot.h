@@ -14,7 +14,7 @@ public:
 	int get_r();
 	void set_id(int);
 	int get_id();
-	void set_dpos(double,double);
+	void set_dpos(double, double);
 	double get_dx();
 	double get_dy();
 	~Shot() {};

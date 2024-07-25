@@ -69,7 +69,7 @@ keyhouse::keyhouse()
 	load_shots(L"assets/bulletFf001.png");//25
 	load_shots(L"assets/bulletFf002.png");//26
 	//other
-	
+
 }
 
 int keyhouse::get_flag(int pos)

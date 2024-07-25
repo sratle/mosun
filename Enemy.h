@@ -111,7 +111,7 @@ private:
 class five_super :public Enemy
 {
 public:
-	five_super(int, int, int,int);//需传入初始化判定位置,关卡id，方向+-1
+	five_super(int, int, int, int);//需传入初始化判定位置,关卡id，方向+-1
 	void draw() override;
 
 private:
