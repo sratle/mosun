@@ -513,7 +513,7 @@ lock_extend::lock_extend(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 150;
 	hp = 900;
-	speed = 0.55;
+	speed = 0.65;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -553,8 +553,8 @@ void lock_extend::draw()
 	if ((keys.timer - record_time[0]) > (FPS * speed))
 	{
 		//下面设计是需要改动的模块，子弹出鞘
-		double dx = 20.0 * (float)(*plane_x - position[2]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
-		double dy = 20.0 * (float)(*plane_y - position[3]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
+		double dx = 18.0 * (float)(*plane_x - position[2]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
+		double dy = 18.0 * (float)(*plane_y - position[3]) / (float)(abs(*plane_y - position[3]) + abs(*plane_x - position[2]));
 
 		shots.push_back(new Shot(6, 10, position[2], position[3]));
 		shots.back()->set_pos(position[2] + 28, shots.back()->get_y() - 2);
@@ -610,7 +610,7 @@ five_super::five_super(int x, int y, int g, int r)
 {
 	attack = 150;
 	hp = 1000;
-	speed = 0.65;
+	speed = 0.9;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -652,7 +652,7 @@ void five_super::draw()
 		//下面设计是需要改动的模块，子弹出鞘
 		for (int i = 0; i < 5; i++) {
 			shots.push_back(new Shot(20, 10, position[2], position[3]));
-			shots.back()->set_pos(position[2] - 80 + i * 32, position[3] - 16);
+			shots.back()->set_pos(position[2] - 80 + i * 32, position[3] - 14);
 		}
 		//end
 		record_time[0] = keys.timer;
@@ -696,7 +696,7 @@ three_move::three_move(int x, int y, int g)
 {
 	attack = 150;
 	hp = 900;
-	speed = 0.6;
+	speed = 0.7;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -732,8 +732,8 @@ void three_move::draw()
 	//move
 	static int move_flag = 0;
 	if (move_flag == 0) {
-		position[0] -= 3;
-		position[2] -= 3;
+		position[0] -= 2;
+		position[2] -= 2;
 		if (position[2] <= left_x) {
 			move_flag = 1;
 			position[2] = left_x;
@@ -741,8 +741,8 @@ void three_move::draw()
 		}
 	}
 	else if (move_flag == 1) {
-		position[0] += 3;
-		position[2] += 3;
+		position[0] += 2;
+		position[2] += 2;
 		if (position[2] >= right_x) {
 			move_flag = 0;
 			position[2] = right_x;
@@ -775,7 +775,7 @@ void three_move::draw()
 			shot->flag = 1;
 		}
 		//下面设计是需要改动的模块，子弹运动
-		shot->set_pos(shot->get_x() + shot->get_dx(), shot->get_y() + 16);
+		shot->set_pos(shot->get_x() + shot->get_dx(), shot->get_y() + 14);
 		//end
 		shot->draw();
 	}
@@ -863,7 +863,7 @@ void boss_2::draw()
 		if (hp <= 0 && state == 0)
 		{
 			stage = 1;
-			speed = 0.9;
+			speed = 1;
 			hp = 6000;
 			if (shots.empty())
 				return;
@@ -999,7 +999,7 @@ six_super::six_super(int x, int y, int g)
 {
 	attack = 150;
 	hp = 1400;
-	speed = 0.6;
+	speed = 0.75;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -1091,7 +1091,7 @@ five_trans::five_trans(int x, int y, int g)
 {
 	attack = 150;
 	hp = 1600;
-	speed = 0.6;
+	speed = 0.7;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
