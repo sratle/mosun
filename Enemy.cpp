@@ -8,7 +8,7 @@ simple_enemy::simple_enemy(int x, int y, int g)
 {
 	attack = 100;
 	hp = 500;
-	speed = 0.6;
+	speed = 0.75;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -77,7 +77,7 @@ lock_simple::lock_simple(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 150;
 	hp = 400;
-	speed = 0.6;
+	speed = 0.7;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -148,7 +148,7 @@ simple_three::simple_three(int x, int y, int g)
 {
 	attack = 100;
 	hp = 600;
-	speed = 0.55;
+	speed = 0.7;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -234,9 +234,9 @@ void simple_three::draw()
 lock_super::lock_super(int x, int y, int g, int* x_t, int* y_t)
 	:width(64), height(128), plane_x(x_t), plane_y(y_t)
 {
-	attack = 300;
+	attack = 200;
 	hp = 600;
-	speed = 0.90;
+	speed = 1.0;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -308,7 +308,7 @@ boss_1::boss_1(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 150;
 	hp = 3000;
-	speed = 0.7;
+	speed = 0.8;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -353,7 +353,7 @@ void boss_1::draw()
 		if (hp <= 0 && state == 0)
 		{
 			stage = 1;
-			speed = 0.9;
+			speed = 1.0;
 			hp = 3500;
 			if (shots.empty())
 				return;
@@ -442,7 +442,7 @@ void boss_1::draw()
 				for (int i = 0; i < num_2; i++)//随机方向
 					rand_save.push_back(rand() % 5 - 2);
 				for (int i = 0; i < num_2; i++)//随机速度
-					rand_save.push_back(rand() % 8 + 8);
+					rand_save.push_back(rand() % 8 + 6);
 			}
 		}
 		if ((keys.timer - record_time[0]) > (FPS * speed))
@@ -513,7 +513,7 @@ lock_extend::lock_extend(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 150;
 	hp = 900;
-	speed = 0.65;
+	speed = 0.75;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -610,7 +610,7 @@ five_super::five_super(int x, int y, int g, int r)
 {
 	attack = 150;
 	hp = 1000;
-	speed = 0.9;
+	speed = 1.0;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -696,7 +696,7 @@ three_move::three_move(int x, int y, int g)
 {
 	attack = 150;
 	hp = 900;
-	speed = 0.7;
+	speed = 0.9;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -725,7 +725,7 @@ void three_move::draw()
 		int deff = position[1] - record_time[1];
 		put_bk_image(position[0], record_time[1], keys.enemy_image[id]);
 		setfillcolor(WHITE);
-		fillcircle(position[2], record_time[1] + height / 2, 12);
+		fillcircle(position[2], record_time[1] + height / 2, 14);
 		record_time[1] += 5 + deff / 12;
 		return;
 	}
@@ -775,7 +775,7 @@ void three_move::draw()
 			shot->flag = 1;
 		}
 		//下面设计是需要改动的模块，子弹运动
-		shot->set_pos(shot->get_x() + shot->get_dx(), shot->get_y() + 14);
+		shot->set_pos(shot->get_x() + shot->get_dx(), shot->get_y() + 12);
 		//end
 		shot->draw();
 	}
@@ -799,7 +799,7 @@ boss_2::boss_2(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 150;
 	hp = 5000;
-	speed = 1.3;
+	speed = 1.4;
 	state = 0;
 	group = g;
 	position.push_back(x - width / 2);
@@ -837,6 +837,7 @@ void boss_2::draw()
 	setfillcolor(RED);
 	fillcircle(position[2], position[3], 6);
 	//一阶段
+	static double scale = 0.9;//子弹速度系数
 	if (stage == 0)
 	{
 		static int move_flag = 0;
@@ -863,7 +864,7 @@ void boss_2::draw()
 		if (hp <= 0 && state == 0)
 		{
 			stage = 1;
-			speed = 1;
+			speed = 1.1;
 			hp = 6000;
 			if (shots.empty())
 				return;
@@ -897,7 +898,7 @@ void boss_2::draw()
 				shot->flag = 1;
 			}
 			//下面设计是需要改动的模块，子弹运动
-			shot->set_pos(shot->get_x() + shot->get_dx() * (shot->flag - 3), shot->get_y() + shot->get_dy());
+			shot->set_pos(shot->get_x() + scale * (shot->get_dx() * (shot->flag - 3)), shot->get_y() + scale * shot->get_dy());
 			//end
 			shot->draw();
 		}
@@ -970,7 +971,7 @@ void boss_2::draw()
 				shot->flag = 1;
 			}
 			//下面设计是需要改动的模块，子弹运动
-			shot->set_pos(shot->get_x() + shot->get_dx() * (shot->flag - 3), shot->get_y() + shot->get_dy());
+			shot->set_pos(shot->get_x() + scale * (shot->get_dx() * (shot->flag - 3)), shot->get_y() + scale * shot->get_dy());
 			//end
 			shot->draw();
 		}
@@ -1162,7 +1163,7 @@ void five_trans::draw()
 		//下面设计是需要改动的模块，子弹运动
 		if (shot->flag > 1)
 			shot->flag++;
-		if (shot->flag == int(FPS*0.6))
+		if (shot->flag == int(FPS * 0.6))
 			shot->set_dpos(-(shot->get_dx() * 2), shot->get_dy() - 6);
 		shot->set_pos(shot->get_x() + shot->get_dx(), shot->get_y() + shot->get_dy());
 		//end

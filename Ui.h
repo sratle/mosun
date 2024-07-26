@@ -18,6 +18,7 @@ private:
 	int current_index;//当前页面id
 	int music_id;//控制当前播放的音效
 	int bgm_id;//控制当前播放的bgm
+	int mouse_ban;
 	vector<IMAGE*> pages;//页面背景的图片指针
 	void add_page(IMAGE*);
 	void set_current_index(int);

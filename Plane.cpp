@@ -1112,7 +1112,7 @@ void Plane::control()
 	if (position[1] > 916) {
 		position[1] = 916;
 		position[3] = 980;
-		keys.move[0] = 980;
+		keys.move[1] = 980;
 	}
 }
 
