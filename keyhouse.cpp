@@ -2,7 +2,7 @@
 
 keyhouse::keyhouse()
 	:condition(0), timer(0), sun(100), star_value(100), moon(100), attack(0), hp(0), mp(0), shield(0),
-	key_card(0), plane_id(0), plane_unlock(0), strike(0), stage(0)
+	key_card(0), plane_id(0), plane_unlock(0), strike(0), stage(0),score(0)
 {
 	//Ô¤¼ÓÔØ
 	load_image_asset(L"assets/sakuya1.png", 0);

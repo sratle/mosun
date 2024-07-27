@@ -38,6 +38,14 @@ void Ui::init()
 	IMAGE* page_7 = new IMAGE(width, height);
 	loadimage(page_7, L"assets/planehouse.png");//机库
 	add_page(page_7);
+
+	IMAGE* page_8 = new IMAGE(width, height);
+	loadimage(page_8, L"assets/planehouse.jpg");//牌库
+	add_page(page_8);
+
+	IMAGE* page_9 = new IMAGE(width, height);
+	loadimage(page_9, L"assets/mune.jpg");//设置
+	add_page(page_9);
 }
 
 void Ui::run()
@@ -155,7 +163,32 @@ void Ui::draw_control()
 		//按下2，进入无尽
 		if (keys.condition == 1 && keys.key_num == 50)
 		{
-
+			music_id = 8;
+			keys.key_num = 0;
+			set_current_index(5);
+			keys.condition = 2;
+			//初始进入战斗进行战机的初始化
+			switch (keys.plane_id)
+			{
+			case 0:
+				plane = new ur;
+				break;
+			case 1:
+				plane = new nanna;
+				break;
+			case 2:
+				plane = new ea;
+				break;
+			case 3:
+				plane = new enlil;
+				break;
+			}
+			plane->upgrade();//加载数据到keys中
+			plane->set_stage(0);
+			//随机数种子更新
+			srand((unsigned)time(NULL));
+			bgm_id = 5;
+			//init end
 		}
 		//按下3，进入机库
 		if (keys.condition == 1 && keys.key_num == 51)
@@ -168,12 +201,18 @@ void Ui::draw_control()
 		//按下4，进入牌库
 		if (keys.condition == 1 && keys.key_num == 52)
 		{
-
+			music_id = 8;
+			bgm_id = 1;
+			keys.key_num = 0;
+			set_current_index(7);
 		}
 		//按下5，进入设置
 		if (keys.condition == 1 && keys.key_num == 53)
 		{
-
+			music_id = 8;
+			bgm_id = 1;
+			keys.key_num = 0;
+			set_current_index(8);
 		}
 	}
 	else if (current_index == 2 || current_index == 3 || current_index == 4)
@@ -196,6 +235,7 @@ void Ui::draw_control()
 		//返回菜单
 		if (keys.condition == 2 && keys.key_num == 48)
 		{
+			keys.score = 0;
 			keys.key_num = 0;
 			music_id = 1;
 			set_current_index(1);
@@ -262,11 +302,112 @@ void Ui::draw_control()
 	}
 	else if (current_index == 5)
 	{
+		COLORREF color = RGB(102, 204, 255);
+		note(10, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"按0:退出");
+		string text2 = "score:" + std::to_string(keys.score);
+		wstring out2(text2.begin(), text2.end());
+		note(200, 10, 100, 50, 30, 0, color, WHITE, out2.c_str());
+		string text3 = "Level:" + std::to_string(keys.plane_level[keys.plane_id] + 1);
+		wstring out3(text3.begin(), text3.end());
+		note(420, 10, 100, 50, 30, 0, color, WHITE, out3.c_str());
+		if (mouse_ban == 0) {
+			note(570, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"F1禁用鼠标");
+		}
+		else if (mouse_ban == 1) {
+			note(570, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"F1启用鼠标");
+		}
 
+		//返回菜单
+		if (keys.condition == 2 && keys.key_num == 48)
+		{
+			if (keys.score > keys.max_score) {
+				keys.max_score = keys.score;
+			}
+			keys.score = 0;
+			keys.key_num = 0;
+			music_id = 1;
+			set_current_index(1);
+			keys.condition = 1;
+			//重置flags，用于关卡的flags
+			for (int i = 0; i < keys.get_flag_size(); i++)
+				keys.set_flag(i, 0);
+			delete plane;
+			plane = nullptr;
+			//重置defeat目标数据
+			defeat_target.clear();
+			//内存管理
+			if (!enemys.empty())
+			{
+				for (auto enemy : enemys)
+					delete enemy;
+				enemys.clear();
+			}
+			if (!drops.empty())
+			{
+				for (auto drop : drops)
+					delete drop;
+				drops.clear();
+			}
+			if (!card_select.empty())
+			{
+				for (auto card : card_select)
+					delete card;
+				card_select.clear();
+			}
+			card_now.clear();
+			bgm_id = 0;
+			keys.stage = 0;
+			keys.move[0] = 360;
+			keys.move[1] = 932;
+			return;
+		}
+		//死亡
+		if (keys.hp <= 0) {
+			note(180, 300, 400, 120, 80, 1, RED, WHITE, L"YOU DIED");
+			return;
+		}
+		//机体相关的渲染,大部分渲染逻辑封装进plane中
+		plane->draw();
+		infinity();
+		for (auto ene : enemys) {
+			ene->draw();
+		}
+		for (auto drop : drops) {
+			drop->draw();
+		}
+		judge();//判定
 	}
 	else if (current_index == 6)
 	{
 		plane_house();
+	}
+	else if (current_index == 7)
+	{
+		note(10, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"按0:退出");
+		if (keys.condition == 1 && keys.key_num == 48)
+		{
+			keys.key_num = 0;
+			music_id = 1;
+			bgm_id = 0;
+			set_current_index(1);
+			return;
+		}
+	}
+	else if (current_index == 8)
+	{
+		COLORREF color = RGB(102, 204, 255);
+		note(10, 10, 120, 50, 30, 1, LIGHTGRAY, WHITE, L"按0:退出");
+		string text2 = "max score:" + std::to_string(keys.max_score);
+		wstring out2(text2.begin(), text2.end());
+		note(200, 10, 250, 50, 40, 0, color, WHITE, out2.c_str());
+		if (keys.condition == 1 && keys.key_num == 48)
+		{
+			keys.key_num = 0;
+			music_id = 1;
+			bgm_id = 0;
+			set_current_index(1);
+			return;
+		}
 	}
 }
 
@@ -562,6 +703,38 @@ void Ui::stage_3()
 	}
 }
 
+void Ui::infinity()
+{
+	//使用flag和defeat目标进行对照，编写关卡下一个阶段的时候需要将target_num值手动加一
+	static int target_num = 1000;
+	static int target = 0;
+	static int enemy_id = 0;//0~11,9,10,11为boss1，boss2，boss3
+	if (defeat_target.empty()) {
+		for (int i = 0; i <= target_num; i++) {
+			defeat_target.push_back(0);
+			target = 0;
+		}
+	}
+	//模块start
+	if (keys.get_flag(4) == defeat_target[target]) {
+		enemys_reset();
+		//添加enemy,需修改group
+		srand((unsigned)time(NULL));
+		enemy_id = rand() % 100;
+		if (enemy_id < (100 - target * 10)) {
+			enemys.push_back(new simple_enemy(enemy_id % 128 + 232, 150, 4));
+		}
+		if ((enemy_id > (100 - target * 40)) && (enemy_id < (100 - target * 10))) {
+			enemys.push_back(new lock_simple(488-enemy_id % 128, 250, 4, &(plane->position[2]), &(plane->position[3])));
+		}
+		//下面三句话不用改
+		keys.set_flag(4, keys.get_flag(4) + 1);
+		target++;
+		defeat_target[target] = keys.get_flag(4) + (int)enemys.size();
+	}
+	//end
+}
+
 void Ui::plane_house()
 {
 	//数据
@@ -707,22 +880,22 @@ void Ui::plane_house()
 
 	if (temp_id == 0) {
 		note(0, 320, 720, 40, 30, 0, color, WHITE, L"Chirno");
-		note(0, 900, 720, 50, 45, 0, color, WHITE, L"无特殊被动");
+		note(0, 890, 720, 50, 45, 0, color, WHITE, L"无特殊被动");
 	}
 	else if (temp_id == 1) {
 		string text6 = std::to_string(keys.plane_level[temp_id] * 5 + 5);
 		wstring out6(text6.begin(), text6.end());
 		note(0, 320, 720, 40, 30, 0, color, WHITE, L"Patchouli");
-		note(0, 900, 720, 50, 45, 0, color, WHITE, L"每12秒恢复HP");
-		note(164, 900, 720, 50, 45, 0, color, WHITE, out6.c_str());
+		note(0, 890, 720, 50, 45, 0, color, WHITE, L"每12秒恢复HP");
+		note(164, 890, 720, 50, 45, 0, color, WHITE, out6.c_str());
 	}
 	else if (temp_id == 2) {
 		note(0, 320, 720, 40, 30, 0, color, WHITE, L"Sanae");
-		note(0, 900, 720, 50, 45, 0, color, WHITE, L"有20%概率防御力翻倍");
+		note(0, 890, 720, 50, 45, 0, color, WHITE, L"有20%概率防御力翻倍");
 	}
 	else if (temp_id == 3) {
 		note(0, 320, 720, 40, 30, 0, color, WHITE, L"Meirin");
-		note(0, 900, 720, 50, 45, 0, color, WHITE, L"有20%概率暴击率翻倍");
+		note(0, 890, 720, 50, 45, 0, color, WHITE, L"有20%概率暴击率翻倍");
 	}
 	//数值显示
 	string text7 = "HP:" + std::to_string(hps[temp_id][keys.plane_level[temp_id]]);
@@ -743,13 +916,13 @@ void Ui::plane_house()
 	//资源数据
 	string text3 = "star:" + std::to_string(keys.star_value);
 	wstring out3(text3.begin(), text3.end());
-	note(0, 950, 240, 40, 35, 0, color, WHITE, out3.c_str());
+	note(0, 940, 240, 40, 35, 0, color, WHITE, out3.c_str());
 	string text4 = "moon:" + std::to_string(keys.moon);
 	wstring out4(text4.begin(), text4.end());
-	note(240, 950, 240, 40, 35, 0, color, WHITE, out4.c_str());
+	note(240, 940, 240, 40, 35, 0, color, WHITE, out4.c_str());
 	string text5 = "sun:" + std::to_string(keys.sun);
 	wstring out5(text5.begin(), text5.end());
-	note(480, 950, 240, 40, 35, 0, color, WHITE, out5.c_str());
+	note(480, 940, 240, 40, 35, 0, color, WHITE, out5.c_str());
 
 	//解锁机体
 	if (keys.condition == 1 && keys.key_num == 57 && flag == 1) {
@@ -1115,6 +1288,7 @@ void Ui::judge()//判定函数
 			{
 				enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
 				shot->flag = 1;
+				keys.score += keys.attack/20;
 				if (enemy->hp > 0)
 					music_id = 11;
 				put_bk_image((int)shot->get_x(), (int)shot->get_y(), keys.boom_image[0]);
@@ -1134,6 +1308,7 @@ void Ui::judge()//判定函数
 				plane->set_stage(plane->get_stage() - 1);
 				shot->flag = 1;
 				music_id = 11;
+				keys.score -=100;
 				put_bk_image((int)shot->get_x(), (int)shot->get_y(), keys.boom_image[3]);
 			}
 		}
@@ -1146,6 +1321,7 @@ void Ui::judge()//判定函数
 		//超大判定范围下，然后判断id，做出不同的功效
 		if (sqrt(pow(abs(drop->get_x() - plane->position[2]), 2) + pow(abs(drop->get_y() - plane->position[3]), 2)) < 32)
 		{
+			keys.score +=30;
 			drop->state = 1;
 			switch (drop->get_id())
 			{
@@ -1229,22 +1405,22 @@ void Ui::input()
 		if (keys.condition == 2 && plane != nullptr)
 		{
 			if (KEY_DOWN(16)) {
-				key_shift = 4;
+				key_shift = 5;
 			}
 			else {
 				key_shift = 0;
 			}
 			if (KEY_DOWN(37)) {
-				keys.move[0] -= 7 - key_shift;
+				keys.move[0] -= 8 - key_shift;
 			}
 			else if (KEY_DOWN(39)) {
-				keys.move[0] += 7 - key_shift;
+				keys.move[0] += 8 - key_shift;
 			}
 			if (KEY_DOWN(38)) {
-				keys.move[1] -= 7 - key_shift;
+				keys.move[1] -= 8 - key_shift;
 			}
 			else if (KEY_DOWN(40)) {
-				keys.move[1] += 7 - key_shift;
+				keys.move[1] += 8 - key_shift;
 			}
 			if (KEY_DOWN(112)) {
 				while (KEY_DOWN(112)) {}

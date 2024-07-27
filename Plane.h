@@ -16,11 +16,13 @@ public:
 	virtual int get_maxmp() { return 0; };
 	virtual int get_maxlevel() { return 0; };
 
+	vector<Shot*> shots;
+	vector<int> position{ 324,868,360,932 };//0，1：渲染坐标，2，3：判定坐标
+
+protected:
 	void put_bk_image(int, int, IMAGE);
 	void control();//控制移动和渲染自身
 	void shot_clear();
-	vector<Shot*> shots;
-	vector<int> position{ 324,868,360,932 };//0，1：渲染坐标，2，3：判定坐标
 };
 
 //id:0

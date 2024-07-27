@@ -11,6 +11,7 @@ simple_enemy::simple_enemy(int x, int y, int g)
 	speed = 0.75;
 	state = 0;
 	group = g;
+	score = 100;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -29,6 +30,7 @@ void simple_enemy::draw()
 		}
 		state = 1;
 		keys.set_flag(group, keys.get_flag(group) + 1);
+		keys.score += score;
 		return;
 	}
 	//»Î≥°∂Øª≠
@@ -80,6 +82,7 @@ lock_simple::lock_simple(int x, int y, int g, int* x_t, int* y_t)
 	speed = 0.7;
 	state = 0;
 	group = g;
+	score = 150;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -97,6 +100,7 @@ void lock_simple::draw()
 			return;
 		}
 		state = 1;
+		keys.score += score;
 		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
@@ -151,6 +155,7 @@ simple_three::simple_three(int x, int y, int g)
 	speed = 0.7;
 	state = 0;
 	group = g;
+	score = 200;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -168,6 +173,7 @@ void simple_three::draw()
 			return;
 		}
 		state = 1;
+		keys.score += score;
 		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
@@ -239,6 +245,7 @@ lock_super::lock_super(int x, int y, int g, int* x_t, int* y_t)
 	speed = 1.0;
 	state = 0;
 	group = g;
+	score = 200;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -256,6 +263,7 @@ void lock_super::draw()
 			return;
 		}
 		state = 1;
+		keys.score += score;
 		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
@@ -311,6 +319,7 @@ boss_1::boss_1(int x, int y, int g, int* x_t, int* y_t)
 	speed = 0.8;
 	state = 0;
 	group = g;
+	score = 1000;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -328,6 +337,7 @@ void boss_1::draw()
 			return;
 		}
 		state = 1;
+		keys.score += score;
 		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
@@ -516,6 +526,7 @@ lock_extend::lock_extend(int x, int y, int g, int* x_t, int* y_t)
 	speed = 0.75;
 	state = 0;
 	group = g;
+	score = 300;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -533,6 +544,7 @@ void lock_extend::draw()
 			return;
 		}
 		state = 1;
+		keys.score += score;
 		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
@@ -613,6 +625,7 @@ five_super::five_super(int x, int y, int g, int r)
 	speed = 1.0;
 	state = 0;
 	group = g;
+	score = 300;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -630,6 +643,7 @@ void five_super::draw()
 			return;
 		}
 		state = 1;
+		keys.score += score;
 		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
@@ -699,6 +713,7 @@ three_move::three_move(int x, int y, int g)
 	speed = 0.9;
 	state = 0;
 	group = g;
+	score = 350;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -716,6 +731,7 @@ void three_move::draw()
 			return;
 		}
 		state = 1;
+		keys.score += score;
 		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
@@ -802,6 +818,7 @@ boss_2::boss_2(int x, int y, int g, int* x_t, int* y_t)
 	speed = 1.4;
 	state = 0;
 	group = g;
+	score = 1200;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -819,6 +836,7 @@ void boss_2::draw()
 			return;
 		}
 		state = 1;
+		keys.score += score;
 		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
@@ -1003,6 +1021,7 @@ six_super::six_super(int x, int y, int g)
 	speed = 0.75;
 	state = 0;
 	group = g;
+	score = 400;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -1020,6 +1039,7 @@ void six_super::draw()
 			return;
 		}
 		state = 1;
+		keys.score += score;
 		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
@@ -1095,6 +1115,7 @@ five_trans::five_trans(int x, int y, int g)
 	speed = 0.7;
 	state = 0;
 	group = g;
+	score = 450;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -1112,6 +1133,7 @@ void five_trans::draw()
 			return;
 		}
 		state = 1;
+		keys.score += score;
 		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
@@ -1192,6 +1214,7 @@ boss_3::boss_3(int x, int y, int g, int* x_t, int* y_t)
 	speed = 0.8;
 	state = 0;
 	group = g;
+	score = 2000;
 	position.push_back(x - width / 2);
 	position.push_back(y - height / 2);
 	position.push_back(x);
@@ -1209,6 +1232,7 @@ void boss_3::draw()
 			return;
 		}
 		state = 1;
+		keys.score += score;
 		keys.set_flag(group, keys.get_flag(group) + 1);
 		return;
 	}
