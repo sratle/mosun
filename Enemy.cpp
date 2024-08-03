@@ -8,6 +8,7 @@ simple_enemy::simple_enemy(int x, int y, int g)
 {
 	attack = 100;
 	hp = 500;
+	max_hp = hp;
 	speed = 0.75;
 	state = 0;
 	group = g;
@@ -38,6 +39,7 @@ void simple_enemy::draw()
 	{
 		int deff = position[1] - record_time[1];
 		put_bk_image(position[0], record_time[1], keys.enemy_image[id]);
+		//判定点
 		setfillcolor(WHITE);
 		fillcircle(position[2], record_time[1] + height / 2, 10);
 		record_time[1] += 5 + deff / 12;
@@ -47,6 +49,13 @@ void simple_enemy::draw()
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 10);
+	//血条
+	setlinecolor(WHITE);
+	setfillcolor(RED);
+	setbkmode(TRANSPARENT);
+	rectangle(position[2] - 32, position[3] - 64, position[2] + 32, position[3] - 56);
+	solidrectangle(position[2] - 32, position[3] - 64, position[2] - 32 + 64 * ((double)hp / (double)max_hp), position[3] - 56);
+
 	if ((keys.timer - record_time[0]) > (FPS * speed))
 	{
 		//下面设计是需要改动的模块，子弹出鞘
@@ -79,6 +88,7 @@ lock_simple::lock_simple(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 150;
 	hp = 400;
+	max_hp = hp;
 	speed = 0.7;
 	state = 0;
 	group = g;
@@ -118,6 +128,13 @@ void lock_simple::draw()
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 10);
+	//血条
+	setlinecolor(WHITE);
+	setfillcolor(RED);
+	setbkmode(TRANSPARENT);
+	rectangle(position[2] - 32, position[3] - 64, position[2] + 32, position[3] - 56);
+	solidrectangle(position[2] - 32, position[3] - 64, position[2] - 32 + 64 * ((double)hp / (double)max_hp), position[3] - 56);
+
 	if ((keys.timer - record_time[0]) > (FPS * speed))
 	{
 		//下面设计是需要改动的模块，子弹出鞘
@@ -152,6 +169,7 @@ simple_three::simple_three(int x, int y, int g)
 {
 	attack = 100;
 	hp = 600;
+	max_hp = hp;
 	speed = 0.7;
 	state = 0;
 	group = g;
@@ -191,6 +209,13 @@ void simple_three::draw()
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 10);
+	//血条
+	setlinecolor(WHITE);
+	setfillcolor(RED);
+	setbkmode(TRANSPARENT);
+	rectangle(position[2] - 32, position[3] - 64, position[2] + 32, position[3] - 56);
+	solidrectangle(position[2] - 32, position[3] - 64, position[2] - 32 + 64 * ((double)hp / (double)max_hp), position[3] - 56);
+
 	if ((keys.timer - record_time[0]) > (FPS * speed))
 	{
 		//下面设计是需要改动的模块，子弹出鞘
@@ -242,6 +267,7 @@ lock_super::lock_super(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 200;
 	hp = 600;
+	max_hp = hp;
 	speed = 1.0;
 	state = 0;
 	group = g;
@@ -281,6 +307,13 @@ void lock_super::draw()
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 10);
+	//血条
+	setlinecolor(WHITE);
+	setfillcolor(RED);
+	setbkmode(TRANSPARENT);
+	rectangle(position[2] - 32, position[3] - 64, position[2] + 32, position[3] - 56);
+	solidrectangle(position[2] - 32, position[3] - 64, position[2] - 32 + 64 * ((double)hp / (double)max_hp), position[3] - 56);
+
 	if ((keys.timer - record_time[0]) > (FPS * speed))
 	{
 		//下面设计是需要改动的模块，子弹出鞘
@@ -316,6 +349,7 @@ boss_1::boss_1(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 150;
 	hp = 3000;
+	max_hp = hp;
 	speed = 0.8;
 	state = 0;
 	group = g;
@@ -355,6 +389,18 @@ void boss_1::draw()
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(RED);
 	fillcircle(position[2], position[3], 6);
+	//血条
+	setlinecolor(WHITE);
+	if (stage == 0) {
+		setfillcolor(YELLOW);
+	}
+	else if (stage == 1) {
+		setfillcolor(RED);
+	}
+	setbkmode(TRANSPARENT);
+	rectangle(100, 50, 620, 58);
+	solidrectangle(100, 50, 100 + 520 * ((double)hp / (double)max_hp), 58);
+
 	//一阶段
 	if (stage == 0)
 	{
@@ -365,6 +411,7 @@ void boss_1::draw()
 			stage = 1;
 			speed = 1.0;
 			hp = 3500;
+			max_hp = hp;
 			if (shots.empty())
 				return;
 			for (auto shot : shots)
@@ -523,6 +570,7 @@ lock_extend::lock_extend(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 150;
 	hp = 900;
+	max_hp = hp;
 	speed = 0.75;
 	state = 0;
 	group = g;
@@ -562,6 +610,12 @@ void lock_extend::draw()
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 10);
+	//血条
+	setlinecolor(WHITE);
+	setfillcolor(RED);
+	setbkmode(TRANSPARENT);
+	rectangle(position[2] - 32, position[3] - 64, position[2] + 32, position[3] - 56);
+	solidrectangle(position[2] - 32, position[3] - 64, position[2] - 32 + 64 * ((double)hp / (double)max_hp), position[3] - 56);
 	if ((keys.timer - record_time[0]) > (FPS * speed))
 	{
 		//下面设计是需要改动的模块，子弹出鞘
@@ -622,6 +676,7 @@ five_super::five_super(int x, int y, int g, int r)
 {
 	attack = 150;
 	hp = 1000;
+	max_hp = hp;
 	speed = 1.0;
 	state = 0;
 	group = g;
@@ -661,6 +716,12 @@ void five_super::draw()
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 10);
+	//血条
+	setlinecolor(WHITE);
+	setfillcolor(RED);
+	setbkmode(TRANSPARENT);
+	rectangle(position[2] - 32, position[3] - 64, position[2] + 32, position[3] - 56);
+	solidrectangle(position[2] - 32, position[3] - 64, position[2] - 32 + 64 * ((double)hp / (double)max_hp), position[3] - 56);
 	if ((keys.timer - record_time[0]) > (FPS * speed))
 	{
 		//下面设计是需要改动的模块，子弹出鞘
@@ -710,6 +771,7 @@ three_move::three_move(int x, int y, int g)
 {
 	attack = 150;
 	hp = 900;
+	max_hp = hp;
 	speed = 0.9;
 	state = 0;
 	group = g;
@@ -769,6 +831,12 @@ void three_move::draw()
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 10);
+	//血条
+	setlinecolor(WHITE);
+	setfillcolor(RED);
+	setbkmode(TRANSPARENT);
+	rectangle(position[2] - 32, position[3] - 64, position[2] + 32, position[3] - 56);
+	solidrectangle(position[2] - 32, position[3] - 64, position[2] - 32 + 64 * ((double)hp / (double)max_hp), position[3] - 56);
 	if ((keys.timer - record_time[0]) > (FPS * speed))
 	{
 		//下面设计是需要改动的模块，子弹出鞘
@@ -815,6 +883,7 @@ boss_2::boss_2(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 150;
 	hp = 5000;
+	max_hp = hp;
 	speed = 1.4;
 	state = 0;
 	group = g;
@@ -854,6 +923,17 @@ void boss_2::draw()
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(RED);
 	fillcircle(position[2], position[3], 6);
+	//血条
+	setlinecolor(WHITE);
+	if (stage == 0) {
+		setfillcolor(YELLOW);
+	}
+	else if (stage == 1) {
+		setfillcolor(RED);
+	}
+	setbkmode(TRANSPARENT);
+	rectangle(100, 50, 620, 58);
+	solidrectangle(100, 50, 100 + 520 * ((double)hp / (double)max_hp), 58);
 	//一阶段
 	static double scale = 0.9;//子弹速度系数
 	if (stage == 0)
@@ -884,6 +964,7 @@ void boss_2::draw()
 			stage = 1;
 			speed = 1.1;
 			hp = 6000;
+			max_hp = hp;
 			if (shots.empty())
 				return;
 			for (auto shot : shots)
@@ -1018,6 +1099,7 @@ six_super::six_super(int x, int y, int g)
 {
 	attack = 150;
 	hp = 1400;
+	max_hp = hp;
 	speed = 0.75;
 	state = 0;
 	group = g;
@@ -1057,6 +1139,12 @@ void six_super::draw()
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 10);
+	//血条
+	setlinecolor(WHITE);
+	setfillcolor(RED);
+	setbkmode(TRANSPARENT);
+	rectangle(position[2] - 32, position[3] - 64, position[2] + 32, position[3] - 56);
+	solidrectangle(position[2] - 32, position[3] - 64, position[2] - 32 + 64 * ((double)hp / (double)max_hp), position[3] - 56);
 	if ((keys.timer - record_time[0]) > (FPS * speed))
 	{
 		//下面设计是需要改动的模块，子弹出鞘
@@ -1112,6 +1200,7 @@ five_trans::five_trans(int x, int y, int g)
 {
 	attack = 150;
 	hp = 1600;
+	max_hp = hp;
 	speed = 0.7;
 	state = 0;
 	group = g;
@@ -1151,6 +1240,12 @@ void five_trans::draw()
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
 	fillcircle(position[2], position[3], 10);
+	//血条
+	setlinecolor(WHITE);
+	setfillcolor(RED);
+	setbkmode(TRANSPARENT);
+	rectangle(position[2] - 32, position[3] - 64, position[2] + 32, position[3] - 56);
+	solidrectangle(position[2] - 32, position[3] - 64, position[2] - 32 + 64 * ((double)hp / (double)max_hp), position[3] - 56);
 	if ((keys.timer - record_time[0]) > (FPS * speed))
 	{
 		//下面设计是需要改动的模块，子弹出鞘
@@ -1211,6 +1306,7 @@ boss_3::boss_3(int x, int y, int g, int* x_t, int* y_t)
 {
 	attack = 150;
 	hp = 8000;
+	max_hp = hp;
 	speed = 0.8;
 	state = 0;
 	group = g;
@@ -1250,6 +1346,17 @@ void boss_3::draw()
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(RED);
 	fillcircle(position[2], position[3], 6);
+	//血条
+	setlinecolor(WHITE);
+	if (stage == 0) {
+		setfillcolor(YELLOW);
+	}
+	else if (stage == 1) {
+		setfillcolor(RED);
+	}
+	setbkmode(TRANSPARENT);
+	rectangle(100, 50, 620, 58);
+	solidrectangle(100, 50, 100 + 520 * ((double)hp / (double)max_hp), 58);
 	//一阶段
 	if (stage == 0)
 	{
@@ -1279,6 +1386,7 @@ void boss_3::draw()
 			stage = 1;
 			speed = 0.8;
 			hp = 10000;
+			max_hp = hp;
 			if (shots.empty())
 				return;
 			for (auto shot : shots)

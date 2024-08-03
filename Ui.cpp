@@ -155,6 +155,8 @@ void Ui::draw_control()
 			}
 			plane->upgrade();//加载数据到keys中
 			plane->set_stage(0);
+			//血条部件
+			tools.push_back(new hpmp_bar(plane->get_maxhp(), plane->get_maxmp(), &keys.hp, &keys.mp));
 			//随机数种子更新
 			srand((unsigned)time(NULL));
 			bgm_id = 2;
@@ -185,6 +187,8 @@ void Ui::draw_control()
 			}
 			plane->upgrade();//加载数据到keys中
 			plane->set_stage(0);
+			//血条部件
+			tools.push_back(new hpmp_bar(plane->get_maxhp(), plane->get_maxmp(), &keys.hp, &keys.mp));
 			//随机数种子更新
 			srand((unsigned)time(NULL));
 			bgm_id = 5;
@@ -260,6 +264,12 @@ void Ui::draw_control()
 					delete drop;
 				drops.clear();
 			}
+			if (!tools.empty())
+			{
+				for (auto tool : tools)
+					delete tool;
+				tools.clear();
+			}
 			if (!card_select.empty())
 			{
 				for (auto card : card_select)
@@ -297,6 +307,9 @@ void Ui::draw_control()
 		}
 		for (auto drop : drops) {
 			drop->draw();
+		}
+		for (auto tool : tools) {
+			tool->draw();
 		}
 		judge();//判定
 	}
@@ -348,6 +361,12 @@ void Ui::draw_control()
 					delete drop;
 				drops.clear();
 			}
+			if (!tools.empty())
+			{
+				for (auto tool : tools)
+					delete tool;
+				tools.clear();
+			}
 			if (!card_select.empty())
 			{
 				for (auto card : card_select)
@@ -368,12 +387,16 @@ void Ui::draw_control()
 		}
 		//机体相关的渲染,大部分渲染逻辑封装进plane中
 		plane->draw();
+		//无尽关卡
 		infinity();
 		for (auto ene : enemys) {
 			ene->draw();
 		}
 		for (auto drop : drops) {
 			drop->draw();
+		}
+		for (auto tool : tools) {
+			tool->draw();
 		}
 		judge();//判定
 	}
