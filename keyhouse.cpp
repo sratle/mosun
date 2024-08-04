@@ -1,7 +1,7 @@
 #include "keyhouse.h"
 
 keyhouse::keyhouse()
-	:condition(0), timer(0), sun(100), star_value(100), moon(100), attack(0), hp(0), mp(0), shield(0),
+	:condition(0), timer(0), sun(0), star_value(0), moon(0), attack(0), hp(0), mp(0), shield(0),
 	key_card(0), plane_id(0), plane_unlock(0), strike(0), stage(0), score(0)
 {
 	//‘§º”‘ÿ
@@ -110,6 +110,21 @@ void keyhouse::load()
 	plane_unlock = std::stoi(to_load[23]);
 	max_score = std::stoi(to_load[24]);
 	file.close();
+}
+
+void keyhouse::reset_save()
+{
+	star_value = 0;
+	moon = 0;
+	sun = 0;
+	for (int i = 3; i < 7; i++) {
+		plane_level[i - 3] = 0;
+	}
+	for (int i = 7; i < 23; i++) {
+		cards_unlock[i - 7] = 0;
+	}
+	plane_unlock = 0;
+	max_score = 0;
 }
 
 int keyhouse::get_flag(int pos)

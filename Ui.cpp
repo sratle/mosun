@@ -427,6 +427,13 @@ void Ui::draw_control()
 		string text2 = "max score:" + std::to_string(keys.max_score);
 		wstring out2(text2.begin(), text2.end());
 		note(200, 10, 250, 50, 40, 0, color, WHITE, out2.c_str());
+		note(0, 60, 720, 55, 50, 0, color, WHITE, L"∞¥9÷ÿ÷√¥Êµµ");
+		if (keys.condition == 1 && keys.key_num == 57)
+		{
+			keys.reset_save();
+			keys.save();
+			keys.load();
+		}
 		if (keys.condition == 1 && keys.key_num == 48)
 		{
 			keys.key_num = 0;

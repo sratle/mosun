@@ -48,6 +48,7 @@ public:
 	keyhouse();
 	void load();//½«´æµµ¼ÓÔØ
 	void save();//´æµµ
+	void reset_save();
 
 private:
 	vector<int> desigh_flags;
