@@ -507,11 +507,11 @@ int nanna::get_stage() {
 }
 
 int nanna::get_maxhp() {
-	return hps[keys.plane_level[0]];
+	return hps[keys.plane_level[1]];
 }
 
 int nanna::get_maxmp() {
-	return mps[keys.plane_level[0]];
+	return mps[keys.plane_level[1]];
 }
 
 int nanna::get_maxlevel() {
@@ -782,11 +782,11 @@ int ea::get_stage() {
 }
 
 int ea::get_maxhp() {
-	return hps[keys.plane_level[0]];
+	return hps[keys.plane_level[2]];
 }
 
 int ea::get_maxmp() {
-	return mps[keys.plane_level[0]];
+	return mps[keys.plane_level[2]];
 }
 
 int ea::get_maxlevel() {
@@ -1055,11 +1055,11 @@ int enlil::get_stage() {
 }
 
 int enlil::get_maxhp() {
-	return hps[keys.plane_level[0]];
+	return hps[keys.plane_level[3]];
 }
 
 int enlil::get_maxmp() {
-	return mps[keys.plane_level[0]];
+	return mps[keys.plane_level[3]];
 }
 
 int enlil::get_maxlevel() {
