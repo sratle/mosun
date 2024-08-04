@@ -7,6 +7,7 @@
 #include <conio.h>
 #include <easyx.h>
 #include <iostream>
+#include <fstream>
 #include <mmsystem.h>
 #include <algorithm>//算法库，之后好好看看用法
 #include <string>

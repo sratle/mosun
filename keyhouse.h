@@ -35,8 +35,8 @@ public:
 	vector<int> plane_level{ 0,0,0,0 };//save 存储四种机体的当前等级
 	vector<int> cards_unlock{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };//save 16张卡的解锁情况
 	int plane_unlock;//save 机体解锁
-	int score;//save
 	int max_score;//save
+	int score;
 	//机体数据,这是当前的飞机数据加载到这里，实时变化控制
 	int plane_id;//从ui.planes_data中加载对应id
 	int mp;

@@ -2,7 +2,7 @@
 
 keyhouse::keyhouse()
 	:condition(0), timer(0), sun(100), star_value(100), moon(100), attack(0), hp(0), mp(0), shield(0),
-	key_card(0), plane_id(0), plane_unlock(0), strike(0), stage(0),score(0)
+	key_card(0), plane_id(0), plane_unlock(0), strike(0), stage(0), score(0)
 {
 	//‘§º”‘ÿ
 	load_image_asset(L"assets/sakuya1.png", 0);
@@ -40,6 +40,7 @@ keyhouse::keyhouse()
 	load_image_asset(L"assets/boom03.png", 4);
 	load_image_asset(L"assets/boom04.png", 4);
 	load_image_asset(L"assets/boom05.png", 4);
+	//card
 	//bullet
 	load_shots(L"assets/BulletAa000.png");//0
 	load_shots(L"assets/BulletAa001.png");//1
@@ -70,6 +71,45 @@ keyhouse::keyhouse()
 	load_shots(L"assets/bulletFf002.png");//26
 	//other
 
+}
+
+void keyhouse::save()
+{
+	std::ofstream file("savedata/savedata.dat", std::ios::out | std::ios::binary);
+	string to_save;
+	to_save = std::to_string(star_value) + " " + std::to_string(moon) + " " + std::to_string(sun) + " ";
+	for (auto level : plane_level) {
+		to_save = to_save + std::to_string(level) + " ";
+	}
+	for (auto unlock : cards_unlock) {
+		to_save = to_save + std::to_string(unlock) + " ";
+	}
+	to_save = to_save + std::to_string(plane_unlock) + " " + std::to_string(max_score);
+	file << to_save;
+	file.close();
+}
+
+void keyhouse::load()
+{
+	std::ifstream file("savedata/savedata.dat", std::ios::in | std::ios::binary);
+	vector<string> to_load;
+	string load_buffer;
+	for (int i = 0; i < 25; i++) {
+		file >> load_buffer;
+		to_load.push_back(load_buffer);
+	}
+	star_value = std::stoi(to_load[0]);
+	moon = std::stoi(to_load[1]);
+	sun = std::stoi(to_load[2]);
+	for (int i = 3; i < 7; i++) {
+		plane_level[i - 3] = std::stoi(to_load[i]);
+	}
+	for (int i = 7; i < 23; i++) {
+		cards_unlock[i - 7] = std::stoi(to_load[i]);
+	}
+	plane_unlock = std::stoi(to_load[23]);
+	max_score = std::stoi(to_load[24]);
+	file.close();
 }
 
 int keyhouse::get_flag(int pos)

@@ -441,7 +441,7 @@ void nanna::draw()
 			else if (flag == 4) {
 				if (shot->flag != 1)
 					shot->flag++;
-				if (shot->flag < FPS*0.6) {
+				if (shot->flag < FPS * 0.6) {
 					shot->set_pos(shot->get_x() + 4, shot->get_y() - 16);
 				}
 				else {

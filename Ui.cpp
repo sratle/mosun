@@ -2,13 +2,14 @@
 extern keyhouse keys;
 
 Ui::Ui(int width, int height)
-	:width(width), height(height), current_index(0), plane(nullptr), music_id(0), bgm_id(0),mouse_ban(0)
+	:width(width), height(height), current_index(0), plane(nullptr), music_id(0), bgm_id(0), mouse_ban(0)
 {
 }
 
 void Ui::init()
 {
 	initgraph(width, height);
+	keys.load();
 
 	//加载页面
 	IMAGE* page_1 = new IMAGE(width, height);
@@ -101,6 +102,7 @@ void Ui::draw_control()
 		//确认捕获按键0则执行退出
 		if (keys.condition == 0 && keys.key_any == 48)
 		{
+			keys.save();
 			close();
 		}//如果是其他任意按键就进入
 		else if (keys.condition == 0 && keys.key_any)
@@ -235,10 +237,11 @@ void Ui::draw_control()
 		else if (mouse_ban == 1) {
 			note(570, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"F1启用鼠标");
 		}
-		
+
 		//返回菜单
 		if (keys.condition == 2 && keys.key_num == 48)
 		{
+			keys.save();
 			keys.score = 0;
 			keys.key_num = 0;
 			music_id = 1;
@@ -336,6 +339,7 @@ void Ui::draw_control()
 			if (keys.score > keys.max_score) {
 				keys.max_score = keys.score;
 			}
+			keys.save();
 			keys.score = 0;
 			keys.key_num = 0;
 			music_id = 1;
@@ -449,6 +453,7 @@ void Ui::stage_1()
 	//模块start
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		//添加enemy,需修改
 		enemys.push_back(new simple_enemy(260, 150, 1));//分别是x，y坐标和group参数，group就是关卡id
 		enemys.push_back(new simple_enemy(460, 150, 1));
@@ -461,6 +466,7 @@ void Ui::stage_1()
 	//end
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		//添加enemy
 		enemys.push_back(new simple_enemy(220, 150, 1));
 		enemys.push_back(new lock_simple(360, 250, 1, &(plane->position[2]), &(plane->position[3])));
@@ -473,6 +479,7 @@ void Ui::stage_1()
 	i++;
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		enemys.push_back(new lock_simple(160, 300, 1, &(plane->position[2]), &(plane->position[3])));
 		enemys.push_back(new simple_three(360, 150, 1));
 		enemys.push_back(new lock_simple(560, 300, 1, &(plane->position[2]), &(plane->position[3])));
@@ -483,6 +490,7 @@ void Ui::stage_1()
 	i++;
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		enemys.push_back(new simple_three(260, 150, 1));
 		enemys.push_back(new lock_super(120, 300, 1, &(plane->position[2]), &(plane->position[3])));
 		enemys.push_back(new lock_simple(600, 300, 1, &(plane->position[2]), &(plane->position[3])));
@@ -494,6 +502,7 @@ void Ui::stage_1()
 	i++;
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		enemys.push_back(new simple_three(120, 360, 1));
 		enemys.push_back(new lock_super(120, 140, 1, &(plane->position[2]), &(plane->position[3])));
 		enemys.push_back(new simple_three(360, 260, 1));
@@ -506,6 +515,7 @@ void Ui::stage_1()
 	i++;
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		enemys.push_back(new simple_three(120, 360, 1));
 		enemys.push_back(new lock_super(120, 140, 1, &(plane->position[2]), &(plane->position[3])));
 		enemys.push_back(new lock_super(360, 100, 1, &(plane->position[2]), &(plane->position[3])));
@@ -519,6 +529,7 @@ void Ui::stage_1()
 	i++;
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		enemys.push_back(new boss_1(360, 120, 1, &(plane->position[2]), &(plane->position[3])));
 		keys.set_flag(1, keys.get_flag(1) + 1);
 		target++;
@@ -527,6 +538,7 @@ void Ui::stage_1()
 	i++;
 	if (keys.get_flag(1) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		note(0, 500, 720, 70, 60, 0, LIGHTGREEN, WHITE, L"STAGE01 COMPLETE!");
 		static int count = 0;
 		count++;
@@ -554,6 +566,7 @@ void Ui::stage_2()
 	//模块start
 	if (keys.get_flag(2) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		//添加enemy,需修改
 		enemys.push_back(new lock_extend(560, 140, 2, &(plane->position[2]), &(plane->position[3])));//分别是x，y坐标和group参数，group就是关卡id
 		enemys.push_back(new lock_extend(160, 140, 2, &(plane->position[2]), &(plane->position[3])));
@@ -566,6 +579,7 @@ void Ui::stage_2()
 	//end
 	if (keys.get_flag(2) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		//添加enemy,需修改
 		enemys.push_back(new five_super(580, 200, 2, -6));//分别是x，y坐标和group参数，group就是关卡id
 		enemys.push_back(new lock_extend(360, 180, 2, &(plane->position[2]), &(plane->position[3])));
@@ -578,6 +592,7 @@ void Ui::stage_2()
 	i++;
 	if (keys.get_flag(2) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		//添加enemy,需修改
 		enemys.push_back(new five_super(580, 220, 2, -6));//分别是x，y坐标和group参数，group就是关卡id
 		enemys.push_back(new five_super(440, 80, 2, 2));
@@ -591,6 +606,7 @@ void Ui::stage_2()
 	i++;
 	if (keys.get_flag(2) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		//添加enemy,需修改
 		enemys.push_back(new lock_extend(560, 200, 2, &(plane->position[2]), &(plane->position[3])));//分别是x，y坐标和group参数，group就是关卡id
 		enemys.push_back(new lock_extend(160, 200, 2, &(plane->position[2]), &(plane->position[3])));
@@ -603,6 +619,7 @@ void Ui::stage_2()
 	i++;
 	if (keys.get_flag(2) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		//添加enemy,需修改
 		enemys.push_back(new five_super(580, 220, 2, -6));
 		enemys.push_back(new five_super(140, 220, 2, 6));
@@ -616,6 +633,7 @@ void Ui::stage_2()
 	i++;
 	if (keys.get_flag(2) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		enemys.push_back(new boss_2(360, 120, 2, &(plane->position[2]), &(plane->position[3])));
 		keys.set_flag(2, keys.get_flag(2) + 1);
 		target++;
@@ -624,6 +642,7 @@ void Ui::stage_2()
 	i++;
 	if (keys.get_flag(2) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		note(0, 500, 720, 70, 60, 0, LIGHTGREEN, WHITE, L"STAGE02 COMPLETE!");
 		static int count = 0;
 		count++;
@@ -650,6 +669,7 @@ void Ui::stage_3()
 	int i = 0;
 	if (keys.get_flag(3) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		//添加enemy,需修改
 		enemys.push_back(new lock_super(620, 240, 3, &(plane->position[2]), &(plane->position[3])));//分别是x，y坐标和group参数，group就是关卡id
 		enemys.push_back(new lock_extend(360, 140, 3, &(plane->position[2]), &(plane->position[3])));
@@ -664,6 +684,7 @@ void Ui::stage_3()
 	i++;
 	if (keys.get_flag(3) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		//添加enemy,需修改
 		enemys.push_back(new lock_simple(620, 240, 3, &(plane->position[2]), &(plane->position[3])));
 		enemys.push_back(new simple_three(360, 140, 3));
@@ -678,6 +699,7 @@ void Ui::stage_3()
 	i++;
 	if (keys.get_flag(3) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		//添加enemy,需修改
 		enemys.push_back(new five_super(160, 200, 3, -1));
 		enemys.push_back(new six_super(360, 140, 3));
@@ -690,6 +712,7 @@ void Ui::stage_3()
 	i++;
 	if (keys.get_flag(3) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		//添加enemy,需修改
 		enemys.push_back(new five_trans(160, 200, 3));
 		enemys.push_back(new three_move(360, 140, 3));
@@ -702,6 +725,7 @@ void Ui::stage_3()
 	i++;
 	if (keys.get_flag(3) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		//添加enemy,需修改
 		enemys.push_back(new six_super(160, 220, 3));
 		enemys.push_back(new five_trans(360, 120, 3));
@@ -714,6 +738,7 @@ void Ui::stage_3()
 	i++;
 	if (keys.get_flag(3) == defeat_target[i]) {
 		enemys_reset();
+		keys.save();
 		enemys.push_back(new boss_3(360, 120, 3, &(plane->position[2]), &(plane->position[3])));
 		keys.set_flag(3, keys.get_flag(3) + 1);
 		target++;
@@ -721,6 +746,7 @@ void Ui::stage_3()
 	}
 	i++;
 	if (keys.get_flag(3) == defeat_target[i]) {
+		keys.save();
 		enemys_reset();
 		note(0, 500, 720, 70, 60, 0, LIGHTGREEN, WHITE, L"ALL STAGE COMPLETE!");
 	}
@@ -748,7 +774,7 @@ void Ui::infinity()
 			enemys.push_back(new simple_enemy(enemy_id % 128 + 232, 150, 4));
 		}
 		if ((enemy_id > (100 - target * 40)) && (enemy_id < (100 - target * 10))) {
-			enemys.push_back(new lock_simple(488-enemy_id % 128, 250, 4, &(plane->position[2]), &(plane->position[3])));
+			enemys.push_back(new lock_simple(488 - enemy_id % 128, 250, 4, &(plane->position[2]), &(plane->position[3])));
 		}
 		//下面三句话不用改
 		keys.set_flag(4, keys.get_flag(4) + 1);
@@ -1311,7 +1337,7 @@ void Ui::judge()//判定函数
 			{
 				enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
 				shot->flag = 1;
-				keys.score += keys.attack/20;
+				keys.score += keys.attack / 20;
 				if (enemy->hp > 0)
 					music_id = 11;
 				put_bk_image((int)shot->get_x(), (int)shot->get_y(), keys.boom_image[0]);
@@ -1331,7 +1357,7 @@ void Ui::judge()//判定函数
 				plane->set_stage(plane->get_stage() - 1);
 				shot->flag = 1;
 				music_id = 11;
-				keys.score -=100;
+				keys.score -= 100;
 				put_bk_image((int)shot->get_x(), (int)shot->get_y(), keys.boom_image[3]);
 			}
 		}
@@ -1344,7 +1370,7 @@ void Ui::judge()//判定函数
 		//超大判定范围下，然后判断id，做出不同的功效
 		if (sqrt(pow(abs(drop->get_x() - plane->position[2]), 2) + pow(abs(drop->get_y() - plane->position[3]), 2)) < 32)
 		{
-			keys.score +=30;
+			keys.score += 30;
 			drop->state = 1;
 			switch (drop->get_id())
 			{
@@ -1418,7 +1444,7 @@ void Ui::input()
 					keys.key_card = msg.vkcode;
 				}
 			}
-			else if (msg.x > 5 && keys.condition == 2 && plane != nullptr&&mouse_ban==0)
+			else if (msg.x > 5 && keys.condition == 2 && plane != nullptr && mouse_ban == 0)
 			{
 				keys.move[0] = msg.x;
 				keys.move[1] = msg.y;
