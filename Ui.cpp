@@ -765,24 +765,115 @@ void Ui::infinity()
 	static int target_num = 1000;
 	static int target = 0;
 	static int enemy_id = 0;//0~11,9,10,11为boss1，boss2，boss3
+	static int position_id = 0;//用于随机分配敌机位置0~14
+	static vector<int> position_buffer;//防止重复
+	static int position_flag = 0;
+	static int score_stage = 0;//用于标识目前分数所在的难度等级
 	if (defeat_target.empty()) {
 		for (int i = 0; i <= target_num; i++) {
 			defeat_target.push_back(0);
 			target = 0;
 		}
 	}
+	//15个可能出现的位置
+	static vector<vector<int>> enemy_position{
+		{160,120},{260,120},{360,120},{460,120},{560,120},
+		{160,240},{260,240},{360,240},{460,240},{560,240},
+		{160,360},{260,360},{360,360},{460,360},{560,360}
+	};
+
 	//模块start
 	if (keys.get_flag(4) == defeat_target[target]) {
 		enemys_reset();
+		position_buffer.clear();
+
 		//添加enemy,需修改group
 		srand((unsigned)time(NULL));
-		enemy_id = rand() % 100;
-		if (enemy_id < (100 - target * 10)) {
-			enemys.push_back(new simple_enemy(enemy_id % 128 + 232, 150, 4));
+		if (keys.score != 0) {
+			score_stage = int(log2(keys.score)) - 9;
+			if (score_stage < 1) {
+				score_stage = 1;
+			}
 		}
-		if ((enemy_id > (100 - target * 40)) && (enemy_id < (100 - target * 10))) {
-			enemys.push_back(new lock_simple(488 - enemy_id % 128, 250, 4, &(plane->position[2]), &(plane->position[3])));
+		else {
+			score_stage = 1;
 		}
+		
+		while (score_stage > 0) {
+			enemy_id = rand() % 9;
+			position_flag = 1;
+
+			while (position_flag == 1) {
+				position_id = rand() % 14;
+				position_flag = 0;
+				if (!position_buffer.empty()){
+					for (auto position : position_buffer) {
+						if (position == position_id) {
+							position_flag = 1;
+							break;
+						}
+					}
+				}
+			}
+			position_buffer.push_back(position_id);
+
+			if (enemy_id == 0) {
+				enemys.push_back(new simple_enemy(enemy_position[position_id][0], enemy_position[position_id][1], 4));
+			}
+			if (enemy_id == 1) {
+				enemys.push_back(new lock_simple(enemy_position[position_id][0], enemy_position[position_id][1], 4, &(plane->position[2]), &(plane->position[3])));
+			}
+			if (enemy_id == 2) {
+				enemys.push_back(new simple_three(enemy_position[position_id][0], enemy_position[position_id][1], 4));
+			}
+			if (enemy_id == 3) {
+				enemys.push_back(new lock_super(enemy_position[position_id][0], enemy_position[position_id][1], 4, &(plane->position[2]), &(plane->position[3])));
+			}
+			if (enemy_id == 4) {
+				enemys.push_back(new lock_extend(enemy_position[position_id][0], enemy_position[position_id][1], 4, &(plane->position[2]), &(plane->position[3])));
+			}
+			if (enemy_id == 5) {
+				enemys.push_back(new five_super(enemy_position[position_id][0], enemy_position[position_id][1], 4, position_id % 2 * 2 - 1));
+			}
+			if (enemy_id == 6) {
+				enemys.push_back(new three_move(enemy_position[position_id][0], enemy_position[position_id][1], 4));
+			}
+			if (enemy_id == 7) {
+				enemys.push_back(new six_super(enemy_position[position_id][0], enemy_position[position_id][1], 4));
+			}
+			if (enemy_id == 8) {
+				enemys.push_back(new five_trans(enemy_position[position_id][0], enemy_position[position_id][1], 4));
+			}
+			if (enemy_id == 9) {
+				if (score_stage > 1) {
+					enemys.push_back(new boss_1(enemy_position[position_id][0], enemy_position[position_id][1], 4, &(plane->position[2]), &(plane->position[3])));
+					score_stage--;
+				}
+				else {
+					enemys.push_back(new simple_three(enemy_position[position_id][0], enemy_position[position_id][1], 4));
+				}
+			}
+			if (enemy_id == 10) {
+				if (score_stage > 2) {
+					enemys.push_back(new boss_2(enemy_position[position_id][0], enemy_position[position_id][1], 4, &(plane->position[2]), &(plane->position[3])));
+					score_stage -= 2;
+				}
+				else {
+					enemys.push_back(new three_move(enemy_position[position_id][0], enemy_position[position_id][1], 4));
+				}
+			}
+			if (enemy_id == 11) {
+				if (score_stage > 2) {
+					enemys.push_back(new boss_3(enemy_position[position_id][0], enemy_position[position_id][1], 4, &(plane->position[2]), &(plane->position[3])));
+					score_stage -= 2;
+				}
+				else {
+					enemys.push_back(new six_super(enemy_position[position_id][0], enemy_position[position_id][1], 4));
+				}
+			}
+			score_stage--;
+		}
+
 		//下面三句话不用改
 		keys.set_flag(4, keys.get_flag(4) + 1);
 		target++;
