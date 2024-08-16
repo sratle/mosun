@@ -2,7 +2,7 @@
 
 keyhouse::keyhouse()
 	:condition(0), timer(0), sun(0), star_value(0), moon(0), attack(0), hp(0), mp(0), shield(0),
-	key_card(0), plane_id(0), plane_unlock(0), strike(0), stage(0), score(0)
+	key_card(0), plane_id(0), plane_unlock(0), strike(0), stage(0), score(0),score_level(0),score_plane_id(0)
 {
 	//‘§º”‘ÿ
 	load_image_asset(L"assets/sakuya1.png", 0);
@@ -84,7 +84,7 @@ void keyhouse::save()
 	for (auto unlock : cards_unlock) {
 		to_save = to_save + std::to_string(unlock) + " ";
 	}
-	to_save = to_save + std::to_string(plane_unlock) + " " + std::to_string(max_score);
+	to_save = to_save + std::to_string(plane_unlock) + " " + std::to_string(max_score) + " " + std::to_string(score_plane_id) + " " + std::to_string(score_level);
 	file << to_save;
 	file.close();
 }
@@ -94,7 +94,7 @@ void keyhouse::load()
 	std::ifstream file("savedata/savedata.dat", std::ios::in | std::ios::binary);
 	vector<string> to_load;
 	string load_buffer;
-	for (int i = 0; i < 25; i++) {
+	for (int i = 0; i < 27; i++) {
 		file >> load_buffer;
 		to_load.push_back(load_buffer);
 	}
@@ -109,6 +109,8 @@ void keyhouse::load()
 	}
 	plane_unlock = std::stoi(to_load[23]);
 	max_score = std::stoi(to_load[24]);
+	score_plane_id = std::stoi(to_load[25]);
+	score_level = std::stoi(to_load[26]);
 	file.close();
 }
 
@@ -125,6 +127,8 @@ void keyhouse::reset_save()
 	}
 	plane_unlock = 0;
 	max_score = 0;
+	score_plane_id = 0;
+	score_level = 0;
 }
 
 int keyhouse::get_flag(int pos)

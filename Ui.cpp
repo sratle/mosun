@@ -338,6 +338,8 @@ void Ui::draw_control()
 		{
 			if (keys.score > keys.max_score) {
 				keys.max_score = keys.score;
+				keys.score_plane_id = keys.plane_id;
+				keys.score_level = keys.plane_level[keys.plane_id];
 			}
 			keys.save();
 			keys.score = 0;
@@ -424,10 +426,28 @@ void Ui::draw_control()
 	{
 		COLORREF color = RGB(102, 204, 255);
 		note(10, 10, 120, 50, 30, 1, LIGHTGRAY, WHITE, L"按0:退出");
-		string text2 = "max score:" + std::to_string(keys.max_score);
+		string text2 = "Max Score:" + std::to_string(keys.max_score);
 		wstring out2(text2.begin(), text2.end());
-		note(200, 10, 250, 50, 40, 0, color, WHITE, out2.c_str());
-		note(0, 60, 720, 55, 50, 0, color, WHITE, L"按9重置存档");
+		note(20, 70, 300, 50, 40, 0, color, WHITE, out2.c_str());
+		switch (keys.score_plane_id)
+		{
+		case 0:
+			note(20, 130, 300, 50, 40, 0, color, WHITE, L"Plane:Chirono");
+			break;
+		case 1:
+			note(20, 130, 300, 50, 40, 0, color, WHITE, L"Plane:Patchouli");
+			break;
+		case 2:
+			note(20, 130, 300, 50, 40, 0, color, WHITE, L"Plane:Sanae");
+			break;
+		case 3:
+			note(20, 130, 300, 50, 40, 0, color, WHITE, L"Plane:Meirin");
+			break;
+		}
+		string text3 = "Level:" + std::to_string(keys.score_level + 1);
+		wstring out3(text3.begin(), text3.end());
+		note(20, 190, 300, 50, 40, 0, color, WHITE, out3.c_str());
+		note(0, 10, 720, 55, 50, 0, color, WHITE, L"按9重置存档");
 		if (keys.condition == 1 && keys.key_num == 57)
 		{
 			keys.reset_save();
@@ -786,6 +806,7 @@ void Ui::infinity()
 	if (keys.get_flag(4) == defeat_target[target]) {
 		enemys_reset();
 		position_buffer.clear();
+		keys.save();
 
 		//添加enemy,需修改group
 		srand((unsigned)time(NULL));
@@ -798,7 +819,7 @@ void Ui::infinity()
 		else {
 			score_stage = 1;
 		}
-		
+
 		while (score_stage > 0) {
 			enemy_id = rand() % 9;
 			position_flag = 1;
@@ -806,7 +827,7 @@ void Ui::infinity()
 			while (position_flag == 1) {
 				position_id = rand() % 14;
 				position_flag = 0;
-				if (!position_buffer.empty()){
+				if (!position_buffer.empty()) {
 					for (auto position : position_buffer) {
 						if (position == position_id) {
 							position_flag = 1;
@@ -1135,6 +1156,7 @@ void Ui::plane_house()
 		music_id = 1;
 		bgm_id = 0;
 		set_current_index(1);
+		keys.save();
 		return;
 	}
 }
