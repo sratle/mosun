@@ -85,6 +85,9 @@ void keyhouse::save()
 		to_save = to_save + std::to_string(unlock) + " ";
 	}
 	to_save = to_save + std::to_string(plane_unlock) + " " + std::to_string(max_score) + " " + std::to_string(score_plane_id) + " " + std::to_string(score_level);
+	for (auto select : cards_select) {
+		to_save = to_save + std::to_string(select) + " ";
+	}
 	file << to_save;
 	file.close();
 }
@@ -94,7 +97,7 @@ void keyhouse::load()
 	std::ifstream file("savedata/savedata.dat", std::ios::in | std::ios::binary);
 	vector<string> to_load;
 	string load_buffer;
-	for (int i = 0; i < 27; i++) {
+	for (int i = 0; i < 33; i++) {
 		file >> load_buffer;
 		to_load.push_back(load_buffer);
 	}
@@ -111,6 +114,9 @@ void keyhouse::load()
 	max_score = std::stoi(to_load[24]);
 	score_plane_id = std::stoi(to_load[25]);
 	score_level = std::stoi(to_load[26]);
+	for (int i = 27; i < 33; i++) {
+		cards_select[i - 27] = std::stoi(to_load[i]);
+	}
 	file.close();
 }
 
@@ -129,6 +135,9 @@ void keyhouse::reset_save()
 	max_score = 0;
 	score_plane_id = 0;
 	score_level = 0;
+	for (int i = 27; i < 33; i++) {
+		cards_select[i - 27] = 0;
+	}
 }
 
 int keyhouse::get_flag(int pos)

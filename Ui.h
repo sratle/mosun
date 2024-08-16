@@ -31,6 +31,8 @@ private:
 	void infinity();//无尽
 	void enemys_reset();//重置敌机
 	void card_control();//卡牌效果
+	void card_house();//卡牌仓库
+	void card_load();//把keyhouse中选择的卡牌加载到card_select中
 	void plane_house();//机库函数
 	vector<int> defeat_target;//目标击败的总数，主要用于自动化统计敌机数量，完成关卡推进
 

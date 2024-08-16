@@ -41,7 +41,7 @@ void Ui::init()
 	add_page(page_7);
 
 	IMAGE* page_8 = new IMAGE(width, height);
-	loadimage(page_8, L"assets/planehouse.jpg");//牌库
+	loadimage(page_8, L"assets/planehouse.png");//牌库
 	add_page(page_8);
 
 	IMAGE* page_9 = new IMAGE(width, height);
@@ -412,15 +412,7 @@ void Ui::draw_control()
 	}
 	else if (current_index == 7)
 	{
-		note(10, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"按0:退出");
-		if (keys.condition == 1 && keys.key_num == 48)
-		{
-			keys.key_num = 0;
-			music_id = 1;
-			bgm_id = 0;
-			set_current_index(1);
-			return;
-		}
+		card_house();
 	}
 	else if (current_index == 8)
 	{
@@ -821,11 +813,11 @@ void Ui::infinity()
 		}
 
 		while (score_stage > 0) {
-			enemy_id = rand() % 9;
+			enemy_id = rand() % 12;
 			position_flag = 1;
 
 			while (position_flag == 1) {
-				position_id = rand() % 14;
+				position_id = rand() % 15;
 				position_flag = 0;
 				if (!position_buffer.empty()) {
 					for (auto position : position_buffer) {
@@ -884,9 +876,9 @@ void Ui::infinity()
 				}
 			}
 			if (enemy_id == 11) {
-				if (score_stage > 2) {
+				if (score_stage > 3) {
 					enemys.push_back(new boss_3(enemy_position[position_id][0], enemy_position[position_id][1], 4, &(plane->position[2]), &(plane->position[3])));
-					score_stage -= 2;
+					score_stage -= 3;
 				}
 				else {
 					enemys.push_back(new six_super(enemy_position[position_id][0], enemy_position[position_id][1], 4));
@@ -1289,6 +1281,41 @@ void Ui::card_control()//卡牌相关的操控、使用
 		}
 	}
 	keys.key_card = 0;
+}
+
+//在卡牌库界面**修改**卡牌的选择,设置界面抽卡，保存卡牌选择的id到keyhouse中,进入游戏的时候加载卡牌就行
+void Ui::card_house()
+{
+	COLORREF color = RGB(102, 204, 255);
+	vector<int> temp_select;
+	//6张卡牌压入card_select中,
+	note(0, 10, 720, 50, 30, 0, color, WHITE, L"按9切换卡牌列，按1~8选择卡牌");
+	note(0, 40, 720, 50, 30, 0, color, WHITE, L"需选择6张，少于六张保存失败");
+
+
+	note(10, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"按0:退出");
+	if (keys.condition == 1 && keys.key_num == 48)
+	{
+		if (temp_select.size() == 6) {
+			for (int i = 0; i < 6;i++) {
+				keys.cards_select[i] = temp_select[i];
+			}
+		}
+		keys.key_num = 0;
+		music_id = 1;
+		bgm_id = 0;
+		set_current_index(1);
+		keys.save();
+		return;
+	}
+
+}
+
+//加载卡牌,使用的是keyhouse中的数据
+void Ui::card_load()
+{
+	card_select.clear();
+
 }
 
 void Ui::music_control()
