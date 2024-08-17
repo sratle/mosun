@@ -13,6 +13,7 @@ public:
 	vector<int> position;//0，1：渲染坐标，2，3：判定坐标
 	vector<Shot*> shots;
 	int state = 0;//0:初始状态 1：死亡状态但未释放掉落物 2：已经释放掉落物
+	int attack_flag = 0;
 	int attack = 0;
 	int hp = 0;
 	int max_hp = 0;

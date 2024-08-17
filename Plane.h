@@ -28,11 +28,11 @@ protected:
 //id:0
 class ur : public Plane {
 private:
-	int hps[8]{ 300,350,420,500,600,720,850,1000 };
-	int mps[8]{ 200,230,260,300,360,430,500,600 };
-	int attacks[8]{ 100,120,145,170,200,240,290,350 };
-	int shields[8]{ 0,20,40,60,75,85,95,100 };//护甲减免值
-	int strikes[8]{ 0,2,4,7,10,13,16,20 };//暴击率
+	int hps[8]{ 300,350,400,460,520,580,640,700 };
+	int mps[8]{ 200,230,260,300,350,400,450,500 };
+	int attacks[8]{ 100,120,140,160,180,210,240,270 };
+	int shields[8]{ 0,10,20,30,40,50,55,60 };//护甲减免值
+	int strikes[8]{ 0,2,4,7,10,13,15,18 };//暴击率
 	int max_level = 8;
 	vector<int> record_time = { 0 ,1000 ,0 };//子弹，入场动画，技能
 	int stage = 0;//子弹阶段
@@ -52,11 +52,11 @@ public:
 //id:1
 class nanna : public Plane {
 private:
-	int hps[5]{ 300,370,450,540,650 };
-	int mps[5]{ 300,350,400,460,520 };
-	int attacks[5]{ 80,110,140,175,220 };
+	int hps[5]{ 300,370,440,520,600 };
+	int mps[5]{ 300,350,400,450,500 };
+	int attacks[5]{ 80,110,140,175,210 };
 	int shields[5]{ 20,35,50,60,70 };
-	int strikes[5]{ 2,4,7,10,13 };
+	int strikes[5]{ 2,4,7,10,12 };
 	int max_level = 5;
 	vector<int> record_time = { 0,1000,0 };
 	int stage = 0;//子弹阶段
@@ -76,11 +76,11 @@ public:
 //id:2
 class ea :public Plane {
 private:
-	int hps[6]{ 400,470,550,640,740,850 };
+	int hps[6]{ 400,450,500,550,620,700 };
 	int mps[6]{ 200,230,260,300,350,400 };
-	int attacks[6]{ 100,120,150,180,210,250 };
-	int shields[6]{ 15,30,40,50,65,75 };
-	int strikes[6]{ 2,5,8,11,15,19 };
+	int attacks[6]{ 100,120,145,170,200,230 };
+	int shields[6]{ 15,30,40,50,60,70 };
+	int strikes[6]{ 2,5,8,11,14,16 };
 	int max_level = 6;
 	vector<int> record_time = { 0,1000,0 };
 	int stage = 0;//子弹阶段
@@ -100,11 +100,11 @@ public:
 //id:3
 class enlil :public Plane {
 private:
-	int hps[6]{ 200,250,310,380,460,550 };
-	int mps[6]{ 220,250,280,320,370,420 };
-	int attacks[6]{ 130,160,200,240,300,370 };
-	int shields[6]{ 10,20,30,45,55,60 };
-	int strikes[6]{ 10,13,17,22,27,35 };
+	int hps[6]{ 200,250,300,350,400,450 };
+	int mps[6]{ 220,250,280,320,360,400 };
+	int attacks[6]{ 130,150,180,220,260,300 };
+	int shields[6]{ 10,20,30,40,45,50 };
+	int strikes[6]{ 10,13,17,21,25,30 };
 	int max_level = 6;
 	vector<int> record_time = { 0,1000,0 };
 	int stage = 0;//子弹阶段

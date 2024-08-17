@@ -45,6 +45,9 @@ void simple_enemy::draw()
 		record_time[1] += 5 + deff / 12;
 		return;
 	}
+	else if (attack_flag == 0) {
+		attack_flag = 1;
+	}
 	//渲染机体
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
@@ -123,6 +126,9 @@ void lock_simple::draw()
 		fillcircle(position[2], record_time[1] + height / 2, 10);
 		record_time[1] += 5 + deff / 12;
 		return;
+	}
+	else if (attack_flag == 0) {
+		attack_flag = 1;
 	}
 	//渲染机体
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
@@ -204,6 +210,9 @@ void simple_three::draw()
 		fillcircle(position[2], record_time[1] + height / 2, 12);
 		record_time[1] += 5 + deff / 12;
 		return;
+	}
+	else if (attack_flag == 0) {
+		attack_flag = 1;
 	}
 	//渲染机体
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
@@ -303,6 +312,9 @@ void lock_super::draw()
 		record_time[1] += 5 + deff / 12;
 		return;
 	}
+	else if (attack_flag == 0) {
+		attack_flag = 1;
+	}
 	//渲染机体
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
@@ -384,6 +396,9 @@ void boss_1::draw()
 		fillcircle(position[2], record_time[1] + height / 2, 12);
 		record_time[1] += 5 + deff / 20;
 		return;
+	}
+	else if (attack_flag == 0) {
+		attack_flag = 1;
 	}
 	//渲染机体
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
@@ -606,6 +621,9 @@ void lock_extend::draw()
 		record_time[1] += 5 + deff / 12;
 		return;
 	}
+	else if (attack_flag == 0) {
+		attack_flag = 1;
+	}
 	//渲染机体
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
@@ -712,6 +730,9 @@ void five_super::draw()
 		record_time[1] += 5 + deff / 12;
 		return;
 	}
+	else if (attack_flag == 0) {
+		attack_flag = 1;
+	}
 	//渲染机体
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
@@ -806,6 +827,9 @@ void three_move::draw()
 		fillcircle(position[2], record_time[1] + height / 2, 14);
 		record_time[1] += 5 + deff / 12;
 		return;
+	}
+	else if (attack_flag == 0) {
+		attack_flag = 1;
 	}
 	//move
 	static int move_flag = 0;
@@ -918,6 +942,9 @@ void boss_2::draw()
 		fillcircle(position[2], record_time[1] + height / 2, 12);
 		record_time[1] += 5 + deff / 20;
 		return;
+	}
+	else if (attack_flag == 0) {
+		attack_flag = 1;
 	}
 	//渲染机体
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
@@ -1135,6 +1162,9 @@ void six_super::draw()
 		record_time[1] += 5 + deff / 12;
 		return;
 	}
+	else if (attack_flag == 0) {
+		attack_flag = 1;
+	}
 	//渲染机体
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
 	setfillcolor(WHITE);
@@ -1235,6 +1265,9 @@ void five_trans::draw()
 		fillcircle(position[2], record_time[1] + height / 2, 12);
 		record_time[1] += 5 + deff / 12;
 		return;
+	}
+	else if (attack_flag == 0) {
+		attack_flag = 1;
 	}
 	//渲染机体
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
@@ -1341,6 +1374,9 @@ void boss_3::draw()
 		fillcircle(position[2], record_time[1] + height / 2, 12);
 		record_time[1] += 5 + deff / 20;
 		return;
+	}
+	else if (attack_flag == 0) {
+		attack_flag = 1;
 	}
 	//渲染机体
 	put_bk_image(position[0], position[1], keys.enemy_image[id]);
