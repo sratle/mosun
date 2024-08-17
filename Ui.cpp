@@ -1289,9 +1289,8 @@ void Ui::card_house()
 	COLORREF color = RGB(102, 204, 255);
 	vector<int> temp_select;
 	//6张卡牌压入card_select中,
-	note(0, 10, 720, 50, 30, 0, color, WHITE, L"按9切换卡牌列，按1~8选择卡牌");
+	note(0, 10, 720, 50, 30, 0, color, WHITE, L"按9切换卡牌列，按1~4选择卡牌");
 	note(0, 40, 720, 50, 30, 0, color, WHITE, L"需选择6张，少于六张保存失败");
-
 
 	note(10, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"按0:退出");
 	if (keys.condition == 1 && keys.key_num == 48)
@@ -1315,7 +1314,9 @@ void Ui::card_house()
 void Ui::card_load()
 {
 	card_select.clear();
-
+	for (auto card : keys.cards_select) {
+		card_select.push_back(new Card(card));
+	}
 }
 
 void Ui::music_control()

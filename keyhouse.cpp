@@ -84,7 +84,7 @@ void keyhouse::save()
 	for (auto unlock : cards_unlock) {
 		to_save = to_save + std::to_string(unlock) + " ";
 	}
-	to_save = to_save + std::to_string(plane_unlock) + " " + std::to_string(max_score) + " " + std::to_string(score_plane_id) + " " + std::to_string(score_level);
+	to_save = to_save + std::to_string(plane_unlock) + " " + std::to_string(max_score) + " " + std::to_string(score_plane_id) + " " + std::to_string(score_level) + " ";
 	for (auto select : cards_select) {
 		to_save = to_save + std::to_string(select) + " ";
 	}
