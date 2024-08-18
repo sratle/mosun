@@ -9,7 +9,7 @@
 
 #define KEY_DOWN(VK_CODE) ((GetAsyncKeyState(VK_CODE)&0x8000)?1:0)
 
-//整体UI设计，本次项目不采用鼠标，全键盘操控
+//整体UI设计，本次项目键盘操控
 class Ui
 {
 private:

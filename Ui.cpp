@@ -830,34 +830,36 @@ void Ui::infinity()
 			}
 			position_buffer.push_back(position_id);
 
-			if (enemy_id == 0) {
+			switch (enemy_id) 
+			{
+			case 0:
 				enemys.push_back(new simple_enemy(enemy_position[position_id][0], enemy_position[position_id][1], 4));
-			}
-			if (enemy_id == 1) {
+				break;
+			case 1:
 				enemys.push_back(new lock_simple(enemy_position[position_id][0], enemy_position[position_id][1], 4, &(plane->position[2]), &(plane->position[3])));
-			}
-			if (enemy_id == 2) {
+				break;
+			case 2:
 				enemys.push_back(new simple_three(enemy_position[position_id][0], enemy_position[position_id][1], 4));
-			}
-			if (enemy_id == 3) {
+				break;
+			case 3:
 				enemys.push_back(new lock_super(enemy_position[position_id][0], enemy_position[position_id][1], 4, &(plane->position[2]), &(plane->position[3])));
-			}
-			if (enemy_id == 4) {
+				break;
+			case 4:
 				enemys.push_back(new lock_extend(enemy_position[position_id][0], enemy_position[position_id][1], 4, &(plane->position[2]), &(plane->position[3])));
-			}
-			if (enemy_id == 5) {
+				break;
+			case 5:
 				enemys.push_back(new five_super(enemy_position[position_id][0], enemy_position[position_id][1], 4, position_id % 2 * 2 - 1));
-			}
-			if (enemy_id == 6) {
+				break;
+			case 6:
 				enemys.push_back(new three_move(enemy_position[position_id][0], enemy_position[position_id][1], 4));
-			}
-			if (enemy_id == 7) {
+				break;
+			case 7:
 				enemys.push_back(new six_super(enemy_position[position_id][0], enemy_position[position_id][1], 4));
-			}
-			if (enemy_id == 8) {
+				break;
+			case 8:
 				enemys.push_back(new five_trans(enemy_position[position_id][0], enemy_position[position_id][1], 4));
-			}
-			if (enemy_id == 9) {
+				break;
+			case 9:
 				if (score_stage > 1) {
 					enemys.push_back(new boss_1(enemy_position[position_id][0], enemy_position[position_id][1], 4, &(plane->position[2]), &(plane->position[3])));
 					score_stage--;
@@ -865,8 +867,8 @@ void Ui::infinity()
 				else {
 					enemys.push_back(new simple_three(enemy_position[position_id][0], enemy_position[position_id][1], 4));
 				}
-			}
-			if (enemy_id == 10) {
+				break;
+			case 10:
 				if (score_stage > 2) {
 					enemys.push_back(new boss_2(enemy_position[position_id][0], enemy_position[position_id][1], 4, &(plane->position[2]), &(plane->position[3])));
 					score_stage -= 2;
@@ -874,8 +876,8 @@ void Ui::infinity()
 				else {
 					enemys.push_back(new three_move(enemy_position[position_id][0], enemy_position[position_id][1], 4));
 				}
-			}
-			if (enemy_id == 11) {
+				break;
+			case 11:
 				if (score_stage > 3) {
 					enemys.push_back(new boss_3(enemy_position[position_id][0], enemy_position[position_id][1], 4, &(plane->position[2]), &(plane->position[3])));
 					score_stage -= 3;
@@ -883,6 +885,7 @@ void Ui::infinity()
 				else {
 					enemys.push_back(new six_super(enemy_position[position_id][0], enemy_position[position_id][1], 4));
 				}
+				break;
 			}
 			score_stage--;
 		}
@@ -1292,7 +1295,7 @@ void Ui::card_house()
 		{148,296},{268,296},{388,296},{508,296},
 		{148,442},{268,442},{388,442},{508,442},
 		{148,588},{268,588},{388,588},{508,588}
-	};
+	};//id 0~15
 	static vector<int> card_pos_status{
 		0,0,0,0,
 		0,0,0,0,
@@ -1301,8 +1304,9 @@ void Ui::card_house()
 	};
 	COLORREF color = RGB(102, 204, 255);
 	static vector<int> temp_select;
-	//6张卡牌压入card_select中,
-	note(0, 10, 720, 50, 30, 0, color, WHITE, L"按9切换卡牌列，按1~4选择卡牌");
+	static int last_select;
+	//6张卡牌压入card_select中
+	note(0, 10, 720, 50, 30, 0, color, WHITE, L"按9切换卡牌行，按1~4选择卡牌");
 	note(0, 40, 720, 50, 30, 0, color, WHITE, L"需选择6张，少于六张保存失败");
 
 	if (keys.condition == 1 && keys.key_num == 57) {
@@ -1312,11 +1316,76 @@ void Ui::card_house()
 		}
 		keys.key_num = 0;
 	}
-	note(card_position[card_column][0], 80, 64, 50, 30, 0, color, WHITE, L"[THIS]");
+	note(30, card_position[card_column * 4 + 1][1]+17, 64, 50, 30, 0, color, WHITE, L"THIS->");
 
-	if (keys.condition == 1 && (keys.key_num == 49|| keys.key_num == 50 || keys.key_num == 51 || keys.key_num == 52)) {
-		card_pos_status[(keys.key_num - 49) * 4 + card_column] = 1 - card_pos_status[(keys.key_num - 49) * 4 + card_column];
+	if (keys.condition == 1 && (keys.key_num == 49 || keys.key_num == 50 || keys.key_num == 51 || keys.key_num == 52)) {
+		last_select = keys.key_num - 49 + card_column * 4;
+		if (card_pos_status[last_select] != 0 || temp_select.size() < 6) {
+			card_pos_status[last_select] = 1 - card_pos_status[last_select];
+			if (card_pos_status[last_select] == 1) {
+				temp_select.push_back(last_select);
+			}
+			else if (card_pos_status[last_select] == 0) {
+				for (int i = 0; i < temp_select.size(); i++) {
+					if (temp_select[i] == last_select) {
+						temp_select.erase(temp_select.begin() + i);
+						break;
+					}
+				}
+			}
+		}
 		keys.key_num = 0;
+	}
+	switch (last_select)
+	{
+	case 0:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card1");
+		break;
+	case 1:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card2");
+		break;
+	case 2:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card3");
+		break;
+	case 3:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card4");
+		break;
+	case 4:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card5");
+		break;
+	case 5:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card6");
+		break;
+	case 6:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card7");
+		break;
+	case 7:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card8");
+		break;
+	case 8:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card9");
+		break;
+	case 9:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card10");
+		break;
+	case 10:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card11");
+		break;
+	case 11:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card12");
+		break;
+	case 12:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card13");
+		break;
+	case 13:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card14");
+		break;
+	case 14:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card15");
+		break;
+	case 15:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card16");
+		break;
 	}
 
 	for (int i = 0; i < 16; i++) {
@@ -1330,7 +1399,7 @@ void Ui::card_house()
 	if (keys.condition == 1 && keys.key_num == 48)
 	{
 		if (temp_select.size() == 6) {
-			for (int i = 0; i < 6;i++) {
+			for (int i = 0; i < 6; i++) {
 				keys.cards_select[i] = temp_select[i];
 			}
 		}
@@ -1482,7 +1551,7 @@ void Ui::judge()//判定函数
 	{
 		for (auto enemy : enemys)
 		{
-			if (enemy->state == 2 || enemy->attack_flag==0)
+			if (enemy->state == 2 || enemy->attack_flag == 0)
 				continue;//敌机已经寄了就不用做判断
 			else if (enemy->state == 1)
 			{
@@ -1547,7 +1616,7 @@ void Ui::judge()//判定函数
 		if (sqrt(pow(abs(enemy->position[2] - plane->position[2]), 2) + pow(abs(enemy->position[3] - plane->position[3]), 2)) < 48) {
 			keys.hp -= 5;
 			enemy->hp -= 15;
-			put_bk_image((int)plane->position[0], (int)plane->position[1]+32, keys.boom_image[4]);
+			put_bk_image((int)plane->position[0], (int)plane->position[1] + 32, keys.boom_image[4]);
 		}
 	}
 	//判定掉落物
