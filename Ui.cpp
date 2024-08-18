@@ -1286,11 +1286,45 @@ void Ui::card_control()//卡牌相关的操控、使用
 //在卡牌库界面**修改**卡牌的选择,设置界面抽卡，保存卡牌选择的id到keyhouse中,进入游戏的时候加载卡牌就行
 void Ui::card_house()
 {
+	static int card_column = 0;
+	static vector<vector<int>> card_position{
+		{148,150},{268,150},{388,150},{508,150},
+		{148,296},{268,296},{388,296},{508,296},
+		{148,442},{268,442},{388,442},{508,442},
+		{148,588},{268,588},{388,588},{508,588}
+	};
+	static vector<int> card_pos_status{
+		0,0,0,0,
+		0,0,0,0,
+		0,0,0,0,
+		0,0,0,0
+	};
 	COLORREF color = RGB(102, 204, 255);
-	vector<int> temp_select;
+	static vector<int> temp_select;
 	//6张卡牌压入card_select中,
 	note(0, 10, 720, 50, 30, 0, color, WHITE, L"按9切换卡牌列，按1~4选择卡牌");
 	note(0, 40, 720, 50, 30, 0, color, WHITE, L"需选择6张，少于六张保存失败");
+
+	if (keys.condition == 1 && keys.key_num == 57) {
+		card_column++;
+		if (card_column == 4) {
+			card_column = 0;
+		}
+		keys.key_num = 0;
+	}
+	note(card_position[card_column][0], 80, 64, 50, 30, 0, color, WHITE, L"[THIS]");
+
+	if (keys.condition == 1 && (keys.key_num == 49|| keys.key_num == 50 || keys.key_num == 51 || keys.key_num == 52)) {
+		card_pos_status[(keys.key_num - 49) * 4 + card_column] = 1 - card_pos_status[(keys.key_num - 49) * 4 + card_column];
+		keys.key_num = 0;
+	}
+
+	for (int i = 0; i < 16; i++) {
+		if (card_pos_status[i] == 1) {
+			setlinecolor(WHITE);
+			rectangle(card_position[i][0], card_position[i][1], card_position[i][0] + 64, card_position[i][1] + 128);
+		}
+	}
 
 	note(10, 10, 120, 50, 30, 0, LIGHTGRAY, WHITE, L"按0:退出");
 	if (keys.condition == 1 && keys.key_num == 48)
@@ -1512,7 +1546,7 @@ void Ui::judge()//判定函数
 		//判定碰撞
 		if (sqrt(pow(abs(enemy->position[2] - plane->position[2]), 2) + pow(abs(enemy->position[3] - plane->position[3]), 2)) < 48) {
 			keys.hp -= 5;
-			enemy->hp -= 5;
+			enemy->hp -= 15;
 			put_bk_image((int)plane->position[0], (int)plane->position[1]+32, keys.boom_image[4]);
 		}
 	}
