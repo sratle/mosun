@@ -144,7 +144,10 @@ void keyhouse::reset_save()
 	for (int i = 3; i < 7; i++) {
 		plane_level[i - 3] = 0;
 	}
-	for (int i = 7; i < 23; i++) {
+	for (int i = 7; i < 13; i++) {
+		cards_unlock[i - 7] = 1;
+	}
+	for (int i = 13; i < 23; i++) {
 		cards_unlock[i - 7] = 0;
 	}
 	plane_unlock = 0;
@@ -152,7 +155,7 @@ void keyhouse::reset_save()
 	score_plane_id = 0;
 	score_level = 0;
 	for (int i = 27; i < 33; i++) {
-		cards_select[i - 27] = 0;
+		cards_select[i - 27] = i - 27;
 	}
 }
 

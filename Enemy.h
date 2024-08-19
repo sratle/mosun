@@ -17,6 +17,8 @@ public:
 	int attack = 0;
 	int hp = 0;
 	int max_hp = 0;
+	int width = 0;
+	int height = 0;
 
 protected:
 	int score = 0;
@@ -33,8 +35,6 @@ public:
 private:
 	const int id = 0;//标识这个敌机的id
 	vector<int> record_time = { 0 , 0 , 0 };//0:标识子弹时间 1：标识入场动画 2：标识爆炸动画
-	int height;
-	int width;
 };
 
 class lock_simple :public Enemy
@@ -46,8 +46,6 @@ public:
 private:
 	const int id = 1;
 	vector<int> record_time = { 0 , 0 ,0 };
-	int height;
-	int width;
 	int* plane_x;
 	int* plane_y;
 };
@@ -61,8 +59,6 @@ public:
 private:
 	const int id = 2;//标识这个敌机的id
 	vector<int> record_time = { 0 , 0 ,0 };
-	int height;
-	int width;
 };
 
 class lock_super :public Enemy
@@ -74,8 +70,6 @@ public:
 private:
 	const int id = 3;
 	vector<int> record_time = { 0 , 0,0 };
-	int height;
-	int width;
 	int* plane_x;
 	int* plane_y;
 };
@@ -91,8 +85,6 @@ private:
 	const int id = 4;
 	vector<int> record_time = { 0 , 0,0 };
 	vector<int> rand_save;
-	int height;
-	int width;
 	int stage;
 	int* plane_x;
 	int* plane_y;
@@ -107,8 +99,6 @@ public:
 private:
 	const int id = 5;
 	vector<int> record_time = { 0 , 0,0 };
-	int height;
-	int width;
 	int* plane_x;
 	int* plane_y;
 };
@@ -122,8 +112,6 @@ public:
 private:
 	const int id = 6;
 	vector<int> record_time = { 0 , 0,0 };
-	int height;
-	int width;
 	int rotate;
 };
 
@@ -136,8 +124,6 @@ public:
 private:
 	const int id = 7;
 	vector<int> record_time = { 0 , 0,0 };
-	int height;
-	int width;
 	int left_x;
 	int right_x;
 };
@@ -153,8 +139,6 @@ private:
 	const int id = 8;
 	vector<int> record_time = { 0 , 0,0 };
 	vector<int> rand_save;
-	int height;
-	int width;
 	int stage;
 	int* plane_x;
 	int* plane_y;
@@ -171,8 +155,6 @@ public:
 private:
 	const int id = 9;
 	vector<int> record_time = { 0 , 0,0 };
-	int height;
-	int width;
 };
 
 class five_trans :public Enemy
@@ -184,8 +166,6 @@ public:
 private:
 	const int id = 10;
 	vector<int> record_time = { 0 , 0,0 };
-	int height;
-	int width;
 };
 
 class boss_3 :public Enemy
@@ -199,8 +179,6 @@ private:
 	const int id = 11;
 	vector<int> record_time = { 0 , 0,0 };
 	vector<int> rand_save;
-	int height;
-	int width;
 	int stage;
 	int* plane_x;
 	int* plane_y;

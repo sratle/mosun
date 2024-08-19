@@ -33,7 +33,7 @@ public:
 	int sun;//save
 	int moon;//save
 	vector<int> plane_level{ 0,0,0,0 };//save 存储四种机体的当前等级
-	vector<int> cards_unlock{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };//save 16张卡的解锁情况
+	vector<int> cards_unlock{ 1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0 };//save 16张卡的解锁情况
 	vector<int> cards_select{ 0,0,0,0,0,0 };//save 选择的六张卡牌，用于游玩体验的连续性
 	int plane_unlock;//save 机体解锁
 	int max_score;//save

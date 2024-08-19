@@ -420,30 +420,178 @@ void Ui::draw_control()
 	}
 	else if (current_index == 8)
 	{
+		static int display_status = 0;
+		static int rand_num = 0;
 		COLORREF color = RGB(102, 204, 255);
 		note(10, 10, 120, 50, 30, 1, LIGHTGRAY, WHITE, L"按0:退出");
 		string text2 = "Max Score:" + std::to_string(keys.max_score);
 		wstring out2(text2.begin(), text2.end());
-		note(20, 70, 300, 50, 40, 0, color, WHITE, out2.c_str());
+		note(0, 70, 720, 50, 40, 0, color, WHITE, out2.c_str());
 		switch (keys.score_plane_id)
 		{
 		case 0:
-			note(20, 130, 300, 50, 40, 0, color, WHITE, L"Plane:Chirono");
+			note(0, 130, 720, 50, 40, 0, color, WHITE, L"Plane:Chirono");
 			break;
 		case 1:
-			note(20, 130, 300, 50, 40, 0, color, WHITE, L"Plane:Patchouli");
+			note(0, 130, 720, 50, 40, 0, color, WHITE, L"Plane:Patchouli");
 			break;
 		case 2:
-			note(20, 130, 300, 50, 40, 0, color, WHITE, L"Plane:Sanae");
+			note(0, 130, 720, 50, 40, 0, color, WHITE, L"Plane:Sanae");
 			break;
 		case 3:
-			note(20, 130, 300, 50, 40, 0, color, WHITE, L"Plane:Meirin");
+			note(0, 130, 720, 50, 40, 0, color, WHITE, L"Plane:Meirin");
 			break;
 		}
 		string text3 = "Level:" + std::to_string(keys.score_level + 1);
 		wstring out3(text3.begin(), text3.end());
-		note(20, 190, 300, 50, 40, 0, color, WHITE, out3.c_str());
+		note(0, 190, 720, 50, 40, 0, color, WHITE, out3.c_str());
 		note(0, 10, 720, 55, 50, 0, color, WHITE, L"按9重置存档");
+		note(0, 250, 720, 55, 50, 0, color, WHITE, L"按1进行星辰抽卡（star-10）");
+		note(0, 310, 720, 55, 50, 0, color, WHITE, L"按2进行月光抽卡（moon-3）");
+		note(0, 370, 720, 55, 50, 0, color, WHITE, L"按3进行烈日抽卡（sun-1）");
+		note(0, 430, 720, 55, 50, 0, color, WHITE, L"卡池是一样的！");
+
+		if (keys.condition == 1 && keys.key_num == 49) 
+		{
+			keys.key_num = 0;
+			if (keys.star_value >= 10) {
+				keys.star_value -= 10;
+				display_status = 2;
+			}
+			else {
+				display_status = 1;
+			}
+		}
+		if (keys.condition == 1 && keys.key_num == 50)
+		{
+			keys.key_num = 0;
+			if (keys.moon >= 3) {
+				keys.moon -= 3;
+				display_status = 2;
+			}
+			else {
+				display_status = 1;
+			}
+		}
+		if (keys.condition == 1 && keys.key_num == 51)
+		{
+			keys.key_num = 0;
+			if (keys.sun >= 1) {
+				keys.sun -= 1;
+				display_status = 2;
+			}
+			else {
+				display_status = 1;
+			}
+		}
+		if (display_status == 2) {
+			srand((unsigned)time(NULL));
+			rand_num = rand() % 10 + 6;
+			if (keys.cards_unlock[rand_num] == 0) {
+				keys.cards_unlock[rand_num] = 1;
+				display_status = 3;
+			}
+			else {
+				display_status = 4;
+			}
+			keys.save();
+		}
+		if (display_status == 1) {
+			note(0, 500, 720, 55, 50, 0, color, WHITE, L"资源不足！");
+		}
+		if (display_status == 3) {
+			switch (rand_num)
+			{
+			case 6:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"解锁了[帕秋莉·诺蕾姬]");
+				break;
+			case 7:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"解锁了[博丽灵梦]");
+				break;
+			case 8:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"解锁了[东风谷早苗]");
+				break;
+			case 9:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"解锁了[尔子田里乃]");
+				break;
+			case 10:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"解锁了[古明地觉]");
+				break;
+			case 11:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"解锁了[伊吹萃香]");
+				break;
+			case 12:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"解锁了[洩矢诹访子]");
+				break;
+			case 13:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"解锁了[比那名居天子]");
+				break;
+			case 14:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"解锁了[灵乌路空]");
+				break;
+			case 15:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"解锁了[八云紫]");
+				break;
+			}
+		}
+		if (display_status == 4) {
+			switch (rand_num % 8) {
+			case 0:
+				keys.star_value += 3;
+				break;
+			case 1:
+				keys.moon += 2;
+				break;
+			case 2:
+				keys.sun += 1;
+				break;
+			case 3:
+				keys.star_value += 6;
+				break;
+			case 4:
+				keys.star_value += 10;
+				break;
+			case 5:
+				keys.moon += 4;
+				break;
+			case 6:
+				keys.sun += 2;
+				break;
+			case 7:
+				keys.star_value += 18;
+				break;
+			}
+			display_status = 5;
+		}
+		if (display_status == 5) {
+			switch (rand_num % 8) {
+			case 0:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"获得star*3");
+				break;
+			case 1:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"获得moon*2");
+				break;
+			case 2:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"获得sun*1");
+				break;
+			case 3:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"获得star*6");
+				break;
+			case 4:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"获得star*10");
+				break;
+			case 5:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"获得moon*4");
+				break;
+			case 6:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"获得sun*2");
+				break;
+			case 7:
+				note(0, 500, 720, 55, 50, 0, color, WHITE, L"获得star*18");
+				break;
+			}
+			display_status = 5;
+		}
 		if (keys.condition == 1 && keys.key_num == 57)
 		{
 			keys.reset_save();
@@ -1163,6 +1311,7 @@ void Ui::plane_house()
 void Ui::card_control()//卡牌相关的操控、使用
 {
 	//第一次进入这个函数
+	static int total_hp = 0;
 	static int card_skill_rand02 = 0;
 	if (card_now.empty())
 	{
@@ -1229,26 +1378,53 @@ void Ui::card_control()//卡牌相关的操控、使用
 				card_skill_flag[5] = 1;
 				break;
 			case 6:
-				plane->set_stage(plane->get_stage() + 1);
-				card_skill_flag[6] = 1;
+				for (int i = 0; i < enemys.size(); i++) {
+					enemys[i]->hp -= 300;
+					enemys[i]->position[1] = enemys[i]->position[1] / 2;
+					enemys[i]->position[3] = enemys[i]->position[1] + enemys[i]->height / 2;
+				}
 				break;
 			case 7:
+				card_skill_flag[7] = 1;
 				break;
 			case 8:
+				keys.hp = plane->get_maxhp();
 				break;
 			case 9:
+				card_skill_flag[9] = 1;
 				break;
 			case 10:
+				card_skill_flag[10] = 1;
 				break;
 			case 11:
+				for (int i = 0; i < enemys.size(); i++) {
+					enemys[i]->hp = enemys[i]->hp / 2;
+					enemys[i]->attack = enemys[i]->attack / 2;
+				}
 				break;
 			case 12:
+				card_skill_flag[12] = 1;
 				break;
 			case 13:
+				for (int i = 0; i < enemys.size(); i++) {
+					enemys[i]->hp = enemys[i]->hp - 2000;
+				}
+				keys.hp = keys.hp / 2;
 				break;
 			case 14:
+				for (int i = 0; i < enemys.size(); i++) {
+					enemys[i]->hp = enemys[i]->hp / 2;
+					total_hp += enemys[i]->hp / 5;
+				}
+				keys.hp += total_hp;
+				if (keys.hp > plane->get_maxhp()) {
+					keys.hp = plane->get_maxhp();
+				}
+				total_hp = 0;
 				break;
 			case 15:
+				plane->set_stage(plane->get_stage() + 1);
+				card_skill_flag[15] = 1;
 				break;
 			}
 			//重置
@@ -1277,7 +1453,7 @@ void Ui::card_control()//卡牌相关的操控、使用
 			music_id = 10;
 		}
 		else if (card_select[card_now[0]]->get_state() == 1 && card_now[1] != -1 && keys.mp >= card_select[card_now[0]]->get_cost(card_now[0])) {
-			keys.mp -= card_select[card_now[0]]->get_cost(card_select[card_now[0]]->get_id());
+			keys.mp -= card_select[card_now[0]]->get_cost(card_now[0]);
 			card_select[card_now[0]]->set_state(2);
 			music_id = 9;
 		}
@@ -1297,8 +1473,8 @@ void Ui::card_control()//卡牌相关的操控、使用
 			card_select[card_now[1]]->set_state(1);
 			music_id = 10;
 		}
-		else if (card_select[card_now[1]]->get_state() == 1 && card_now[0] != -1 && keys.mp > card_select[card_now[1]]->get_cost(card_now[1])) {
-			keys.mp -= card_select[card_now[1]]->get_cost(card_select[card_now[1]]->get_id());
+		else if (card_select[card_now[1]]->get_state() == 1 && card_now[0] != -1 && keys.mp >= card_select[card_now[1]]->get_cost(card_now[1])) {
+			keys.mp -= card_select[card_now[1]]->get_cost(card_now[1]);
 			card_select[card_now[1]]->set_state(2);
 			music_id = 9;
 		}
@@ -1334,6 +1510,7 @@ void Ui::card_house()
 	//6张卡牌压入card_select中
 	note(0, 10, 720, 50, 30, 0, color, WHITE, L"按9切换卡牌行，按1~4选择卡牌");
 	note(0, 40, 720, 50, 30, 0, color, WHITE, L"需选择6张，少于六张保存失败");
+	note(0, 940, 720, 50, 30, 0, color, WHITE, L"卡牌效果不叠加,战斗中按z,x选择卡牌,第二次选中即使用");
 
 	if (keys.condition == 1 && keys.key_num == 57) {
 		card_column++;
@@ -1346,7 +1523,7 @@ void Ui::card_house()
 
 	if (keys.condition == 1 && (keys.key_num == 49 || keys.key_num == 50 || keys.key_num == 51 || keys.key_num == 52)) {
 		last_select = keys.key_num - 49 + card_column * 4;
-		if (card_pos_status[last_select] != 0 || temp_select.size() < 6) {
+		if (card_pos_status[last_select] != 0 || temp_select.size() < 6 && keys.cards_unlock[last_select]==1) {
 			card_pos_status[last_select] = 1 - card_pos_status[last_select];
 			if (card_pos_status[last_select] == 1) {
 				temp_select.push_back(last_select);
@@ -1361,6 +1538,9 @@ void Ui::card_house()
 			}
 		}
 		keys.key_num = 0;
+	}
+	if (keys.cards_unlock[last_select] == 0) {
+		note(0, 890, 720, 50, 50, 0, color, WHITE, L"该卡牌未解锁！");
 	}
 	switch (last_select)
 	{
@@ -1401,37 +1581,64 @@ void Ui::card_house()
 		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费60");
 		break;
 	case 6:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"帕秋莉·诺蕾姬");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"使用魔法程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"击退所有的敌机，并造成300伤害");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费100");
+		break;
+	case 7:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"博丽灵梦");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"在空中飞翔程度的能力/操纵灵气程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"接下来三次补能道具获得的能量值翻倍");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费100");
+		break;
+	case 8:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"东风谷早苗");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"引发奇迹程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"将生命值回满");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费150");
+		break;
+	case 9:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"尔子田里乃");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"通过在背后起舞来诱导出精神力程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"下一个武器升级道具可以把武器升满");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费150");
+		break;
+	case 10:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"古明地觉");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"读心程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"防止武器降级三次");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费120");
+		break;
+	case 11:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"伊吹萃香");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"操纵密度程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"使得在场的敌机血量减半，攻击减半");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费150");
+		break;
+	case 12:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"洩矢诹访子");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"创造程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"接下来三次补血道具获得的能量值翻倍");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费120");
+		break;
+	case 13:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"比那名居天子");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"操纵大地程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"击杀全体敌方（对BOSS-2000血量），自己血量减少一半");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费180");
+		break;
+	case 14:
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"灵乌路空");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"操控核聚变程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"使用敌方一半血量为自己回血");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费160");
+		break;
+	case 15:
 		note(0, 750, 720, 30, 30, 0, color, WHITE, L"八云紫");
 		note(0, 780, 720, 30, 30, 0, color, WHITE, L"使用境界程度的能力");
 		note(0, 810, 720, 30, 30, 0, color, WHITE, L"提升自己的武器等级一级，并抵御三次伤害");
-		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费200");
-		break;
-	case 7:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card8");
-		break;
-	case 8:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card9");
-		break;
-	case 9:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card10");
-		break;
-	case 10:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card11");
-		break;
-	case 11:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card12");
-		break;
-	case 12:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card13");
-		break;
-	case 13:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card14");
-		break;
-	case 14:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card15");
-		break;
-	case 15:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card16");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费220");
 		break;
 	}
 
@@ -1664,15 +1871,23 @@ void Ui::judge()//判定函数
 		{
 			if (shot->flag != 1 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 13)
 			{
-				if (card_skill_flag[6] == 1) {
-					card_skill_flag[6]++;
-					if (card_skill_flag[6] == 4) {
-						card_skill_flag[6] = 0;
+				if (card_skill_flag[15] != 0) {
+					card_skill_flag[15]++;
+					if (card_skill_flag[15] == 4) {
+						card_skill_flag[15] = 0;
 					}
 					continue;
 				}
 				keys.hp -= (enemy->attack - keys.shield);
-				plane->set_stage(plane->get_stage() - 1);
+				if (card_skill_flag[10] == 0) {
+					plane->set_stage(plane->get_stage() - 1);
+				}
+				else {
+					card_skill_flag[10]++;
+					if (card_skill_flag[10] == 4) {
+						card_skill_flag[10] = 0;
+					}
+				}
 				shot->flag = 1;
 				music_id = 11;
 				keys.score -= 100;
@@ -1700,15 +1915,33 @@ void Ui::judge()//判定函数
 			{
 			case 0:
 				plane->set_stage(plane->get_stage() + 1);
+				if (card_skill_flag[9] == 1) {
+					plane->set_stage(3);
+					card_skill_flag[9] = 0;
+				}
 				music_id = 12;
 				break;
 			case 1:
+				if (card_skill_flag[12] != 0) {
+					keys.hp += 150;
+					card_skill_flag[12]++;
+					if (card_skill_flag[12] == 4) {
+						card_skill_flag[12] = 0;
+					}
+				}
 				keys.hp += 150;
 				if (keys.hp > plane->get_maxhp())
 					keys.hp = plane->get_maxhp();
 				music_id = 10;
 				break;
 			case 2:
+				if (card_skill_flag[7] != 0) {
+					keys.mp += 80;
+					card_skill_flag[7]++;
+					if (card_skill_flag[7] == 4) {
+						card_skill_flag[7] = 0;
+					}
+				}
 				keys.mp += 80;
 				if (keys.mp > plane->get_maxmp())
 					keys.mp = plane->get_maxmp();

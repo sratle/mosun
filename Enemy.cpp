@@ -4,8 +4,9 @@ extern keyhouse keys;
 
 //simple_enemy 简单的往前发射单列子弹的飞机
 simple_enemy::simple_enemy(int x, int y, int g)
-	:width(64), height(128)
 {
+	width = 64;
+	height = 128;
 	attack = 100;
 	hp = 500;
 	max_hp = hp;
@@ -87,8 +88,10 @@ void simple_enemy::draw()
 
 //lock_simple 简单的能够发射锁定的单列子弹的敌机
 lock_simple::lock_simple(int x, int y, int g, int* x_t, int* y_t)
-	:width(64), height(128), plane_x(x_t), plane_y(y_t)
+	:plane_x(x_t), plane_y(y_t)
 {
+	width = 64;
+	height = 128;
 	attack = 150;
 	hp = 400;
 	max_hp = hp;
@@ -171,8 +174,9 @@ void lock_simple::draw()
 
 //simple_three 简单的往前发射三列子弹的飞机
 simple_three::simple_three(int x, int y, int g)
-	:width(64), height(128)
 {
+	width = 64;
+	height = 128;
 	attack = 100;
 	hp = 600;
 	max_hp = hp;
@@ -272,8 +276,10 @@ void simple_three::draw()
 
 //lock_super 能够发射锁定的单列高速子弹的敌机,狙击手
 lock_super::lock_super(int x, int y, int g, int* x_t, int* y_t)
-	:width(64), height(128), plane_x(x_t), plane_y(y_t)
+	:plane_x(x_t), plane_y(y_t)
 {
+	width = 64;
+	height = 128;
 	attack = 200;
 	hp = 600;
 	max_hp = hp;
@@ -357,8 +363,10 @@ void lock_super::draw()
 
 //boss1 第一关的boss
 boss_1::boss_1(int x, int y, int g, int* x_t, int* y_t)
-	:width(90), height(128), plane_x(x_t), plane_y(y_t), stage(0)
+	:plane_x(x_t), plane_y(y_t), stage(0)
 {
+	width = 90;
+	height = 128;
 	attack = 150;
 	hp = 3000;
 	max_hp = hp;
@@ -581,8 +589,10 @@ int boss_1::get_id()
 
 //lock_extend 能够发射锁定的三列高速子弹的敌机
 lock_extend::lock_extend(int x, int y, int g, int* x_t, int* y_t)
-	:width(64), height(128), plane_x(x_t), plane_y(y_t)
+	:plane_x(x_t), plane_y(y_t)
 {
+	width = 64;
+	height = 128;
 	attack = 150;
 	hp = 900;
 	max_hp = hp;
@@ -690,8 +700,10 @@ void lock_extend::draw()
 
 //five_super 能够发射五列子弹的敌机
 five_super::five_super(int x, int y, int g, int r)
-	:width(64), height(128), rotate(r)
+	:rotate(r)
 {
+	width = 64;
+	height = 128;
 	attack = 150;
 	hp = 1000;
 	max_hp = hp;
@@ -788,8 +800,10 @@ void five_super::draw()
 
 //three_move 能够发射三列子弹的移动敌机
 three_move::three_move(int x, int y, int g)
-	:width(64), height(128), left_x(x - 100), right_x(x + 100)
+	:left_x(x - 100), right_x(x + 100)
 {
+	width = 64;
+	height = 128;
 	attack = 150;
 	hp = 900;
 	max_hp = hp;
@@ -903,8 +917,10 @@ void three_move::draw()
 
 //boss2 第二关的boss
 boss_2::boss_2(int x, int y, int g, int* x_t, int* y_t)
-	:width(92), height(104), plane_x(x_t), plane_y(y_t), stage(0), left_x(x - 40), right_x(x + 40)
+	:plane_x(x_t), plane_y(y_t), stage(0), left_x(x - 40), right_x(x + 40)
 {
+	width = 92;
+	height = 104;
 	attack = 150;
 	hp = 5000;
 	max_hp = hp;
@@ -1122,8 +1138,9 @@ int boss_2::get_id()
 
 //six_super 往前发射六列子弹的飞机
 six_super::six_super(int x, int y, int g)
-	:width(64), height(128)
 {
+	width = 64;
+	height = 128;
 	attack = 150;
 	hp = 1400;
 	max_hp = hp;
@@ -1226,8 +1243,9 @@ void six_super::draw()
 
 //five_trans 往前发射五列子弹的飞机，改变弹道
 five_trans::five_trans(int x, int y, int g)
-	:width(64), height(128)
 {
+	width = 64;
+	height = 128;
 	attack = 150;
 	hp = 1600;
 	max_hp = hp;
@@ -1335,8 +1353,10 @@ void five_trans::draw()
 
 //boss3 第三关的boss
 boss_3::boss_3(int x, int y, int g, int* x_t, int* y_t)
-	:width(116), height(120), plane_x(x_t), plane_y(y_t), stage(0), left_x(x - 60), right_x(x + 60)
+	:plane_x(x_t), plane_y(y_t), stage(0), left_x(x - 60), right_x(x + 60)
 {
+	width = 116;
+	height = 120;
 	attack = 150;
 	hp = 8000;
 	max_hp = hp;
