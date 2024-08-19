@@ -45,7 +45,7 @@ void Ui::init()
 	add_page(page_8);
 
 	IMAGE* page_9 = new IMAGE(width, height);
-	loadimage(page_9, L"assets/mune.jpg");//…Ë÷√
+	loadimage(page_9, L"assets/planehouse.png");//…Ë÷√
 	add_page(page_9);
 }
 
