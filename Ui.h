@@ -52,5 +52,6 @@ public:
 	vector<Tool*> tools;//一些小部件的定义包含其中
 	vector<Card*> card_select;//每次战斗可以选择六张卡，数据压入其中,id标识0~15
 	vector<int> card_now;//手上同时拥有的卡牌有两张，可以打出其中的一张，并在定时之后刷新，标识card_Select中的pos,存id
+	vector<int> card_skill_flag{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 	vector<Drop*> drops;//掉落物
 };

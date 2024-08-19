@@ -41,6 +41,22 @@ keyhouse::keyhouse()
 	load_image_asset(L"assets/boom04.png", 4);
 	load_image_asset(L"assets/boom05.png", 4);
 	//card
+	load_image_asset(L"assets/card01.png", 5);
+	load_image_asset(L"assets/card02.png", 5);
+	load_image_asset(L"assets/card03.png", 5);
+	load_image_asset(L"assets/card04.png", 5);
+	load_image_asset(L"assets/card05.png", 5);
+	load_image_asset(L"assets/card06.png", 5);
+	load_image_asset(L"assets/card07.png", 5);
+	load_image_asset(L"assets/card08.png", 5);
+	load_image_asset(L"assets/card09.png", 5);
+	load_image_asset(L"assets/card10.png", 5);
+	load_image_asset(L"assets/card11.png", 5);
+	load_image_asset(L"assets/card12.png", 5);
+	load_image_asset(L"assets/card13.png", 5);
+	load_image_asset(L"assets/card14.png", 5);
+	load_image_asset(L"assets/card15.png", 5);
+	load_image_asset(L"assets/card16.png", 5);
 	//bullet
 	load_shots(L"assets/BulletAa000.png");//0
 	load_shots(L"assets/BulletAa001.png");//1

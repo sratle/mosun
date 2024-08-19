@@ -14,7 +14,12 @@ public:
 	void set_pos(int);//设置被使用到了哪个位置
 
 private:
-	vector<int> mp_cost{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };//卡牌消耗
+	vector<int> mp_cost{ 
+		100,120,80,0,
+		100,50,0,0,
+		0,0,0,0,
+		0,0,0,0 
+	};//卡牌消耗
 	int id;//id不可set
 	int pos;
 	int r_time;

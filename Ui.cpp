@@ -139,6 +139,7 @@ void Ui::draw_control()
 			keys.key_num = 0;
 			set_current_index(2);
 			keys.condition = 2;
+			card_load();
 			//初始进入战斗进行战机的初始化
 			switch (keys.plane_id)
 			{
@@ -171,6 +172,7 @@ void Ui::draw_control()
 			keys.key_num = 0;
 			set_current_index(5);
 			keys.condition = 2;
+			card_load();
 			//初始进入战斗进行战机的初始化
 			switch (keys.plane_id)
 			{
@@ -305,6 +307,7 @@ void Ui::draw_control()
 			stage_3();
 			break;
 		}
+		card_control();
 		for (auto ene : enemys) {
 			ene->draw();
 		}
@@ -1159,15 +1162,16 @@ void Ui::plane_house()
 void Ui::card_control()//卡牌相关的操控、使用
 {
 	//第一次进入这个函数
+	static int card_skill_rand02 = 0;
 	if (card_now.empty())
 	{
 		int first = rand() % 6;
 		int second = rand() % 6;
-		card_now.push_back(card_select[first]->get_id());
+		card_now.push_back(first);
 		card_select[first]->set_pos(0);
 		while (first == second)
 			second = rand() % 6;
-		card_now.push_back(card_select[second]->get_id());
+		card_now.push_back(second);
 		card_select[second]->set_pos(1);
 	}
 	for (int pos_id : card_now)
@@ -1176,17 +1180,20 @@ void Ui::card_control()//卡牌相关的操控、使用
 		{
 			//刷新
 			if (keys.timer - keys.get_flag(0) > FPS * 5) {
+				if (card_skill_flag[1] == 1) {
+					card_skill_flag[1] = 0;
+				}
 				int rand_id = rand() % 6;
 				if (card_now[0] == pos_id) {
-					while (card_select[rand_id]->get_id() == card_now[1])
+					while (rand_id == card_now[1])
 						rand_id = rand() % 6;
-					card_now[0] = card_select[rand_id]->get_id();
+					card_now[0] = rand_id;
 					card_select[card_now[0]]->set_pos(0);
 				}
 				else {
-					while (card_select[rand_id]->get_id() == card_now[0])
+					while (rand_id == card_now[0])
 						rand_id = rand() % 6;
-					card_now[1] = card_select[rand_id]->get_id();
+					card_now[1] = rand_id;
 					card_select[card_now[1]]->set_pos(1);
 				}
 			}
@@ -1199,16 +1206,26 @@ void Ui::card_control()//卡牌相关的操控、使用
 			switch (card_select[pos_id]->get_id())
 			{
 			case 0:
+				//直接用 for enemy:enemys会卡死，原因未知
+				for (int i = 0; i < enemys.size();i++) {
+					enemys[i]->hp -= 500;
+				}
 				break;
 			case 1:
+				card_skill_flag[1] = 1;
 				break;
 			case 2:
+				card_skill_rand02 = rand() % (enemys.size());
+				enemys[card_skill_rand02]->hp = 0;
 				break;
 			case 3:
+				keys.mp = plane->get_maxmp();
 				break;
 			case 4:
+				card_skill_flag[4] = 1;
 				break;
 			case 5:
+				card_skill_flag[5] = 1;
 				break;
 			case 6:
 				break;
@@ -1241,9 +1258,9 @@ void Ui::card_control()//卡牌相关的操控、使用
 		}
 	}
 	//检测到了按键
-	if (keys.key_card == 88)//对0位置操控
+	if (keys.key_card == 90)//对0位置操控
 	{
-		if (card_now[0] == -1) {
+		if (card_now[0] == -1||card_now[1]==-1) {
 			keys.key_card = 0;
 			return;
 		}
@@ -1257,14 +1274,14 @@ void Ui::card_control()//卡牌相关的操控、使用
 			music_id = 10;
 		}
 		else if (card_select[card_now[0]]->get_state() == 1 && card_now[1] != -1 && keys.mp >= card_select[card_now[0]]->get_cost(card_now[0])) {
-			keys.mp -= card_select[card_now[0]]->get_cost(card_now[0]);
+			keys.mp -= card_select[card_now[0]]->get_cost(card_select[card_now[0]]->get_id());
 			card_select[card_now[0]]->set_state(2);
 			music_id = 9;
 		}
 	}
-	else if (keys.key_card == 90)//对1位置操控
+	else if (keys.key_card == 88)//对1位置操控
 	{
-		if (card_now[1] == -1) {
+		if (card_now[0] == -1 || card_now[1] == -1) {
 			keys.key_card = 0;
 			return;
 		}
@@ -1278,7 +1295,7 @@ void Ui::card_control()//卡牌相关的操控、使用
 			music_id = 10;
 		}
 		else if (card_select[card_now[1]]->get_state() == 1 && card_now[0] != -1 && keys.mp > card_select[card_now[1]]->get_cost(card_now[1])) {
-			keys.mp -= card_select[card_now[1]]->get_cost(card_now[1]);
+			keys.mp -= card_select[card_now[1]]->get_cost(card_select[card_now[1]]->get_id());
 			card_select[card_now[1]]->set_state(2);
 			music_id = 9;
 		}
@@ -1304,7 +1321,13 @@ void Ui::card_house()
 	};
 	COLORREF color = RGB(102, 204, 255);
 	static vector<int> temp_select;
-	static int last_select;
+	if (temp_select.empty()) {
+		for (auto card : keys.cards_select) {
+			temp_select.push_back(card);
+			card_pos_status[card] = 1;
+		}
+	}
+	static int last_select = 0;
 	//6张卡牌压入card_select中
 	note(0, 10, 720, 50, 30, 0, color, WHITE, L"按9切换卡牌行，按1~4选择卡牌");
 	note(0, 40, 720, 50, 30, 0, color, WHITE, L"需选择6张，少于六张保存失败");
@@ -1339,22 +1362,40 @@ void Ui::card_house()
 	switch (last_select)
 	{
 	case 0:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card1");
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"爱丽丝·玛格特洛依德");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"操纵魔法程度的能力/操纵人偶程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"敌方全体HP-500");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费100");
 		break;
 	case 1:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card2");
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"琪露诺");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"操纵冷气程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"冻结自己血条五秒钟");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费120");
 		break;
 	case 2:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card3");
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"西行寺幽幽子");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"操纵死亡程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"随机击杀一架敌机");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费80");
 		break;
 	case 3:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card4");
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"雾雨魔理沙");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"操纵魔法程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"回满能量值");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费0");
 		break;
 	case 4:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card5");
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"饭纲丸龙");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"操纵星空程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"下一次捡到Star时，多获得一颗star，并且武器等级+2");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费100");
 		break;
 	case 5:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card6");
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"红美铃");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"使用气程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"接下来五次成功击中必定暴击");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费50");
 		break;
 	case 6:
 		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card7");
@@ -1389,9 +1430,13 @@ void Ui::card_house()
 	}
 
 	for (int i = 0; i < 16; i++) {
+		put_bk_image(card_position[i][0], card_position[i][1], keys.card_image[i]);
 		if (card_pos_status[i] == 1) {
-			setlinecolor(WHITE);
+			setlinecolor(color);
 			rectangle(card_position[i][0], card_position[i][1], card_position[i][0] + 64, card_position[i][1] + 128);
+			rectangle(card_position[i][0] - 1, card_position[i][1] - 1, card_position[i][0] + 65, card_position[i][1] + 129);
+			rectangle(card_position[i][0] - 2, card_position[i][1] - 2, card_position[i][0] + 66, card_position[i][1] + 130);
+			rectangle(card_position[i][0] - 3, card_position[i][1] - 3, card_position[i][0] + 67, card_position[i][1] + 131);
 		}
 	}
 
@@ -1586,7 +1631,16 @@ void Ui::judge()//判定函数
 			}//若击中
 			else if (shot->flag != 1 && sqrt(pow(abs(shot->get_x() + 16 - enemy->position[2]), 2) + pow(abs(shot->get_y() + 16 - enemy->position[3]), 2)) < 32)
 			{
-				enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
+				if (card_skill_flag[5] == 0) {
+					enemy->hp -= keys.attack * (1 + ((rand() % 100) < keys.strike));
+				}
+				else {
+					enemy->hp -= keys.attack * 2;
+					card_skill_flag[5]++;
+					if (card_skill_flag[5] == 6) {
+						card_skill_flag[5] = 0;
+					}
+				}
 				shot->flag = 1;
 				keys.score += keys.attack / 20;
 				if (enemy->hp > 0)
@@ -1598,7 +1652,7 @@ void Ui::judge()//判定函数
 	//判定敌机子弹对己方的伤害
 	for (auto enemy : enemys)
 	{
-		if (enemy->state != 0)
+		if (enemy->state != 0||card_skill_flag[1]==1)
 			continue;//敌机已经寄了就不用做判断
 		for (auto shot : enemy->shots)
 		{
@@ -1649,6 +1703,11 @@ void Ui::judge()//判定函数
 				break;
 			case 3:
 				keys.star_value++;
+				if (card_skill_flag[4] == 1) {
+					plane->set_stage(plane->get_stage() + 2);
+					keys.star_value++;
+					card_skill_flag[4] = 0;
+				}
 				music_id = 12;
 				break;
 			case 4:

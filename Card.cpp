@@ -14,7 +14,7 @@ void Card::draw()
 		return;
 	if (state == 2)
 	{
-		put_bk_image(10 + 80 * pos, 900 - state * 16 - r_time * 80, keys.card_image[id]);
+		put_bk_image(15 + 80 * pos, 836 - state * 16 - r_time * 80, keys.card_image[id]);
 		r_time++;
 		if (r_time > 11)
 		{
@@ -23,15 +23,15 @@ void Card::draw()
 		}
 		return;
 	}
-	put_bk_image(10 + 80 * pos, 900 - state * 16, keys.card_image[id]);
+	put_bk_image(15 + 80 * pos, 836 - state * 16, keys.card_image[id]);
 	//ѡ�мӱ߿�
 	if (state == 1)
 	{
 		setlinestyle(PS_SOLID, 1);
 		setlinecolor(WHITE);
-		rectangle(10 + 80 * pos, 900 - state * 16, 10 + 80 * pos + 64, 900 - state * 16 + 128);
+		rectangle(15 + 80 * pos, 836 - state * 16, 15 + 80 * pos + 64, 836 - state * 16 + 128);
 		setlinecolor(RED);
-		rectangle(9 + 80 * pos, 899 - state * 16, 11 + 80 * pos + 64, 901 - state * 16 + 128);
+		rectangle(14 + 80 * pos, 835 - state * 16, 16 + 80 * pos + 64, 837 - state * 16 + 128);
 	}
 }
 
