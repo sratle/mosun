@@ -398,6 +398,7 @@ void Ui::draw_control()
 		plane->draw();
 		//无尽关卡
 		infinity();
+		card_control();
 		for (auto ene : enemys) {
 			ene->draw();
 		}
@@ -1216,7 +1217,7 @@ void Ui::card_control()//卡牌相关的操控、使用
 				break;
 			case 2:
 				card_skill_rand02 = rand() % (enemys.size());
-				enemys[card_skill_rand02]->hp = 0;
+				enemys[card_skill_rand02]->hp -=2000;
 				break;
 			case 3:
 				keys.mp = plane->get_maxmp();
@@ -1376,7 +1377,7 @@ void Ui::card_house()
 	case 2:
 		note(0, 750, 720, 30, 30, 0, color, WHITE, L"西行寺幽幽子");
 		note(0, 780, 720, 30, 30, 0, color, WHITE, L"操纵死亡程度的能力");
-		note(0, 810, 720, 30, 30, 0, color, WHITE, L"随机击杀一架敌机");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"随机击杀一架敌机（对BOSS-2000血量）");
 		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费80");
 		break;
 	case 3:
@@ -1742,28 +1743,18 @@ void Ui::input()
 			{
 				keys.key_any = msg.vkcode;
 			}
-			else if (msg.message == WM_KEYDOWN && keys.condition == 1)
-			{
-				if (msg.vkcode >= 48 && msg.vkcode <= 57)
-				{
-					keys.key_num = msg.vkcode;
-				}
-			}
-			else if (msg.message == WM_KEYDOWN && keys.condition == 2)
-			{
-				if (msg.vkcode >= 48 && msg.vkcode <= 57)
-				{
-					keys.key_num = msg.vkcode;
-				}
-				else if (msg.vkcode == 88 || msg.vkcode == 90)//X,Z键
-				{
-					keys.key_card = msg.vkcode;
-				}
-			}
 			else if (msg.x > 5 && keys.condition == 2 && plane != nullptr && mouse_ban == 0)
 			{
 				keys.move[0] = msg.x;
 				keys.move[1] = msg.y;
+			}
+		}
+		if (keys.condition == 1 || keys.condition == 0) {
+			for (int i = 48; i < 58; i++) {
+				if (KEY_DOWN(i)){
+					while (KEY_DOWN(i)) {}
+					keys.key_num = i;
+				}
 			}
 		}
 		while (peekmessage(&msg)) {}//msg会有堆积，影响按键判断
@@ -1774,6 +1765,18 @@ void Ui::input()
 			}
 			else {
 				key_shift = 0;
+			}
+			if (KEY_DOWN(48)) {
+				while (KEY_DOWN(48)) {}
+				keys.key_num = 48;
+			}
+			if (KEY_DOWN(88)) {
+				while (KEY_DOWN(88)) {}
+				keys.key_card = 88;
+			}
+			if (KEY_DOWN(90)) {
+				while (KEY_DOWN(90)) {}
+				keys.key_card = 90;
 			}
 			if (KEY_DOWN(37)) {
 				keys.move[0] -= 8 - key_shift;
