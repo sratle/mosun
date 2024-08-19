@@ -1229,6 +1229,8 @@ void Ui::card_control()//卡牌相关的操控、使用
 				card_skill_flag[5] = 1;
 				break;
 			case 6:
+				plane->set_stage(plane->get_stage() + 1);
+				card_skill_flag[6] = 1;
 				break;
 			case 7:
 				break;
@@ -1366,19 +1368,19 @@ void Ui::card_house()
 		note(0, 750, 720, 30, 30, 0, color, WHITE, L"爱丽丝·玛格特洛依德");
 		note(0, 780, 720, 30, 30, 0, color, WHITE, L"操纵魔法程度的能力/操纵人偶程度的能力");
 		note(0, 810, 720, 30, 30, 0, color, WHITE, L"敌方全体HP-500");
-		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费100");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费120");
 		break;
 	case 1:
 		note(0, 750, 720, 30, 30, 0, color, WHITE, L"琪露诺");
 		note(0, 780, 720, 30, 30, 0, color, WHITE, L"操纵冷气程度的能力");
 		note(0, 810, 720, 30, 30, 0, color, WHITE, L"冻结自己血条五秒钟");
-		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费120");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费150");
 		break;
 	case 2:
 		note(0, 750, 720, 30, 30, 0, color, WHITE, L"西行寺幽幽子");
 		note(0, 780, 720, 30, 30, 0, color, WHITE, L"操纵死亡程度的能力");
 		note(0, 810, 720, 30, 30, 0, color, WHITE, L"随机击杀一架敌机（对BOSS-2000血量）");
-		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费80");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费100");
 		break;
 	case 3:
 		note(0, 750, 720, 30, 30, 0, color, WHITE, L"雾雨魔理沙");
@@ -1390,16 +1392,19 @@ void Ui::card_house()
 		note(0, 750, 720, 30, 30, 0, color, WHITE, L"饭纲丸龙");
 		note(0, 780, 720, 30, 30, 0, color, WHITE, L"操纵星空程度的能力");
 		note(0, 810, 720, 30, 30, 0, color, WHITE, L"下一次捡到Star时，多获得一颗star，并且武器等级+2");
-		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费100");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费120");
 		break;
 	case 5:
 		note(0, 750, 720, 30, 30, 0, color, WHITE, L"红美铃");
 		note(0, 780, 720, 30, 30, 0, color, WHITE, L"使用气程度的能力");
 		note(0, 810, 720, 30, 30, 0, color, WHITE, L"接下来五次成功击中必定暴击");
-		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费50");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费60");
 		break;
 	case 6:
-		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card7");
+		note(0, 750, 720, 30, 30, 0, color, WHITE, L"八云紫");
+		note(0, 780, 720, 30, 30, 0, color, WHITE, L"使用境界程度的能力");
+		note(0, 810, 720, 30, 30, 0, color, WHITE, L"提升自己的武器等级一级，并抵御三次伤害");
+		note(0, 840, 720, 30, 30, 0, color, WHITE, L"能量花费200");
 		break;
 	case 7:
 		note(0, 750, 720, 30, 30, 0, color, WHITE, L"card8");
@@ -1659,6 +1664,13 @@ void Ui::judge()//判定函数
 		{
 			if (shot->flag != 1 && sqrt(pow(abs(shot->get_x() + 16 - plane->position[2]), 2) + pow(abs(shot->get_y() + 16 - plane->position[3]), 2)) < 13)
 			{
+				if (card_skill_flag[6] == 1) {
+					card_skill_flag[6]++;
+					if (card_skill_flag[6] == 4) {
+						card_skill_flag[6] = 0;
+					}
+					continue;
+				}
 				keys.hp -= (enemy->attack - keys.shield);
 				plane->set_stage(plane->get_stage() - 1);
 				shot->flag = 1;
