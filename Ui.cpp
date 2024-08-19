@@ -1319,8 +1319,10 @@ void Ui::card_control()//卡牌相关的操控、使用
 		int second = rand() % 6;
 		card_now.push_back(first);
 		card_select[first]->set_pos(0);
-		while (first == second)
+		while (first == second) {
+			srand((unsigned)time(NULL));
 			second = rand() % 6;
+		}
 		card_now.push_back(second);
 		card_select[second]->set_pos(1);
 	}
@@ -1334,15 +1336,20 @@ void Ui::card_control()//卡牌相关的操控、使用
 					card_skill_flag[1] = 0;
 				}
 				int rand_id = rand() % 6;
+				srand((unsigned)time(NULL));
 				if (card_now[0] == pos_id) {
-					while (rand_id == card_now[1])
+					while (rand_id == card_now[1]) {
 						rand_id = rand() % 6;
+						srand((unsigned)time(NULL));
+					}
 					card_now[0] = rand_id;
 					card_select[card_now[0]]->set_pos(0);
 				}
 				else {
-					while (rand_id == card_now[0])
+					while (rand_id == card_now[0]) {
 						rand_id = rand() % 6;
+						srand((unsigned)time(NULL));
+					}
 					card_now[1] = rand_id;
 					card_select[card_now[1]]->set_pos(1);
 				}
